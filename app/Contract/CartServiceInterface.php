@@ -31,6 +31,8 @@ interface CartServiceInterface
      */
     public function remove(string $sku): void;
 
+    public function clear() : void;
+
     /**
      * Mengambil satu item dari cart berdasarkan SKU
      * return CartItemData atau null kalau tidak ditemukan

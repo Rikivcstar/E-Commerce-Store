@@ -1,53 +1,52 @@
 <div>
     <div class="container mx-auto max-w-[85rem] w-full px-4 sm:px-6 lg:px-8 py-10">
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-10">
-            <div class="grid grid-cols-1 gap-10 pr-6 border-r border-gray-500 md:col-span-3">
+        <div class="grid grid-cols-1 gap-10 my-5 md:grid-cols-10">
+            <div class="grid grid-cols-1 gap-10 pr-6 border-b md:border-b-0 md:border-r border-[#e2e8f0] md:col-span-3 pb-8 md:pb-0">
                 <div>
                     <div class="space-y-3">
                         <input wire:model.live.debounce.250ms='search' type="text" placeholder="Search Your Product"
                             class="@error('search')
                                 border-red-600
-                            @enderror py-2.5 sm:py-3 px-4 block w-full bg-transparent text-[#FEE715] border-[#FEE715] rounded-lg sm:text-sm focus:border-yellow-500 focus:ring-yellow-500 disabled:opacity-50 disabled:pointer-events-none ">
+                            @enderror py-2.5 sm:py-3 px-4 block w-full bg-white text-[#0f2d5a] border-[#e2e8f0] focus:border-[#1e40af] focus:ring-[#1e40af]/30 rounded-lg sm:text-sm placeholder-slate-400">
                             @error('search')
                                 <p class="text-red-600 text-xs">{{ $message }}</p>
                             @enderror
                     </div>
-                    <span class="block mt-5 mb-5 text-lg font-bold text-[#FEE715] dark:text-neutral-200">
+                    <span class="block mt-6 mb-4 text-base font-bold text-[#0f2d5a]">
                         Collections
                     </span>
                     @error('selectCollection.*')
-                        <div class="text-red-600 text-xs">
+                        <div class="text-red-600 text-xs mb-3">
                             {{ $message }}
                         </div>
                     @enderror
-                    <div class="block space-y-4">
-
+                    <div class="block space-y-3.5">
                         @foreach ($collections as $i => $item)
                             <div class="flex items-center justify-between">
-                                <div class="flex">
+                                <div class="flex items-center">
                                     <input wire:model='selectCollection' value="{{ $item->id }}" type="checkbox"
-                                        class="shrink-0 mt-0.5 bg-transparent border-yellow-300 rounded-sm text-[#FEE715]focus:ring-yellow-500 checked:border-yellow-400 disabled:opacity-50 disabled:pointer-events-none"
+                                        class="shrink-0 mt-0.5 bg-white border-[#cbd5e1] rounded-sm text-[#1e40af] focus:ring-[#1e40af] checked:bg-[#1e40af] checked:border-[#1e40af] disabled:opacity-50 disabled:pointer-events-none"
                                         id="hs-default-checkbox-{{ $i }}">
                                     <label for="hs-default-checkbox-{{ $i }}"
-                                        class="text-sm font-medium text-[#FEE715] ms-3 dark:text-neutral-400">
+                                        class="text-sm font-medium text-[#4b6489] ms-3">
                                         {{ $item->name }}
                                     </label>
                                 </div>
-                                <span class="text-sm text-[#FEE715] font-loght">({{ $item->product_count }})</span>
+                                <span class="text-sm text-[#4b6489]/70 font-light">({{ $item->product_count }})</span>
                             </div>
                         @endforeach
                     </div>
-                    <div class="grid grid-cols-2 gap-2 mt-10">
+                    <div class="grid grid-cols-2 gap-3 mt-8">
                         <button wire:click='applySeacrh' wire:loading.attr='disabled' type="button"
-                            class="inline-flex items-center  justify-center px-4 py-3 text-sm font-medium text-slate-700
-                             bg-[#FEE715] border border-transparent rounded-lg cursor-pointer gap-x-2 hover:bg-yellow-500 focus:outline-hidden focus:bg-yellow-400 disabled:opacity-50 disabled:pointer-events-none">
+                            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white
+                             bg-[#1e40af] hover:bg-[#0f2d5a] border border-transparent rounded-lg cursor-pointer gap-x-2 transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none">
                             Apply Filter
-                            <div wire:loading  class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full dark:text-white" role="status" aria-label="loading">
+                            <div wire:loading class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading">
                             <span class="sr-only">Loading...</span>
                             </div>
                         </button>
                         <button wire:click='resetFilter' type="button"
-                            class="inline-flex items-center justify-center text-sm font-semibold text-[#FEE715] rounded-lg cursor-pointer gap-x-2 hover:text-yellow-500 border border-[#FEE715] focus:outline-hidden focus:text-yellow-400 disabled:opacity-50 disabled:pointer-events-none">
+                            class="inline-flex items-center justify-center text-sm font-semibold text-[#4b6489] hover:text-[#0f2d5a] rounded-lg cursor-pointer gap-x-2 border border-[#e2e8f0] hover:border-[#cbd5e1] transition-all duration-200">
                             Reset
                         </button>
                     </div>
@@ -55,25 +54,25 @@
             </div>
             <div class="col-span-1 md:col-span-7">
                 <div class="flex items-center justify-between gap-5">
-                    <div class="font-light text-[#FEE715]">Result : {{ ($products) ? $products->total () : 'null' }} items</div>
-                    <div class="flex items-center gap-2">
-                        <span class="flex flex-col items-end text-md font-light text-[#FEE715] ">
-                            Sort By :
+                    <div class="font-medium text-[#4b6489]">Result: <span class="text-[#0f2d5a] font-bold">{{ ($products) ? $products->total () : '0' }}</span> items</div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-[#4b6489]">
+                            Sort By:
+                        </span>
                         @error('shortBy')
                             <div class="text-red-600 text-xs">
                                 {{ $message }}
                             </div>
                         @enderror
-                        </span>
 
                         <select
                             wire:model='shortBy'
-                            class="px-3 py-2 text-[#FEE715] text-sm bg-slate-900 border-yellow-200 rounded-lg pe-9 focus:border-yellow-400 focus:ring-yellow-500 disabled:opacity-50 disabled:pointer-events-none ">
-                            <option selected="" class="bg-transparent" >Open this select menu</option>
-                            <option value="newest" class="bg-transparent">Product Newst</option>
-                            <option value="latest" class="bg-transparent">Product Latest</option>
-                            <option value="price_asc" class="bg-transparent">Product Price A-Z</option>
-                            <option value="price_desc" class="bg-transparent">Product Price Z-A</option>
+                            class="px-3 py-2 text-[#0f2d5a] text-sm bg-white border-[#e2e8f0] focus:border-[#1e40af] focus:ring-[#1e40af]/30 rounded-lg pe-9 disabled:opacity-50 disabled:pointer-events-none">
+                            <option selected="">Sort by latest</option>
+                            <option value="newest">Product Newest</option>
+                            <option value="latest">Product Latest</option>
+                            <option value="price_asc">Product Price A-Z</option>
+                            <option value="price_desc">Product Price Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -81,18 +80,17 @@
                     @forelse ($products as $product )
                         <x-single-product-card :product="$product"/>
                     @empty
-                        <div class="font-bold text-2xl col-span-full">
+                        <div class="font-bold text-2xl text-[#0f2d5a] col-span-full py-10 text-center">
                             Product Not found
                         </div>
                     @endforelse
                 </div>
                 @if($products)
-                    <div>
+                    <div class="mt-8">
                     {{ $products->links() }}
                     </div>
                 @endif
             </div>
         </div>
     </div>
-
 </div>

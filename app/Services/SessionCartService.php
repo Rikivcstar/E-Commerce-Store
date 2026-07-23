@@ -94,6 +94,11 @@ class SessionCartService implements CartServiceInterface
             ->first(fn(CartItemData $item) => $item->sku == $sku);
     }
 
+    public function clear() : void
+    {
+        Session::forget($this->session_key);
+    }
+
     /**
      * Mengambil seluruh isi cart dalam bentuk CartData
      */

@@ -1,19 +1,17 @@
 @props(['cart_item'])
-<div class="flex items-center gap-2 border-b border-gray-200">
-    <div class="relative overflow-hidden rounded-md h-15 w-15">
-        <img class="object-coversize-full"
+<div class="flex items-center gap-3 py-1">
+    <div class="relative overflow-hidden rounded-lg h-14 w-14 border border-[#e2e8f0] flex-shrink-0">
+        <img class="object-cover size-full"
             src="{{ $cart_item->product()->cover_url }}"
-            alt="Product Name">
+            alt="{{ $cart_item->product()->name }}">
     </div>
-    <div class="flex items-center">
-        <div class="py-2">
-            <h3 class="text-gray-100 text-md dark:text-white">
-                {{ $cart_item->product()->name }}
-            </h3>
-            <h2 class="text-sm text-gray-300">{{ $cart_item->product()->short_desc }}</h2>
-            <p class="mt-1 text-sm text-black text-md text-white">
-                Rp.{{ $cart_item->product()->price_formatted }} x {{ $cart_item->quantity }}
-            </p>
-        </div>
+    <div class="flex-grow">
+        <h3 class="text-[#0f2d5a] text-sm font-semibold leading-tight">
+            {{ $cart_item->product()->name }}
+        </h3>
+        <p class="text-xs text-[#4b6489] mt-0.5">{{ $cart_item->product()->short_desc }}</p>
+        <p class="mt-1 text-xs font-bold text-[#1e40af]">
+            {{ $cart_item->product()->price_formatted }} <span class="text-[#4b6489] font-normal">x {{ $cart_item->quantity }}</span>
+        </p>
     </div>
 </div>

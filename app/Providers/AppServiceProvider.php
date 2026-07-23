@@ -5,7 +5,10 @@ namespace App\Providers;
 use App\Actions\ValidateCartStock;
 use App\Contract\CartServiceInterface;
 use App\Models\User;
+use App\Services\PaymentMethodQueryService;
+use App\Services\RegionQueryService;
 use App\Services\SessionCartService;
+use App\Services\ShippingMethodService;
 use Illuminate\Support\Number;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -21,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $this->app->bind(CartServiceInterface::class, SessionCartService::class);
+        $this->app->bind(RegionQueryService::class, RegionQueryService::class);
+        $this->app->bind(ShippingMethodService::class, ShippingMethodService::class);
+        $this->app->bind(PaymentMethodQueryService::class, PaymentMethodQueryService::class);
+
     }
 
     /**

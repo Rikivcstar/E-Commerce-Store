@@ -50,6 +50,14 @@ class ProductCatalog extends Component
         ];
     }
 
+    protected function ValidationAttributes()
+    {
+        return [
+            'sellectCollection' => 'Collection',
+            'shortBy' => 'Sort'
+        ];
+    }
+
     public function applySeacrh()
     {
          $this->validate();

@@ -1,29 +1,35 @@
 @props(['title' => 'Title Section', 'url' => '#', 'products' => []])
-<!-- Title -->
-<div class="max-w-2xl mx-auto text-center">
-    <h2 class="text-xl font-bold md:text-2xl md:leading-tight dark:text-white">{{ $title }}</h2>
-</div>
-<!-- End Title -->
-<!-- Card Blog -->
-<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 mx-auto">
-    <!-- Grid -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        @foreach ($products as $product)
-            <x-single-product-card :product="$product"/>
-        @endforeach
+
+<div class="py-14">
+    <div class="max-w-[90rem] px-4 sm:px-6 lg:px-8 mx-auto">
+        <div class="flex items-end justify-between mb-10" data-aos="fade-up" data-aos-duration="500">
+            <div>
+                <span class="inline-block text-xs font-semibold text-[#1e40af] tracking-[0.15em] uppercase mb-2">Collection</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-[#0f2d5a] tracking-tight">{{ $title }}</h2>
+            </div>
+            @if($url !== '#')
+            <a href="{{ $url }}" class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200 group">
+                View All
+                <svg class="size-4 group-hover:translate-x-1 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                </svg>
+            </a>
+            @endif
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
+            @foreach ($products as $product)
+                <x-single-product-card :product="$product" />
+            @endforeach
+        </div>
+        @if($url !== '#')
+        <div class="mt-8 text-center sm:hidden">
+            <a href="{{ $url }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-[#1e40af] transition-colors duration-200">
+                View All Products
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+        @endif
     </div>
-    <div class="flex justify-center w-full mt-5">
-        <a href="{{ $url }}" class="flex items-center text-gray-700">
-            <span class="border-b">
-                Show More Product
-            </span>
-            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-chevron-right">
-                <path d="m9 18 6-6-6-6" />
-            </svg>
-        </a>
-    </div>
-    <!-- End Grid -->
 </div>
-<!-- End Card Blog -->

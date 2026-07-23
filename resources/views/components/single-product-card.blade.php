@@ -1,19 +1,25 @@
-<a  data-aos ="zoom-in"
-    data-aos-delay="100"
-    data-aos-duration="1500"
-    wire: class="flex flex-col bg-[#101820] group rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
-    href="{{ route('product', $product->slug) }}">
-    <img class="object-cover rounded-md aspect-square"
-        src="{{ $product->cover_url }}"
-        alt="{{ $product->name }}">
-    <div class="py-5 bg-[#101820]">
-        <h3 class="text-lg font-bold text-white">
+<a href="{{ route('product', $product->slug) }}"
+    class="group block bg-white rounded-xl overflow-hidden border border-[#e2e8f0] hover:border-[#1e40af]/30 transition-all duration-500 hover:shadow-xl hover:shadow-[#0f2d5a]/[0.08] hover:-translate-y-1"
+    data-aos="fade-up"
+    data-aos-delay="50"
+    data-aos-duration="500">
+    <div class="relative overflow-hidden aspect-square">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            src="{{ $product->cover_url }}"
+            alt="{{ $product->name }}">
+        <div class="absolute inset-0 bg-[#0f2d5a]/0 group-hover:bg-[#0f2d5a]/25 transition-colors duration-500"></div>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#1e40af] text-white px-5 py-2 rounded-full translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
+                Quick View
+            </span>
+        </div>
+    </div>
+    <div class="p-4">
+        <span class="text-[10px] text-[#4b6489] uppercase tracking-widest font-medium">{{ $product->short_desc ?? 'Collection' }}</span>
+        <h3 class="mt-1.5 text-sm font-semibold text-[#0f2d5a] group-hover:text-[#1e40af] transition-colors duration-300 leading-snug line-clamp-2">
             {{ $product->name }}
         </h3>
-        <span class="text-sm text-[#FEE715]">
-            {{ $product->short_desc }}
-        </span>
-        <p class="mt-1 font-semibold text-white">
+        <p class="mt-2.5 text-sm font-bold text-[#1e40af]">
             {{ $product->price_formatted }}
         </p>
     </div>
