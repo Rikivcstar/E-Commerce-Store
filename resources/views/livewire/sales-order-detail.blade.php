@@ -95,7 +95,7 @@
                     </a>
 
                     @else
-                        <span>Silahkan Hubungi Cs Wa : 08999999999</span>
+                        <span>Silahkan Hubungi Cs Wa : 08999999999  </span>
                     @endif
                     <!-- End Buttons -->
 
