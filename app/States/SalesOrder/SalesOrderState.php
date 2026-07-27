@@ -1,10 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\States\SalesOrder;
 
-
-use App\States\SalesOrder\Pending;
 use App\States\SalesOrder\Transition\PendingToCancel;
 use App\States\SalesOrder\Transition\PendingToProgress;
 use App\States\SalesOrder\Transition\ProgressToComplated;
@@ -15,13 +14,12 @@ abstract class SalesOrderState extends State
 {
     abstract public function label(): string;
 
-    public static function config() : StateConfig
+    public static function config(): StateConfig
     {
         return parent::config()
             ->default(Pending::class)
             ->allowTransition(Pending::class, Progress::class, PendingToProgress::class)
-            ->allowAllTransitions(Pending::class, Cancel::class, PendingToCancel::class)
-            ->allowAllTransitions(Progress::class, Completed::class, ProgressToComplated::class);
+            ->allowTransition(Pending::class, Cancel::class, PendingToCancel::class)
+            ->allowTransition(Progress::class, Completed::class, ProgressToComplated::class);
     }
 }
-?>

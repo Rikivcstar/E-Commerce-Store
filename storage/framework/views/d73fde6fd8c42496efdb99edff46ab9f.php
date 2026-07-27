@@ -1,19 +1,19 @@
 <?php $__env->startComponent('mail::message'); ?>
-# Pesanan Anda Sedang Disiapkan, <?php echo e($sales_order->customer->full_name); ?> 📦
+# Pesanan Anda Sedang Disiapkan, <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->customer->full_name); ?> 📦
 
-Pesanan Anda dengan nomor **#<?php echo e($sales_order->trx_id); ?>** sedang kami siapkan dan akan segera dikirimkan ke alamat tujuan.
+Pesanan Anda dengan nomor **#<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->trx_id); ?>** sedang kami siapkan dan akan segera dikirimkan ke alamat tujuan.
 
 ---
 
 ## 🧾 Ringkasan Pesanan:
 
 **Alamat Pengiriman:**  
-<?php echo e($sales_order->address_line); ?>  
-<?php echo e($sales_order->destination->city); ?>, <?php echo e($sales_order->destination->province); ?>, <?php echo e($sales_order->destination->postal_code); ?>
+<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->address_line); ?>  
+<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->destination->city); ?>, <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->destination->province); ?>, <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->destination->postal_code); ?>
 
 
 **Tanggal Pemesanan:**  
-<?php echo e($sales_order->created_at_formatted); ?>
+<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->created_at_formatted); ?>
 
 
 ---
@@ -24,7 +24,7 @@ Pesanan Anda dengan nomor **#<?php echo e($sales_order->trx_id); ?>** sedang kam
 | Produk         | Qty | Harga Satuan | Subtotal   |
 |----------------|-----|---------------|------------|
 <?php $__currentLoopData = $sales_order->items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-| <?php echo e($item->name); ?> | <?php echo e($item->quantity); ?> | <?php echo e($item->price_formatted); ?> | <?php echo e($item->total_formatted); ?> |
+| <?php echo new \Illuminate\Support\EncodedHtmlString($item->name); ?> | <?php echo new \Illuminate\Support\EncodedHtmlString($item->quantity); ?> | <?php echo new \Illuminate\Support\EncodedHtmlString($item->price_formatted); ?> | <?php echo new \Illuminate\Support\EncodedHtmlString($item->total_formatted); ?> |
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php echo $__env->renderComponent(); ?>
 
@@ -32,9 +32,9 @@ Pesanan Anda dengan nomor **#<?php echo e($sales_order->trx_id); ?>** sedang kam
 
 ## 💰 Rincian Pembayaran
 
-- **Subtotal**: <?php echo e($sales_order->sub_total_formatted); ?>  
-- **Ongkir**: <?php echo e($sales_order->shipping_total_formatted); ?>  
-- **Total**: **<?php echo e($sales_order->total_formatted); ?>**
+- **Subtotal**: <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->sub_total_formatted); ?>  
+- **Ongkir**: <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->shipping_total_formatted); ?>  
+- **Total**: **<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->total_formatted); ?>**
 
 ---
 
