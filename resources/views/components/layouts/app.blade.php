@@ -21,11 +21,12 @@
 
     <body class="bg-white text-[#0f2d5a]">
          <x-navigation />
-         <x-alert/>
+         <x-alert />
             <main class="pt-17">
                 {{ $slot }}
             </main>
-        <x-footer/>
+        <x-footer />
+        <x-toast />
 
           <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
             <script>

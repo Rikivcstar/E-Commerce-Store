@@ -1,7 +1,7 @@
 <?php $__env->startComponent('mail::message'); ?>
-# Pesanan Selesai, <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->customer->full_name); ?> ✅
+# Terima Kasih, <?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->customer->full_name); ?> 🎉
 
-Pesanan Anda dengan nomor **#<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->trx_id); ?>** telah berhasil diselesaikan dan telah kami kirimkan ke alamat tujuan.
+Pesanan Anda dengan nomor **#<?php echo new \Illuminate\Support\EncodedHtmlString($sales_order->trx_id); ?>** telah berhasil dibuat.
 
 ---
 
@@ -38,8 +38,12 @@ Pesanan Anda dengan nomor **#<?php echo new \Illuminate\Support\EncodedHtmlStrin
 
 ---
 
+<?php $__env->startComponent('mail::button', ['url' => route('order-confirmed', $sales_order->trx_id)]); ?>
+    Bayar Sekarang
+<?php echo $__env->renderComponent(); ?>
+
 Terima kasih telah berbelanja bersama kami 🙏  
-Semoga produk kami bermanfaat untuk Anda. Sampai jumpa di pesanan berikutnya!
+Kami akan segera memproses pesanan Anda.
 
 <?php echo $__env->renderComponent(); ?>
-<?php /**PATH C:\laraherd\webstore\resources\views/mail/orders/completed.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laraherd\webstore\resources\views/mail/orders/created.blade.php ENDPATH**/ ?>
