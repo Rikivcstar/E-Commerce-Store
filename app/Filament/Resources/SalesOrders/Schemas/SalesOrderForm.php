@@ -66,7 +66,7 @@ class SalesOrderForm
                         TextEntry::make('shipping_weight')
                             ->suffix('gram')
                             ->inlineLabel(),
-                        TextEntry::make('shipping_reciept_number')
+                        TextEntry::make('shipping_receipt_number')
                             ->inlineLabel()
                     ]),
                 RepeatableEntry::make('items')
