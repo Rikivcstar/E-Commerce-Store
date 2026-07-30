@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Schema;
@@ -22,6 +23,11 @@ class UserForm
                     ->unique()
                     ->maxLength(255)
                     ->inlineLabel(),
+                Select::make('roles')
+                    ->required()
+                    ->multiple()
+                    ->preload()
+                    ->relationship('roles', 'name'),
                 Fieldset::make('Password')
                     ->schema([
                         TextInput::make('password')
@@ -30,9 +36,10 @@ class UserForm
                             ->maxLength(255)
                             ->revealable()
                             ->required(fn($record) => $record == null)
-                            ->dehydrateStateUsing(fn($state) => empty($state) ? Hash::make($state) : ''),
+                            ->dehydrateStateUsing(fn($state) => ! empty($state) ? Hash::make($state) : ''),
                         TextInput::make('password_confirmation')
                             ->password()
+                            ->required()
                             ->dehydrated(false)
                             ->revealable()
                             ->maxLength(255)
