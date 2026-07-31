@@ -60,7 +60,8 @@ class OfflineShippingDriver implements ShippingDriverInterface
                     'cost' => 15000,
                     'weight' => $cart->total_weight,
                     'origin' => $origin,
-                    'destination' => $destination
+                    'destination' => $destination,
+                    'logo_url' => 'https://cdn-icons-png.flaticon.com/512/2830/2830289.png'
                 ]);
                 break;
             case 'offline-flat-5':
@@ -72,7 +73,8 @@ class OfflineShippingDriver implements ShippingDriverInterface
                     'cost' => 5000,
                     'weight' => $cart->total_weight,
                     'origin' => $origin,
-                    'destination' => $destination
+                    'destination' => $destination,
+                    'logo_url' => 'https://cdn-icons-png.flaticon.com/512/2830/2830289.png'
                 ]);
                 break;
         }

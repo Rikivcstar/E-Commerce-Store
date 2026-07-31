@@ -9,9 +9,9 @@ use App\Services\PaymentMethodQueryService;
 use App\Services\RegionQueryService;
 use App\Services\SessionCartService;
 use App\Services\ShippingMethodService;
-use Illuminate\Support\Number;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 use League\Config\Exception\ValidationException;
 
@@ -37,16 +37,18 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Model::unguard();
-        Number::useCurrency("IDR");
+        Number::useCurrency('IDR');
 
-        Gate::define('is_stock_available', function(User $user = null){
-           try{
+        Gate::define('is_stock_available', function (?User $user = null) {
+            try {
                 ValidateCartStock::run();
+
                 return true;
-           } catch(ValidationException $e){
+            } catch (ValidationException $e) {
                 session()->flash('error', $e->getMessage());
+
                 return false;
-           }
+            }
         });
 
     }
