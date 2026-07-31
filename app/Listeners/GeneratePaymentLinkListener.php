@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\SalesOrderCreated;
+use App\Events\SalesOrderCreatedEvent;
 use App\Services\PaymentMethodQueryService;
 
 
@@ -19,7 +20,7 @@ class GeneratePaymentLinkListener
     /**
      * Handle the event.
      */
-    public function handle(SalesOrderCreated $event): void
+    public function handle(SalesOrderCreatedEvent $event): void
     {
         app(PaymentMethodQueryService::class)
             ->getDriver(
