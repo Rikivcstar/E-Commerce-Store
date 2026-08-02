@@ -102,7 +102,7 @@
                     <!-- Button -->
                     <a href="<?php echo e($redirect_url); ?>"
                         class="block w-full px-4 py-3 font-bold text-center text-white bg-[#1e40af] hover:bg-[#0f2d5a] border border-transparent rounded-lg text-sm shadow-md transition-colors duration-250">
-                        Check Payment Status
+                        Pay Now
                     </a>
 
                     <?php else: ?>

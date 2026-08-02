@@ -29,7 +29,7 @@ class SalesOrderService
     public function updateShippingPayload(SalesOrderData $sales_order, array $payload) : SalesOrderData
     {
           SalesOrder::where('trx_id', $sales_order->trx_id)->update([
-                'payment_payload' => array_merge($sales_order->payment->payload)
+                'payment_payload' => array_merge($sales_order->payment->payload, $payload)
             ]);
 
             return SalesOrderData::from(
