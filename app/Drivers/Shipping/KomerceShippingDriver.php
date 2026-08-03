@@ -64,6 +64,7 @@ class KomerceShippingDriver implements ShippingDriverInterface
 
         if (empty($apiKey)) {
             Log::warning('Komerce API Key belum dikonfigurasi di .env (KOMERCE_API_KEY)');
+
             return null;
         }
 
@@ -81,7 +82,8 @@ class KomerceShippingDriver implements ShippingDriverInterface
                 ]);
 
             if ($response->failed()) {
-                Log::error('Komerce Rate Error: ' . $response->body());
+                Log::error('Komerce Rate Error: '.$response->body());
+
                 return null;
             }
 
@@ -94,7 +96,7 @@ class KomerceShippingDriver implements ShippingDriverInterface
                 return strtolower((string) data_get($item, 'service')) === strtolower($shipping_service->service);
             });
 
-            if (!$matched) {
+            if (! $matched) {
                 $matched = $items[0];
             }
 
@@ -105,17 +107,17 @@ class KomerceShippingDriver implements ShippingDriverInterface
             $etd = (string) data_get($matched, 'etd', '1-3 Hari');
 
             $logoMap = [
-                'jne'      => 'https://www.jne.co.id/assets/img/jne-logo.png',
-                'sicepat'  => 'https://www.sicepat.com/assets/images/sicepat-logo-color.svg',
-                'jnt'      => 'https://www.jet.co.id/assets/img/logo_jt_express.png',
+                'jne' => 'https://www.jne.co.id/assets/img/jne-logo.png',
+                'sicepat' => 'https://www.sicepat.com/assets/images/sicepat-logo-color.svg',
+                'jnt' => 'https://www.jet.co.id/assets/img/logo_jt_express.png',
                 'anteraja' => 'https://anteraja.id/images/logo-anteraja.png',
-                'pos'      => 'https://www.posindonesia.co.id/images/logo-pos.png',
-                'tiki'     => 'https://tikionline.id/images/logo-tiki.png',
-                'ninja'    => 'https://www.ninjaxpress.co/images/logo.png',
-                'lion'     => 'https://www.lionparcel.com/assets/images/logo-lion-parcel.png',
-                'wahana'   => 'https://www.wahana.com/img/logo-wahana.png',
+                'pos' => 'https://www.posindonesia.co.id/images/logo-pos.png',
+                'tiki' => 'https://tikionline.id/images/logo-tiki.png',
+                'ninja' => 'https://www.ninjaxpress.co/images/logo.png',
+                'lion' => 'https://www.lionparcel.com/assets/images/logo-lion-parcel.png',
+                'wahana' => 'https://www.wahana.com/img/logo-wahana.png',
             ];
-            $logoUrl = url('images/couriers/' . $courierCode . '.svg');
+            $logoUrl = url('images/couriers/'.$courierCode.'.svg');
 
             return new ShippingData(
                 $this->driver,
@@ -129,7 +131,8 @@ class KomerceShippingDriver implements ShippingDriverInterface
                 $logoUrl
             );
         } catch (\Throwable $e) {
-            Log::error('Komerce Driver Exception: ' . $e->getMessage());
+            Log::error('Komerce Driver Exception: '.$e->getMessage());
+
             return null;
         }
     }

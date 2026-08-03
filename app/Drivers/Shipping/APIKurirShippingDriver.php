@@ -10,6 +10,7 @@ use App\Data\RegionData;
 use App\Data\ShippingData;
 use App\Data\ShippingServiceData;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Spatie\LaravelData\DataCollection;
 
 class APIKurirShippingDriver implements ShippingDriverInterface
@@ -55,46 +56,61 @@ class APIKurirShippingDriver implements ShippingDriverInterface
     ): ?ShippingData {
         $username = config('shipping.api_kurir.username');
         $password = config('shipping.api_kurir.password');
+        $baseUrl = rtrim((string) config('shipping.api_kurir.base_url', 'https://sandbox.apikurir.id/shipments/v1/open-api'), '/');
 
         if (empty($username) || empty($password)) {
+            Log::warning('APIKurir credentials (API_KURIR_USERNAME / API_KURIR_PASSWORD) are not set in .env');
+
             return null;
         }
 
-        $response = Http::timeout(10)
-            ->withBasicAuth((string) $username, (string) $password)
-            ->post('https://sandbox.apikurir.id/shipments/v1/open-api/rates', [
-                'isUseInsurance' => true,
-                'isPickup' => true,
-                'isCod' => false,
-                'weight' => $cart->total_weight,
-                'packagePrice' => $cart->total,
-                'origin' => [
-                    'postalCode' => $origin->postal_code,
-                ],
-                'destination' => [
-                    'postalCode' => $destination->postal_code,
-                ],
-                'logistics' => [$shipping_service->courier],
-                'services' => [$shipping_service->service],
-            ]);
+        try {
+            $response = Http::timeout(10)
+                ->withBasicAuth((string) $username, (string) $password)
+                ->post("{$baseUrl}/rates", [
+                    'isUseInsurance' => true,
+                    'isPickup' => true,
+                    'isCod' => false,
+                    'weight' => $cart->total_weight,
+                    'packagePrice' => $cart->total,
+                    'origin' => [
+                        'postalCode' => $origin->postal_code,
+                    ],
+                    'destination' => [
+                        'postalCode' => $destination->postal_code,
+                    ],
+                    'logistics' => [$shipping_service->courier],
+                    'services' => [$shipping_service->service],
+                ]);
 
-        $data = $response->collect('data')->flatten(1)->values()->first();
+            if ($response->failed()) {
+                Log::error('APIKurir Rate API Error: ' . $response->body());
 
-        if (empty($data)) {
+                return null;
+            }
+
+            $data = $response->collect('data')->flatten(1)->values()->first();
+
+            if (empty($data)) {
+                return null;
+            }
+            $est = data_get($data, 'minDuration') . ' - ' . data_get($data, 'maxDuration') . ' ' . data_get($data, 'durationType');
+
+            return new ShippingData(
+                $this->driver,
+                $shipping_service->courier,
+                $shipping_service->service,
+                $est,
+                data_get($data, 'price'),
+                data_get($data, 'weight'),
+                $origin,
+                $destination,
+                data_get($data, 'logoUrl')
+            );
+        } catch (\Throwable $e) {
+            Log::error('APIKurir Driver Exception: ' . $e->getMessage());
+
             return null;
         }
-        $est = data_get($data, 'minDuration').' - '.data_get($data, 'maxDuration').' - '.data_get($data, 'durationType');
-
-        return new ShippingData(
-            $this->driver,
-            $shipping_service->courier,
-            $shipping_service->service,
-            $est,
-            data_get($data, 'price'),
-            data_get($data, 'weight'),
-            $origin,
-            $destination,
-            data_get($data, 'logoUrl')
-        );
     }
 }

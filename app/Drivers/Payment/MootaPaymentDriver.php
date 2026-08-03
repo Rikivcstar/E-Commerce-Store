@@ -41,10 +41,10 @@ class MootaPaymentDriver implements PaymentDriverInterface {
     public function process(SalesOrderData $sales_order)
     {
         $response = Http::withToken(config('services.moota.access_token'))
-            ->post('https://api.moota.co/api/v2/create-transaction', [
+            ->post('https://app.moota.co/api/v2/create-transaction', [
                 'order_id' => $sales_order->trx_id,
                 'account_id' => data_get($sales_order->payment->payload, 'account_id'),
-                'customer' => [
+                'customers' => [
                     'name' => $sales_order->customer->full_name,
                     'email' => $sales_order->customer->email,
                     'phone' => $sales_order->customer->phone,
@@ -54,14 +54,14 @@ class MootaPaymentDriver implements PaymentDriverInterface {
                         'name' => $item->name,
                         'description' => $item->short_desc,
                         'qty' => $item->quantity,
-                        'price' =>$item->price
+                        'price' => $item->price
                     ];
                 })->merge([
                     [
                         'name' => $sales_order->shipping->courier,
                         'description' => $sales_order->shipping->estimated_delivery,
                         'qty' => 1,
-                        'price' =>$sales_order->shipping_cost
+                        'price' => $sales_order->shipping_cost
                     ]
                 ])->toArray(),
                 'description' => '',
@@ -70,19 +70,29 @@ class MootaPaymentDriver implements PaymentDriverInterface {
                 'total' => $sales_order->total
             ]);
 
-          return app(SalesOrderService::class)->updateShippingPayload($sales_order, [
-                    'moota_payload' => $response->json('data')
-                ]);
+        if ($response->failed()) {
+            \Illuminate\Support\Facades\Log::error('Moota create transaction failed', [
+                'trx_id' => $sales_order->trx_id,
+                'status' => $response->status(),
+                'response' => $response->json(),
+            ]);
 
+            return null;
+        }
 
+        return app(SalesOrderService::class)->updateShippingPayload($sales_order, [
+            'moota_payload' => $response->json('data')
+        ]);
     }
 
-    public function shouldShowPayNowButton(SalesOrderData $sales_order) : bool
+    public function shouldShowPayNowButton(SalesOrderData $sales_order): bool
     {
-        return true;
+        $url = data_get($sales_order->payment->payload, 'moota_payload.payment_url');
+
+        return ! empty($url);
     }
 
-    public function getRedirectUrl(SalesOrderData $sales_order) : ?string
+    public function getRedirectUrl(SalesOrderData $sales_order): ?string
     {
         return data_get($sales_order->payment->payload, 'moota_payload.payment_url');
     }

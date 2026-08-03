@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SalesOrderCreated;
+
 use App\Events\SalesOrderCreatedEvent;
 use App\Services\PaymentMethodQueryService;
 
