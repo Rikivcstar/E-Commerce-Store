@@ -89,6 +89,12 @@
                                     <span class="text-[#1e40af] font-semibold"><?php echo e($order->payment->label); ?></span>
                                 </div>
                             </li>
+                            <li class="inline-flex items-center px-4 py-3 text-sm text-[#4b6489] border-b border-[#e2e8f0]">
+                                <div class="flex items-center justify-between w-full">
+                                    <span>Status</span>
+                                    <span class="text-[#1e40af] font-semibold"><?php echo e($order->status_label); ?></span>
+                                </div>
+                            </li>
                             <li class="inline-flex items-center px-4 py-3.5 text-sm font-bold text-[#0f2d5a] bg-[#f8fafc]">
                                 <div class="flex items-center justify-between w-full">
                                     <span>Total Transfer</span>
@@ -97,7 +103,7 @@
                             </li>
                         </ul>
                     </div>
-
+                <!--[if BLOCK]><![endif]--><?php if($order->status == \App\States\SalesOrder\Pending::class): ?>
                   <!--[if BLOCK]><![endif]--><?php if($is_redirect): ?>
                     <!-- Button -->
                     <a href="<?php echo e($redirect_url); ?>"
@@ -109,6 +115,7 @@
                         <span>Silahkan Hubungi Cs Wa : 08999999999  </span>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                     <!-- End Buttons -->
+                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
 
                 </div>

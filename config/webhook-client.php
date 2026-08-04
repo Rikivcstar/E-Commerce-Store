@@ -1,5 +1,7 @@
 <?php
 
+use App\Jobs\MootaPaymentJob;
+
 return [
     'configs' => [
         [
@@ -25,7 +27,7 @@ return [
              *
              * It should implement \Spatie\WebhookClient\SignatureValidator\SignatureValidator
              */
-            'signature_validator' => \Spatie\WebhookClient\SignatureValidator\DefaultSignatureValidator::class,
+            'signature_validator' => \App\Validators\MootaSignatureValidator::class,
 
             /*
              * This class determines if the webhook call should be stored and processed.
@@ -58,7 +60,7 @@ return [
              *
              * This should be set to a class that extends \Spatie\WebhookClient\Jobs\ProcessWebhookJob.
              */
-            'process_webhook_job' => '',
+            'process_webhook_job' => MootaPaymentJob::class,
         ],
     ],
 
