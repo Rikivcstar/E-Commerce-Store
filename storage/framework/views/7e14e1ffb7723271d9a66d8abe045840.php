@@ -20,7 +20,7 @@
         <?php echo $__env->make('sweetalert2::index', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     </head>
 
-    <body class="bg-white text-[#0f2d5a]">
+    <body class="bg-[#f7f2e8] text-[#211b14] antialiased">
          <?php if (isset($component)) { $__componentOriginalf75d29720390c8e1fa3307604849a543 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalf75d29720390c8e1fa3307604849a543 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.navigation','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -61,7 +61,7 @@
 <?php $component = $__componentOriginal5194778a3a7b899dcee5619d0610f5cf; ?>
 <?php unset($__componentOriginal5194778a3a7b899dcee5619d0610f5cf); ?>
 <?php endif; ?>
-            <main class="pt-17">
+            <main class="pt-20">
                 <?php echo e($slot); ?>
 
             </main>

@@ -1,34 +1,47 @@
 <div>
-  <div class="container mx-auto max-w-[85rem] w-full px-4 sm:px-6 lg:px-8 py-10">
-        <div class="grid gap-10 md:grid-cols-10">
-            <div class="md:col-span-7">
-                <h1 class="mb-6 text-2xl font-extrabold text-[#0f2d5a]">Shopping Bag</h1>
-                <div class="grid gap-6">
+    <style>
+        .cart-page { background: #f7f2e8; padding: 2rem clamp(1rem, 3vw, 2.5rem) 4rem; }
+        .cart-shell { max-width: 92rem; margin: 0 auto; }
+        .cart-header { margin-bottom: 1.5rem; }
+        .cart-kicker { color: #8b7659; font-size: .75rem; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+        .cart-title { margin-top: .45rem; color: #211b14; font-family: Finlandica, Inter, sans-serif; font-size: clamp(2.6rem, 6vw, 5.5rem); font-weight: 900; line-height: .86; text-transform: uppercase; }
+        .cart-grid { display: grid; gap: 1.5rem; align-items: start; }
+        .cart-card, .summary-card { border: 1px solid #d7c7ad; background: #fffaf2; border-radius: 1.5rem; box-shadow: 0 18px 45px rgba(79,68,48,.08); }
+        .cart-card { display: grid; gap: 1rem; padding: 1rem; margin-bottom: 1rem; }
+        .cart-img { width: 8.5rem; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 1.1rem; border: 1px solid #d7c7ad; background: #f3eadc; }
+        .cart-item-title { color: #211b14; font-family: Finlandica, Inter, sans-serif; font-size: 1.6rem; font-weight: 900; line-height: 1; text-transform: uppercase; }
+        .cart-desc { margin-top: .4rem; color: #77664c; font-size: .95rem; }
+        .cart-price { color: #4d4634; font-size: 1.35rem; font-weight: 900; }
+        .cart-stock { color: #8b7659; font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+        .cart-empty { padding: 4rem 1.5rem; text-align: center; color: #77664c; font-size: 1rem; font-weight: 900; text-transform: uppercase; }
+        .summary-card { padding: 1.25rem; position: sticky; top: 6rem; }
+        .summary-title { color: #211b14; font-family: Finlandica, Inter, sans-serif; font-size: 2rem; font-weight: 900; text-transform: uppercase; }
+        .summary-list { margin-top: 1.25rem; border: 1px solid #d7c7ad; border-radius: 1.1rem; overflow: hidden; background: #f8f0e2; }
+        .summary-row { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; color: #5d523f; font-size: .95rem; border-bottom: 1px solid #d7c7ad; }
+        .summary-row:last-child { border-bottom: 0; background: #fffaf2; color: #211b14; font-weight: 900; }
+        .summary-row strong { color: #4d4634; }
+        .checkout-btn { margin-top: 1rem; width: 100%; height: 3.25rem; border: 0; border-radius: 999px; background: #4d4634; color: #fffaf2; font-size: .9rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 26px rgba(77,70,52,.16); transition: .2s ease; }
+        .checkout-btn:hover { transform: translateY(-2px); background: #2f2a20; }
+        @media (min-width: 760px) { .cart-card { grid-template-columns: auto 1fr auto; align-items: center; padding: 1.25rem; } }
+        @media (min-width: 980px) { .cart-grid { grid-template-columns: minmax(0, 1fr) 28rem; } }
+    </style>
+
+    <div class="cart-page">
+        <div class="cart-shell">
+            <div class="cart-header">
+                <p class="cart-kicker">Shopping bag</p>
+                <h1 class="cart-title">Your selected items.</h1>
+            </div>
+
+            <div class="cart-grid">
+                <section>
                     <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 pb-6 border-b border-[#e2e8f0]">
-                        <div class="relative w-32 h-32 overflow-hidden rounded-xl border border-[#e2e8f0] flex-shrink-0">
-                            <img class="object-cover size-full"
-                                src="<?php echo e($item->product()->cover_url); ?>"
-                                alt="<?php echo e($item->sku); ?>">
-                        </div>
-                        <div class="flex-grow">
-                            <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
-                                <div>
-                                    <h3 class="text-lg font-bold text-[#0f2d5a]">
-                                        <?php echo e($item->product()->name); ?>
-
-                                    </h3>
-                                    <h2 class="text-sm text-[#4b6489] mt-0.5"><?php echo e($item->product()->short_desc); ?></h2>
-                                </div>
-                                <div class="text-left md:text-right">
-                                    <p class="text-xl font-bold text-[#1e40af]">
-                                        <?php echo e($item->product()->price_formatted); ?>
-
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="flex flex-wrap items-center justify-between gap-4 mt-4">
-                                <div class="flex items-center gap-2">
+                        <article class="cart-card">
+                            <img class="cart-img" src="<?php echo e($item->product()->cover_url); ?>" alt="<?php echo e($item->sku); ?>">
+                            <div>
+                                <h3 class="cart-item-title"><?php echo e($item->product()->name); ?></h3>
+                                <p class="cart-desc"><?php echo e($item->product()->short_desc); ?></p>
+                                <div class="mt-4 max-w-md">
                                     <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
@@ -46,8 +59,11 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <?php
+                                <p class="cart-stock">Stock: <?php echo e($item->product()->stock); ?> left</p>
+                            </div>
+                            <div class="flex items-center justify-between gap-4 md:flex-col md:items-end">
+                                <p class="cart-price"><?php echo e($item->product()->price_formatted); ?></p>
+                                <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
@@ -63,50 +79,25 @@ unset($__params);
 unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
-                                </div>
                             </div>
-                        </div>
-                     </div>
+                        </article>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <div class="font-bold text-[#4b6489] text-lg uppercase flex flex-col justify-center items-center py-10">
-                            Your cart is empty
-                        </div>
+                        <div class="cart-card cart-empty">Your cart is empty</div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-                </div>
-            </div>
-            <div class="md:col-span-3">
-                <h1 class="mb-6 text-2xl text-[#0f2d5a] font-extrabold">Order Summary</h1>
-                <div class="grid gap-5">
-                    <!-- List Group -->
-                    <ul class="flex flex-col border border-[#e2e8f0] rounded-xl overflow-hidden bg-white shadow-xs">
-                        <li class="inline-flex items-center px-4 py-3 text-sm text-[#4b6489] border-b border-[#e2e8f0]">
-                            <div class="flex items-center justify-between w-full">
-                                <span>Sub Total</span>
-                                <span class="text-[#0f2d5a] font-semibold"><?php echo e($subTotal); ?></span>
-                            </div>
-                        </li>
-                        <li class="inline-flex items-center px-4 py-3 text-sm text-[#4b6489] border-b border-[#e2e8f0]">
-                            <div class="flex items-center justify-between w-full">
-                                <span>Shipping</span>
-                                <span class="text-[#0f2d5a] font-semibold">Free</span>
-                            </div>
-                        </li>
-                        <li class="inline-flex items-center px-4 py-4 text-sm font-bold text-[#0f2d5a] bg-[#f8fafc]">
-                            <div class="flex items-center justify-between w-full">
-                                <span>Total</span>
-                                <span class="text-[#1e40af] text-lg"><?php echo e($total); ?></span>
-                            </div>
-                        </li>
-                    </ul>
-                    <!-- End List Group -->
-                    <button type="button" wire:click='checkout' wire:loading.attr='disabled'
-                        class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-bold text-white bg-[#1e40af] hover:bg-[#0f2d5a] border border-transparent rounded-lg cursor-pointer gap-x-2 transition-colors duration-250 shadow-md">
-                        Checkout Now
-                        <div wire:loading class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading">
-                                <span class="sr-only">Loading...</span>
-                        </div>
+                </section>
+
+                <aside class="summary-card">
+                    <h2 class="summary-title">Order summary</h2>
+                    <div class="summary-list">
+                        <div class="summary-row"><span>Sub total</span><strong><?php echo e($subTotal); ?></strong></div>
+                        <div class="summary-row"><span>Shipping</span><strong>Free</strong></div>
+                        <div class="summary-row"><span>Total</span><strong><?php echo e($total); ?></strong></div>
+                    </div>
+                    <button type="button" wire:click='checkout' wire:loading.attr='disabled' class="checkout-btn">
+                        Checkout now
+                        <div wire:loading class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"><span class="sr-only">Loading...</span></div>
                     </button>
-                </div>
+                </aside>
             </div>
         </div>
     </div>

@@ -1,70 +1,46 @@
-    <div class="gap-2 mt-5">
-      <div class="flex items-center">
-            <div x-data="{ quantity: <?php if ((object) ('quantity') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'->value()); ?>')<?php echo e('quantity'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'); ?>')<?php endif; ?> }" class="flex gap-2 items-center my-5 w-full">
-                <div class="inline-block px-3 py-2 bg-white border border-[#e2e8f0] rounded-lg">
-                    <div class="flex items-center gap-x-1.5">
-                        <button
-                            class="inline-flex items-center justify-center text-sm font-medium text-gray-800 bg-white border border-[#e2e8f0] rounded-md cursor-pointer size-6 gap-x-2 shadow-2xs hover:bg-[#f8fafc] focus:outline-hidden focus:bg-[#f8fafc] disabled:opacity-50 disabled:pointer-events-none"
-                            @click="if(quantity > 0) quantity--">
-                            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14"></path>
-                            </svg>
-                        </button>
-                        <!-- Input jumlah -->
-                        <input
-                            class="p-0 w-6 bg-transparent border-0 text-[#0f2d5a] font-semibold text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                            style="-moz-appearance: textfield;" type="number" x-model.number="quantity"
-                            @input="if(quantity < 0) quantity = 0" min="0">
+<div class="nexora-buybox">
+    <style>
+        .nexora-buybox { margin-top: 1.25rem; }
+        .nexora-buybox-row { display: flex; align-items: center; gap: .75rem; width: 100%; flex-wrap: wrap; }
+        .nexora-qty { display: inline-flex; align-items: center; gap: .55rem; height: 3rem; padding: 0 .75rem; border: 1px solid #d7c7ad; background: #fffaf2; border-radius: 999px; }
+        .nexora-qty button { width: 1.8rem; height: 1.8rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid #dfd0b7; background: #f4ead9; color: #4d4634; cursor: pointer; transition: .2s ease; }
+        .nexora-qty button:hover { background: #e7d7bd; }
+        .nexora-qty input { width: 2rem; padding: 0; border: 0; background: transparent; color: #211b14; font-weight: 900; text-align: center; outline: none; }
+        .nexora-add-btn { min-height: 3rem; flex: 1 1 13rem; display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: 0 1.35rem; border: 1px solid #4d4634; border-radius: 999px; background: #4d4634; color: #fffaf2; font-size: .85rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 26px rgba(77,70,52,.16); transition: transform .2s ease, background .2s ease; }
+        .nexora-add-btn:hover { transform: translateY(-2px); background: #2f2a20; }
+        .nexora-stock { margin-top: .8rem; color: #77664c; font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+        .nexora-error { margin-top: .75rem; color: #b42318; font-size: .75rem; font-weight: 800; text-transform: uppercase; }
+    </style>
 
-                        <!-- Tombol tambah -->
-                        <button type="button"
-                            class="inline-flex items-center justify-center text-sm font-medium text-gray-800 bg-white border border-[#e2e8f0] rounded-md cursor-pointer size-6 gap-x-2 shadow-2xs hover:bg-[#f8fafc] focus:outline-hidden focus:bg-[#f8fafc] disabled:opacity-50 disabled:pointer-events-none"
-                            @click="quantity++">
-                            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14"></path>
-                                <path d="M12 5v14"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <button wire:click='addCard' type="button"
-                    class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-[#1e40af] hover:bg-[#0f2d5a] border border-transparent rounded-lg cursor-pointer gap-x-2 transition-colors duration-250 disabled:opacity-50 disabled:pointer-events-none">
-                    <?php echo e($label); ?>
-
-                     <div wire:loading  class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading">
-                            <span class="sr-only">Loading...</span>
-                      </div>
-                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m5 11 4-7"></path>
-                        <path d="m19 11-4-7"></path>
-                        <path d="M2 11h20"></path>
-                        <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4"></path>
-                        <path d="m9 11 1 9"></path>
-                        <path d="M4.5 15.5h15"></path>
-                        <path d="m15 11-1 9"></path>
-                    </svg>
-                </button>
-            </div>
+    <div class="nexora-buybox-row" x-data="{ quantity: <?php if ((object) ('quantity') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'->value()); ?>')<?php echo e('quantity'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'); ?>')<?php endif; ?> }">
+        <div class="nexora-qty">
+            <button type="button" @click="if(quantity > 0) quantity--" aria-label="Kurangi jumlah">
+                <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+            </button>
+            <input style="-moz-appearance: textfield;" type="number" x-model.number="quantity" @input="if(quantity < 0) quantity = 0" min="0" aria-label="Jumlah produk">
+            <button type="button" @click="quantity++" aria-label="Tambah jumlah">
+                <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+            </button>
         </div>
-        <div class="font-bold text-xs uppercase tracking-wider mt-2.5 text-[#1e40af]">Stock: <?php echo e($stock); ?> Left</div>
-        <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['quantity'];
+
+        <button wire:click='addCard' type="button" class="nexora-add-btn">
+            <?php echo e($label); ?>
+
+            <div wire:loading class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"><span class="sr-only">Loading...</span></div>
+            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 11 4-7" /><path d="m19 11-4-7" /><path d="M2 11h20" /><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4" /></svg>
+        </button>
+    </div>
+
+    <div class="nexora-stock">Stock: <?php echo e($stock); ?> left</div>
+    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['quantity'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-            <div class="text-red-600 text-xs my-3 uppercase font-semibold">
-                <?php echo e($message); ?>
-
-            </div>
-        <?php unset($message);
+        <div class="nexora-error"><?php echo e($message); ?></div>
+    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
-    </div>
+</div>
 <?php /**PATH C:\laraherd\webstore\resources\views/livewire/add-to-card.blade.php ENDPATH**/ ?>

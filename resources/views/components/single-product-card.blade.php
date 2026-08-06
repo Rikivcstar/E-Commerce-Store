@@ -1,26 +1,37 @@
 <a href="{{ route('product', $product->slug) }}"
-    class="group block bg-white rounded-xl overflow-hidden border border-[#e2e8f0] hover:border-[#1e40af]/30 transition-all duration-500 hover:shadow-xl hover:shadow-[#0f2d5a]/[0.08] hover:-translate-y-1"
+    class="group block overflow-hidden rounded-[1.25rem] bg-white p-2 shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#555a42]/10"
     data-aos="fade-up"
-    data-aos-delay="50"
-    data-aos-duration="500">
-    <div class="relative overflow-hidden aspect-square">
-        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+    data-aos-delay="40"
+    data-aos-duration="450">
+    <div class="relative aspect-[1.18/1] overflow-hidden rounded-[1rem] bg-[#f1f2ec]">
+        <img class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
             src="{{ $product->cover_url }}"
             alt="{{ $product->name }}">
-        <div class="absolute inset-0 bg-[#0f2d5a]/0 group-hover:bg-[#0f2d5a]/25 transition-colors duration-500"></div>
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#1e40af] text-white px-5 py-2 rounded-full translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
-                Quick View
+        <div class="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+            <span class="rounded-full bg-white/88 px-3 py-1 text-[10px] font-black uppercase tracking-[0.08em] text-[#686d55] shadow-sm backdrop-blur">
+                {{ $product->short_desc ?? 'Collection' }}
+            </span>
+            <span class="flex size-8 items-center justify-center rounded-full bg-white/88 text-[#555a42] shadow-sm backdrop-blur transition group-hover:bg-[#555a42] group-hover:text-white">
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                </svg>
             </span>
         </div>
     </div>
-    <div class="p-4">
-        <span class="text-[10px] text-[#4b6489] uppercase tracking-widest font-medium">{{ $product->short_desc ?? 'Collection' }}</span>
-        <h3 class="mt-1.5 text-sm font-semibold text-[#0f2d5a] group-hover:text-[#1e40af] transition-colors duration-300 leading-snug line-clamp-2">
+    <div class="px-2 pb-3 pt-4">
+        <h3 class="min-h-10 text-sm font-black uppercase leading-5 text-[#20221b] transition group-hover:text-[#555a42] line-clamp-2">
             {{ $product->name }}
         </h3>
-        <p class="mt-2.5 text-sm font-bold text-[#1e40af]">
-            {{ $product->price_formatted }}
-        </p>
+        <div class="mt-3 flex items-center justify-between gap-2">
+            <p class="text-sm font-black text-[#20221b]">
+                {{ $product->price_formatted }}
+            </p>
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#777c62]">
+                4.8
+                <svg class="size-3 fill-[#c9a24b] text-[#c9a24b]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2Z" />
+                </svg>
+            </span>
+        </div>
     </div>
 </a>

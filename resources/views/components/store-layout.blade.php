@@ -19,10 +19,10 @@
     @stack('head')
 </head>
 
-<body class="bg-white text-[#0f2d5a]">
+<body class="bg-[#f7f7f2] text-[#20221b] antialiased">
     <x-navigation />
 
-    <main class="pt-17">
+    <main class="pt-20">
         {{ $slot }}
     </main>
 

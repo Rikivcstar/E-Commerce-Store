@@ -1,92 +1,99 @@
-<footer class="w-full mt-auto border-t border-[#e2e8f0] bg-[#f8fafc]">
-    <div class="max-w-[90rem] py-14 px-4 sm:px-6 lg:px-8 mx-auto">
-        <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-4">
-
-            
-            <div class="col-span-full lg:col-span-1">
-                <a class="text-xl font-extrabold text-[#0f2d5a] tracking-tight focus:outline-hidden focus:opacity-80" href="<?php echo e(url('/')); ?>" aria-label="Brand">
-                    <?php echo e(config('app.name')); ?>
-
-                </a>
-                <p class="mt-3 text-sm text-[#4b6489] leading-relaxed max-w-xs">
-                    Curating premium fashion for the modern individual. Quality craftsmanship meets contemporary design.
-                </p>
-                <div class="flex gap-2 mt-5">
-                    <a href="#" class="size-8 flex items-center justify-center rounded-full bg-[#e8eef6] text-[#4b6489] hover:bg-[#1e40af] hover:text-white transition-all duration-200">
-                        <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                    </a>
-                    <a href="#" class="size-8 flex items-center justify-center rounded-full bg-[#e8eef6] text-[#4b6489] hover:bg-[#1e40af] hover:text-white transition-all duration-200">
-                        <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-                    </a>
-                    <a href="#" class="size-8 flex items-center justify-center rounded-full bg-[#e8eef6] text-[#4b6489] hover:bg-[#1e40af] hover:text-white transition-all duration-200">
-                        <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            
-            <div>
-                <h4 class="text-[10px] font-bold text-[#0f2d5a] uppercase tracking-widest">Shop</h4>
-                <div class="mt-4 space-y-2.5">
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('product-catalog')); ?>">All Products</a></p>
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('product-catalog')); ?>">New Arrivals</a></p>
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('product-catalog')); ?>">Best Sellers</a></p>
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('product-catalog')); ?>">Sale</a></p>
-                </div>
-            </div>
-
-            
-            <div>
-                <h4 class="text-[10px] font-bold text-[#0f2d5a] uppercase tracking-widest">Support</h4>
-                <div class="mt-4 space-y-2.5">
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('page')); ?>">Terms &amp; Conditions</a></p>
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('page')); ?>">Privacy Policy</a></p>
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('page')); ?>">Shipping Info</a></p>
-                    <p><a class="text-sm text-[#4b6489] hover:text-[#1e40af] transition-colors duration-200" href="<?php echo e(route('page')); ?>">Returns</a></p>
-                </div>
-            </div>
-
-            
-            <div>
-                <h4 class="text-[10px] font-bold text-[#0f2d5a] uppercase tracking-widest">Partners</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/shipping/idexpress.webp')); ?>" alt="idexpress" class="h-4" />
-                    </div>
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/shipping/jne.svg')); ?>" alt="jne" class="h-4" />
-                    </div>
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/shipping/jntexpress.svg')); ?>" alt="jnt" class="h-4" />
-                    </div>
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/shipping/ninjaexpress.webp')); ?>" alt="ninja" class="h-4" />
-                    </div>
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/shipping/sicepat.webp')); ?>" alt="sicepat" class="h-4" />
+<footer class="w-full bg-[#f7f7f2] px-3 pb-6 sm:px-5 lg:px-8">
+    <div class="mx-auto max-w-[92rem] overflow-hidden rounded-[1.5rem] bg-white shadow-sm ring-1 ring-black/5">
+        <div class="grid border-b border-[#eceee6] sm:grid-cols-2 lg:grid-cols-4">
+            <?php $__currentLoopData = [
+                ['Pengiriman cepat', 'Partner kurir tepercaya'],
+                ['Retur mudah', 'Proses bantuan jelas'],
+                ['Produk original', 'Kualitas toko terjaga'],
+                ['Support responsif', 'Bantuan saat dibutuhkan'],
+            ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$title, $desc]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="flex items-center gap-4 border-b border-[#eceee6] p-5 last:border-b-0 sm:[&:nth-child(3)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0">
+                    <span class="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[#eef0e7] text-[#555a42]">
+                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                            <path d="m9 12 2 2 4-4" />
+                        </svg>
+                    </span>
+                    <div>
+                        <h3 class="text-sm font-black text-[#20221b]"><?php echo e($title); ?></h3>
+                        <p class="mt-1 text-xs text-[#777b6d]"><?php echo e($desc); ?></p>
                     </div>
                 </div>
-
-                <h4 class="mt-6 text-[10px] font-bold text-[#0f2d5a] uppercase tracking-widest">Payments</h4>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/bank/bca-bank-central-asia.svg')); ?>" class="h-4" alt="bca" />
-                    </div>
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/bank/bank-mandiri.svg')); ?>" class="h-4" alt="mandiri" />
-                    </div>
-                    <div class="h-7 px-2 bg-white border border-[#e2e8f0] rounded flex items-center shadow-sm">
-                        <img src="<?php echo e(asset('images/bank/bank-negara-indonesia.svg')); ?>" class="h-4" alt="BNI" />
-                    </div>
-                </div>
-            </div>
-
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
-        
-        <div class="mt-10 pt-6 border-t border-[#e2e8f0] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p class="text-xs text-[#4b6489]">&copy; <?php echo e(date('Y')); ?> <?php echo e(config('app.name')); ?>. All rights reserved.</p>
-            <p class="text-xs text-[#4b6489]">Designed with ❤️ for premium shopping</p>
+        <div class="grid gap-8 p-6 sm:p-8 md:grid-cols-2 lg:grid-cols-[1.35fr_.75fr_.75fr_1fr]">
+            <div>
+                <a class="inline-flex items-center gap-3 focus:outline-hidden focus:opacity-80" href="<?php echo e(url('/')); ?>" aria-label="Brand">
+                    <span class="flex size-10 items-center justify-center rounded-2xl bg-[#eef0e7] text-[#555a42]">
+                        <span class="h-0.5 w-6 -rotate-[18deg] rounded-full bg-[#555a42]"></span>
+                    </span>
+                    <span class="font-display text-xl font-black uppercase text-[#20221b]"><?php echo e(config('app.name')); ?></span>
+                </a>
+                <p class="mt-4 max-w-sm text-sm leading-6 text-[#686c60]">
+                    Store modern untuk produk pilihan harian, dibuat agar pengalaman belanja terasa cepat, jelas, dan nyaman.
+                </p>
+                <div class="mt-5 flex gap-2">
+                    <?php $__currentLoopData = ['IG', 'TT', 'YT']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $social): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <a href="#" class="flex size-9 items-center justify-center rounded-full bg-[#f2f3ed] text-[11px] font-black text-[#555a42] transition hover:bg-[#555a42] hover:text-white"><?php echo e($social); ?></a>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#20221b]">Catalog</h4>
+                <div class="mt-4 space-y-3">
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">Semua produk</a></p>
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">Produk baru</a></p>
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">Promo</a></p>
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">Terlaris</a></p>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#20221b]">Bantuan</h4>
+                <div class="mt-4 space-y-3">
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('page')); ?>">Syarat layanan</a></p>
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('page')); ?>">Privasi</a></p>
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('page')); ?>">Pengiriman</a></p>
+                    <p><a class="text-sm font-medium text-[#686c60] transition hover:text-[#20221b]" href="<?php echo e(route('page')); ?>">Kontak</a></p>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#20221b]">Partner</h4>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <?php $__currentLoopData = [
+                        ['images/shipping/idexpress.webp', 'idexpress'],
+                        ['images/shipping/jne.svg', 'jne'],
+                        ['images/shipping/jntexpress.svg', 'jnt'],
+                        ['images/shipping/ninjaexpress.webp', 'ninja'],
+                        ['images/shipping/sicepat.webp', 'sicepat'],
+                    ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$src, $alt]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="flex h-8 items-center rounded-full bg-[#f7f7f2] px-3 ring-1 ring-black/5">
+                            <img src="<?php echo e(asset($src)); ?>" alt="<?php echo e($alt); ?>" class="h-4" />
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+
+                <h4 class="mt-6 text-[11px] font-black uppercase tracking-[0.14em] text-[#20221b]">Pembayaran</h4>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <?php $__currentLoopData = [
+                        ['images/bank/bca-bank-central-asia.svg', 'bca'],
+                        ['images/bank/bank-mandiri.svg', 'mandiri'],
+                        ['images/bank/bank-negara-indonesia.svg', 'bni'],
+                    ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$src, $alt]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="flex h-8 items-center rounded-full bg-[#f7f7f2] px-3 ring-1 ring-black/5">
+                            <img src="<?php echo e(asset($src)); ?>" alt="<?php echo e($alt); ?>" class="h-4" />
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3 border-t border-[#eceee6] px-6 py-5 text-xs text-[#777b6d] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+            <p>&copy; <?php echo e(date('Y')); ?> <?php echo e(config('app.name')); ?>. All rights reserved.</p>
+            <p>Privacy policy · Terms of service</p>
         </div>
     </div>
 </footer>

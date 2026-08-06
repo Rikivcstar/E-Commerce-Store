@@ -1,104 +1,113 @@
-<div>
-    <div class="container mx-auto max-w-[85rem] w-full px-4 sm:px-6 lg:px-8 py-10">
-        <div class="grid grid-cols-1 gap-10 my-5 md:grid-cols-10">
-            <div class="grid grid-cols-1 gap-10 pr-6 border-b md:border-b-0 md:border-r border-[#e2e8f0] md:col-span-3 pb-8 md:pb-0">
+<div class="bg-[#f7f7f2] px-3 pb-14 pt-6 text-[#20221b] sm:px-5 lg:px-8">
+    <div class="mx-auto max-w-[92rem]">
+        <div class="mb-6 overflow-hidden rounded-[1.5rem] bg-[#e6e8de] p-6 sm:p-8">
+            <div class="grid items-end gap-6 lg:grid-cols-[1fr_.7fr]">
                 <div>
-                    <div class="space-y-3">
-                        <input wire:model.live.debounce.250ms='search' type="text" placeholder="Search Your Product"
+                    <p class="text-xs font-black uppercase tracking-[0.14em] text-[#777c62]">Catalog</p>
+                    <h1 class="mt-2 font-display text-4xl font-black uppercase leading-none text-[#20221b] sm:text-5xl">Temukan produk favoritmu</h1>
+                    <p class="mt-4 max-w-2xl text-sm leading-6 text-[#65685c]">Filter koleksi, urutkan produk, dan lanjutkan belanja tanpa mengubah alur checkout yang sudah berjalan.</p>
+                </div>
+                <div class="rounded-[1.25rem] bg-white/70 p-4 ring-1 ring-black/5 backdrop-blur">
+                    <div class="font-medium text-[#686c60]">Result: <span class="font-black text-[#20221b]"><?php echo e(($products) ? $products->total () : '0'); ?></span> items</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-5 lg:grid-cols-[20rem_1fr]">
+            <aside class="rounded-[1.5rem] bg-white p-5 shadow-sm ring-1 ring-black/5 lg:sticky lg:top-24 lg:self-start">
+                <div class="space-y-3">
+                    <label class="relative block">
+                        <svg class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#8c9082]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" />
+                        </svg>
+                        <input wire:model.live.debounce.250ms='search' type="text" placeholder="Search product"
                             class="<?php $__errorArgs = ['search'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                border-red-600
-                            <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-600 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?> py-2.5 sm:py-3 px-4 block w-full bg-white text-[#0f2d5a] border-[#e2e8f0] focus:border-[#1e40af] focus:ring-[#1e40af]/30 rounded-lg sm:text-sm placeholder-slate-400">
-                            <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['search'];
+unset($__errorArgs, $__bag); ?> h-12 w-full rounded-full border-0 bg-[#f2f3ed] pl-12 pr-4 text-sm text-[#20221b] placeholder:text-[#8c9082] focus:ring-2 focus:ring-[#777c62]/30">
+                    </label>
+                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['search'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <p class="text-red-600 text-xs"><?php echo e($message); ?></p>
-                            <?php unset($message);
+                        <p class="text-xs font-semibold text-red-600"><?php echo e($message); ?></p>
+                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
-                    </div>
-                    <span class="block mt-6 mb-4 text-base font-bold text-[#0f2d5a]">
-                        Collections
-                    </span>
+                </div>
+
+                <div class="mt-7">
+                    <span class="block text-sm font-black uppercase text-[#20221b]">Collections</span>
                     <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['selectCollection.*'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                        <div class="text-red-600 text-xs mb-3">
-                            <?php echo e($message); ?>
-
-                        </div>
+                        <div class="mt-3 text-xs font-semibold text-red-600"><?php echo e($message); ?></div>
                     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
-                    <div class="block space-y-3.5">
+                    <div class="mt-4 space-y-3">
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between rounded-2xl bg-[#f7f7f2] px-3 py-3">
                                 <div class="flex items-center">
                                     <input wire:model='selectCollection' value="<?php echo e($item->id); ?>" type="checkbox"
-                                        class="shrink-0 mt-0.5 bg-white border-[#cbd5e1] rounded-sm text-[#1e40af] focus:ring-[#1e40af] checked:bg-[#1e40af] checked:border-[#1e40af] disabled:opacity-50 disabled:pointer-events-none"
+                                        class="shrink-0 border-[#c9ccbd] bg-white text-[#555a42] focus:ring-[#555a42] checked:bg-[#555a42] checked:border-[#555a42]"
                                         id="hs-default-checkbox-<?php echo e($i); ?>">
-                                    <label for="hs-default-checkbox-<?php echo e($i); ?>"
-                                        class="text-sm font-medium text-[#4b6489] ms-3">
+                                    <label for="hs-default-checkbox-<?php echo e($i); ?>" class="ms-3 text-sm font-bold text-[#555a42]">
                                         <?php echo e($item->name); ?>
 
                                     </label>
                                 </div>
-                                <span class="text-sm text-[#4b6489]/70 font-light">(<?php echo e($item->product_count); ?>)</span>
+                                <span class="text-xs font-bold text-[#8c9082]"><?php echo e($item->product_count); ?></span>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                     </div>
-                    <div class="grid grid-cols-2 gap-3 mt-8">
-                        <button wire:click='applySeacrh' wire:loading.attr='disabled' type="button"
-                            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white
-                             bg-[#1e40af] hover:bg-[#0f2d5a] border border-transparent rounded-lg cursor-pointer gap-x-2 transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none">
-                            Apply Filter
-                            <div wire:loading class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading">
-                            <span class="sr-only">Loading...</span>
-                            </div>
-                        </button>
-                        <button wire:click='resetFilter' type="button"
-                            class="inline-flex items-center justify-center text-sm font-semibold text-[#4b6489] hover:text-[#0f2d5a] rounded-lg cursor-pointer gap-x-2 border border-[#e2e8f0] hover:border-[#cbd5e1] transition-all duration-200">
-                            Reset
-                        </button>
-                    </div>
                 </div>
-            </div>
-            <div class="col-span-1 md:col-span-7">
-                <div class="flex items-center justify-between gap-5">
-                    <div class="font-medium text-[#4b6489]">Result: <span class="text-[#0f2d5a] font-bold"><?php echo e(($products) ? $products->total () : '0'); ?></span> items</div>
+
+                <div class="mt-7 grid grid-cols-2 gap-3">
+                    <button wire:click='applySeacrh' wire:loading.attr='disabled' type="button"
+                        class="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#555a42] px-4 text-sm font-black text-white transition hover:bg-[#3f4331] disabled:pointer-events-none disabled:opacity-50">
+                        Apply
+                        <div wire:loading class="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-white" role="status" aria-label="loading">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
+                    <button wire:click='resetFilter' type="button"
+                        class="inline-flex h-11 items-center justify-center rounded-full bg-[#f2f3ed] px-4 text-sm font-black text-[#555a42] transition hover:bg-[#e6e8de]">
+                        Reset
+                    </button>
+                </div>
+            </aside>
+
+            <section>
+                <div class="mb-5 flex flex-col gap-3 rounded-[1.5rem] bg-white p-3 shadow-sm ring-1 ring-black/5 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex gap-2 overflow-x-auto scrollbar-hide">
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = ['All', 'Newest', 'Popular', 'Sale']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="inline-flex h-10 shrink-0 items-center rounded-full bg-[#f2f3ed] px-4 text-xs font-black text-[#555a42]"><?php echo e($chip); ?></span>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                    </div>
                     <div class="flex items-center gap-3">
-                        <span class="text-sm font-semibold text-[#4b6489]">
-                            Sort By:
-                        </span>
+                        <span class="text-xs font-black uppercase tracking-[0.12em] text-[#777c62]">Sort</span>
                         <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['shortBy'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="text-red-600 text-xs">
-                                <?php echo e($message); ?>
-
-                            </div>
+                            <div class="text-xs font-semibold text-red-600"><?php echo e($message); ?></div>
                         <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
-
-                        <select
-                            wire:model='shortBy'
-                            class="px-3 py-2 text-[#0f2d5a] text-sm bg-white border-[#e2e8f0] focus:border-[#1e40af] focus:ring-[#1e40af]/30 rounded-lg pe-9 disabled:opacity-50 disabled:pointer-events-none">
+                        <select wire:model='shortBy'
+                            class="h-10 rounded-full border-0 bg-[#f2f3ed] px-4 pe-9 text-sm font-bold text-[#555a42] focus:ring-2 focus:ring-[#777c62]/30 disabled:pointer-events-none disabled:opacity-50">
                             <option selected="">Sort by latest</option>
                             <option value="newest">Product Newest</option>
                             <option value="latest">Product Latest</option>
@@ -107,7 +116,8 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                         </select>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 gap-5 my-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <?php if (isset($component)) { $__componentOriginale405491d357fabfcd42600c89d1c98f5 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale405491d357fabfcd42600c89d1c98f5 = $attributes; } ?>
@@ -130,18 +140,20 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
 <?php unset($__componentOriginale405491d357fabfcd42600c89d1c98f5); ?>
 <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <div class="font-bold text-2xl text-[#0f2d5a] col-span-full py-10 text-center">
-                            Product Not found
+                        <div class="col-span-full rounded-[1.5rem] bg-white py-14 text-center shadow-sm ring-1 ring-black/5">
+                            <p class="font-display text-2xl font-black uppercase text-[#20221b]">Product not found</p>
+                            <p class="mt-2 text-sm text-[#777b6d]">Coba kata kunci atau filter koleksi lain.</p>
                         </div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
+
                 <!--[if BLOCK]><![endif]--><?php if($products): ?>
                     <div class="mt-8">
-                    <?php echo e($products->links()); ?>
+                        <?php echo e($products->links()); ?>
 
                     </div>
                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-            </div>
+            </section>
         </div>
     </div>
 </div>
