@@ -2,11 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Actions\ValidateCartStock;
 use Livewire\Component;
+use App\Data\ProductData;
+use App\Models\Product;
 use Illuminate\Support\Collection;
 use App\Contract\CartServiceInterface;
-use Illuminate\Validation\ValidationException;
 
 class Cart extends Component
 {
@@ -35,8 +35,19 @@ class Cart extends Component
 
     public function render()
     {
-        return view('livewire.cart',[
-                    'items' => $this->items
-                    ]);
+        $cartSkus = $this->items->pluck('sku')->all();
+
+        $recommendations = ProductData::collect(
+            Product::query()
+                ->when($cartSkus !== [], fn ($query) => $query->whereNotIn('sku', $cartSkus))
+                ->inRandomOrder()
+                ->limit(4)
+                ->get()
+        );
+
+        return view('livewire.cart', [
+            'items' => $this->items,
+            'recommendations' => $recommendations,
+        ]);
     }
 }

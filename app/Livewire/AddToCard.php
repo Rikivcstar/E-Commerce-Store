@@ -22,12 +22,13 @@ class AddToCard extends Component
 
     public string $label = 'add to cart';
 
-    public function mount(ProductData  $product, CartServiceInterface $cart)
+    public function mount(ProductData  $product, CartServiceInterface $cart, string $label = 'add to cart')
     {
         $this->sku = $product->sku;
         $this->stock = $product->stock;
         $this->price = $product->price;
         $this->weight =  $product->weight;
+        $this->label = $label;
         $this->quantity = $cart->getItemBySku($product->sku)->quantity ?? 1;
 
 
