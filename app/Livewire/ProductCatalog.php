@@ -3,6 +3,8 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Data\ProductCollectionData;
+use App\Data\CategoryData;
+use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Product;
 use Livewire\Component;
@@ -17,10 +19,13 @@ class ProductCatalog extends Component
 
     public $queryString = [
         'selectCollection' => ['except' => []],
+        'selectCategory' => ['except' => []],
         'search' => ['except' => 'newest'],
         'shortBy' => ['except' => '']
     ];
     public array $selectCollection =[];
+
+    public array $selectCategory =[];
 
     public string $search = '';
 
@@ -29,6 +34,7 @@ class ProductCatalog extends Component
     public function resetFilter(){
 
         $this->selectCollection = [];
+        $this->selectCategory = [];
         $this->search = '';
         $this->shortBy = 'newest';
         $this->resetErrorBag();
@@ -45,6 +51,8 @@ class ProductCatalog extends Component
         return [
             'selectCollection' => 'array',
             'selectCollection.*' => 'integer|exists:tags,id',
+            'selectCategory' => 'array',
+            'selectCategory.*' => 'integer|exists:categories,id',
             'search' => 'nullable|min:3|max:30',
             'shortBy' => 'in:newest,latest,price_asc,price_desc'
         ];
@@ -54,7 +62,7 @@ class ProductCatalog extends Component
     {
         return [
             'sellectCollection' => 'Collection',
-            'shortBy' => 'Sort'
+            'selectCategory' => 'Category'
         ];
     }
 
@@ -73,11 +81,12 @@ class ProductCatalog extends Component
     public function render()
     {
         $collections = ProductCollectionData::collect([]);
+        $categories = CategoryData::collect([]);
         $products = ProductCollectionData::collect([]);
 
         if($this->getErrorBag()->isNotEmpty())
         {
-             return view('livewire.product-catalog', compact('products', 'collections'));
+             return view('livewire.product-catalog', compact('products', 'collections', 'categories'));
         }
 
         $collection_result = Tag::query()->withType('collection')->withCount('products')->get();
@@ -87,6 +96,12 @@ class ProductCatalog extends Component
         if($this->search){
 
             $query->where('name', 'LIKE', "%{$this->search}%");
+        }
+
+        if(!empty($this->selectCategory)){
+            $query->whereHas('categories', function($query) {
+                $query->whereIn('id', $this->selectCategory);
+            });
         }
 
         if(!empty($this->selectCollection)){
@@ -114,8 +129,16 @@ class ProductCatalog extends Component
             $query->paginate(9)
         );
         $collections = ProductCollectionData::collect($collection_result);
+        $categories = CategoryData::collect(
+            Category::query()
+                ->whereNull('parent_id')
+                ->with(['children' => fn ($query) => $query->withCount('products')])
+                ->withCount('products')
+                ->orderBy('order_column')
+                ->get()
+        );
 
         // TODO make TDO
-        return view('livewire.product-catalog', compact('products', 'collections'));
+        return view('livewire.product-catalog', compact('products', 'collections', 'categories'));
     }
 }

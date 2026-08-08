@@ -184,7 +184,57 @@
                 <a class="nexora-struct-btn secondary" href="#best-sellers">Explore collection</a>
             </div>
         </div>
+</section>
+
+    <section class="px-3 pt-14 pb-2 sm:px-5 lg:px-8">
+        <div class="mx-auto max-w-[92rem]">
+            <div class="mb-8 flex items-end justify-between gap-4">
+                <div>
+                    <p class="text-xs font-black uppercase tracking-[0.14em] text-[#777c62]">Belanja berdasarkan kategori</p>
+                    <h2 class="mt-2 font-display text-3xl font-black uppercase text-[#20221b]">Lanjutkan belanja</h2>
+                </div>
+                <a href="{{ route('product-catalog') }}" class="group hidden items-center gap-2 text-sm font-bold text-[#555a42] hover:text-[#20221b] sm:inline-flex">
+                    Semua kategori
+                    <svg class="size-4 transition-transform group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-8 sm:gap-x-8 lg:justify-between">
+                @foreach ($categories as $category)
+                    @php $catCover = $category->products()->first()?->getFirstMediaUrl('cover'); @endphp
+                    <a href="{{ route('product-catalog', ['selectCategory' => [$category->id]]) }}" class="group flex w-28 flex-col items-center sm:w-32" title="{{ $category->name }}">
+                        <span class="relative block aspect-square w-full overflow-hidden rounded-full bg-[#e9e6dc] shadow-sm ring-1 ring-black/5 transition duration-300 group-hover:-translate-y-1.5 group-hover:shadow-lg group-hover:shadow-[#555a42]/15 group-hover:ring-[#c9c3b2]">
+                            @if ($catCover)
+                                <img class="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-110" src="{{ $catCover }}" alt="{{ $category->name }}" loading="lazy">
+                            @else
+                                <span class="absolute inset-0 flex items-center justify-center text-[#9a9d87]">
+                                    <svg class="size-9" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 3h18v18H3ZM3 9h18M9 3v18" />
+                                    </svg>
+                                </span>
+                            @endif
+                            <span class="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-black/25 via-transparent to-white/25 mix-blend-multiply"></span>
+                        </span>
+                        <span class="mt-4 text-center text-sm font-black uppercase leading-tight text-[#20221b] transition-colors group-hover:text-[#551a1a]">{{ $category->name }}</span>
+                        <span class="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[#8c9082]">{{ $category->products_count }} produk</span>
+                    </a>
+                @endforeach
+
+                <a href="{{ route('product-catalog') }}" class="group flex w-28 flex-col items-center sm:w-32" title="Semua produk">
+                    <span class="relative flex aspect-square w-full items-center justify-center rounded-full border border-dashed border-[#c5cabc] bg-transparent text-[#777c62] transition duration-300 group-hover:-translate-y-1.5 group-hover:border-[#555a42] group-hover:bg-[#eef0e7] group-hover:text-[#20221b]">
+                        <svg class="size-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14" /><path d="M5 12h14" />
+                        </svg>
+                    </span>
+                    <span class="mt-4 text-center text-sm font-black uppercase leading-tight text-[#20221b] transition-colors group-hover:text-[#555a42]">Semua</span>
+                    <span class="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[#8c9082]">Lihat semua</span>
+                </a>
+            </div>
+        </div>
     </section>
+
     <section class="px-3 py-4 sm:px-5 lg:px-8">
         <div class="mx-auto max-w-[92rem]">
             <div class="flex flex-col gap-3 rounded-[1.5rem] bg-white p-3 shadow-sm ring-1 ring-black/5 lg:flex-row lg:items-center">
@@ -195,10 +245,13 @@
                     <input type="text" aria-label="Cari produk" placeholder="Cari koleksi, kategori, atau produk favorit..."
                         class="h-13 w-full rounded-full border-0 bg-[#f2f3ed] pl-12 pr-4 text-sm text-[#20221b] placeholder:text-[#8c9082] focus:ring-2 focus:ring-[#777c62]/30">
                 </label>
-                <div class="flex gap-2 overflow-x-auto scrollbar-hide">
-                    @foreach (['Semua', 'Terbaru', 'Terlaris', 'Promo', 'Lifestyle', 'Harian'] as $category)
-                        <a href="{{ route('product-catalog') }}" class="inline-flex h-11 shrink-0 items-center rounded-full bg-[#f2f3ed] px-5 text-xs font-bold text-[#555a42] transition hover:bg-[#555a42] hover:text-white">
-                            {{ $category }}
+<div class="flex gap-2 overflow-x-auto scrollbar-hide">
+                    <a href="{{ route('product-catalog') }}" class="inline-flex h-11 shrink-0 items-center rounded-full bg-[#551a1a] px-5 text-xs font-bold text-white transition hover:bg-[#3f4331]">
+                        {{ __('All') }}
+                    </a>
+                    @foreach ($categories as $category)
+                        <a href="{{ route('product-catalog', ['selectCategory' => [$category->id]]) }}" class="inline-flex h-11 shrink-0 items-center rounded-full bg-[#f2f3ed] px-5 text-xs font-bold text-[#555a42] transition hover:bg-[#555a42] hover:text-white">
+                            {{ $category->name }}
                         </a>
                     @endforeach
                 </div>
@@ -228,27 +281,23 @@
         </div>
     </section>
 
-    <section class="px-3 py-6 sm:px-5 lg:px-8">
+<section class="px-3 py-6 sm:px-5 lg:px-8">
         <div class="mx-auto grid max-w-[92rem] gap-4 lg:grid-cols-2">
-            <a href="{{ route('product-catalog') }}" class="group relative min-h-64 overflow-hidden rounded-[1.5rem] bg-[#e6e8de] p-6 shadow-sm">
-                <img class="absolute inset-y-0 right-0 h-full w-2/3 object-cover transition duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1506629905607-d9e297d99d30?auto=format&fit=crop&w=900&q=80" alt="Produk untuk aktivitas lari">
-                <div class="absolute inset-0 bg-gradient-to-r from-[#f3f4ee] via-[#f3f4ee]/80 to-transparent"></div>
-                <div class="relative max-w-xs">
-                    <h3 class="font-display text-3xl font-black uppercase text-[#20221b]">Harian</h3>
-                    <p class="mt-3 text-sm leading-6 text-[#65685c]">Ringan, fleksibel, dan siap dipakai dari pagi sampai malam.</p>
-                    <span class="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#555a42]">Lihat koleksi <span aria-hidden="true">-&gt;</span></span>
-                </div>
-            </a>
-
-            <a href="{{ route('product-catalog') }}" class="group relative min-h-64 overflow-hidden rounded-[1.5rem] bg-[#e6e8de] p-6 shadow-sm">
-                <img class="absolute inset-y-0 right-0 h-full w-2/3 object-cover transition duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80" alt="Gaya lifestyle urban">
-                <div class="absolute inset-0 bg-gradient-to-r from-[#f3f4ee] via-[#f3f4ee]/80 to-transparent"></div>
-                <div class="relative max-w-xs">
-                    <h3 class="font-display text-3xl font-black uppercase text-[#20221b]">Lifestyle</h3>
-                    <p class="mt-3 text-sm leading-6 text-[#65685c]">Siluet bersih untuk tampilan kota yang tetap nyaman.</p>
-                    <span class="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#555a42]">Lihat koleksi <span aria-hidden="true">-&gt;</span></span>
-                </div>
-            </a>
+            @foreach ($categories as $category)
+                <a href="{{ route('product-catalog', ['selectCategory' => [$category->id]]) }}" class="group relative min-h-64 overflow-hidden rounded-[1.5rem] bg-[#e6e8de] p-6 shadow-sm">
+                    @php $cover = $category->products()->first()?->getFirstMediaUrl('cover'); @endphp
+                    @if ($cover)
+                        <img class="absolute inset-y-0 right-0 h-full w-2/3 object-cover transition duration-700 group-hover:scale-105" src="{{ $cover }}" alt="{{ $category->name }}">
+                    @endif
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#f3f4ee] via-[#f3f4ee]/80 to-transparent"></div>
+                    <div class="relative max-w-xs">
+                        <p class="text-xs font-black uppercase tracking-[0.14em] text-[#777c62]">{{ $category->products_count }} produk</p>
+                        <h3 class="mt-2 font-display text-3xl font-black uppercase text-[#20221b]">{{ $category->name }}</h3>
+                        <p class="mt-3 text-sm leading-6 text-[#65685c]">{{ $category->description ?? 'Jelajahi koleksi pilihan produk terkurasi.' }}</p>
+                        <span class="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#555a42]">Lihat koleksi <span aria-hidden="true">-&gt;</span></span>
+                    </div>
+                </a>
+            @endforeach
         </div>
     </section>
 

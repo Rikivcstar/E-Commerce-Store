@@ -18,7 +18,8 @@
 
         <div class="hidden items-center gap-1 md:flex">
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="{{ url('/') }}">Home</a>
-            <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="{{ route('product-catalog') }}">Catalog</a>
+<a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="{{ route('product-catalog') }}">Catalog</a>
+            <livewire:category-menu />
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="{{ route('product-catalog') }}">New In</a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="{{ route('page') }}">Info</a>
         </div>
@@ -47,6 +48,9 @@
     <div x-show="mobileOpen" x-transition :class="scrolled ? 'mt-2 max-w-[92rem] rounded-[1.25rem]' : 'mt-0 max-w-full rounded-none'" class="mx-auto bg-white/95 p-2 shadow-lg shadow-[#555a42]/10 ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 md:hidden">
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="{{ url('/') }}">Home</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="{{ route('product-catalog') }}">Catalog</a>
+        <div class="mt-1 border-t border-black/5 px-4 py-2">
+            <livewire:category-menu />
+        </div>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="{{ route('product-catalog') }}">New In</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="{{ route('page') }}">Info</a>
     </div>

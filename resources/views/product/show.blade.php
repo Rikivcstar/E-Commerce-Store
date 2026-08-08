@@ -397,10 +397,14 @@
 
     <div class="product-page">
         <div class="product-shell">
-            <nav class="product-crumbs" aria-label="Breadcrumb">
+<nav class="product-crumbs" aria-label="Breadcrumb">
                 <a href="{{ route('home') }}">Home</a>
                 <span aria-hidden="true">/</span>
                 <a href="{{ route('product-catalog') }}">Catalog</a>
+                @foreach ($breadcrumbs as $crumb)
+                    <span aria-hidden="true">/</span>
+                    <a href="{{ route('product-catalog', ['selectCategory' => [$crumb->id]]) }}">{{ $crumb->name }}</a>
+                @endforeach
                 <span aria-hidden="true">/</span>
                 <span>{{ $product->name }}</span>
             </nav>

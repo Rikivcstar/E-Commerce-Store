@@ -18,7 +18,23 @@
 
         <div class="hidden items-center gap-1 md:flex">
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="<?php echo e(url('/')); ?>">Home</a>
-            <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">Catalog</a>
+<a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">Catalog</a>
+            <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('category-menu', []);
+
+$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-0', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="<?php echo e(route('product-catalog')); ?>">New In</a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]" href="<?php echo e(route('page')); ?>">Info</a>
         </div>
@@ -35,7 +51,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('cart-count', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-0', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-1', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -62,6 +78,24 @@ if (isset($__slots)) unset($__slots);
     <div x-show="mobileOpen" x-transition :class="scrolled ? 'mt-2 max-w-[92rem] rounded-[1.25rem]' : 'mt-0 max-w-full rounded-none'" class="mx-auto bg-white/95 p-2 shadow-lg shadow-[#555a42]/10 ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 md:hidden">
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="<?php echo e(url('/')); ?>">Home</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="<?php echo e(route('product-catalog')); ?>">Catalog</a>
+        <div class="mt-1 border-t border-black/5 px-4 py-2">
+            <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('category-menu', []);
+
+$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-2', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
+        </div>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="<?php echo e(route('product-catalog')); ?>">New In</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]" href="<?php echo e(route('page')); ?>">Info</a>
     </div>

@@ -28,6 +28,41 @@
                     @enderror
                 </div>
 
+<div class="mt-7">
+                    <span class="block text-sm font-black uppercase text-[#20221b]">Categories</span>
+                    @error('selectCategory.*')
+                        <div class="mt-3 text-xs font-semibold text-red-600">{{ $message }}</div>
+                    @enderror
+                    <div class="mt-4 space-y-3">
+                        @foreach ($categories as $category)
+                            <div class="flex items-center justify-between rounded-2xl bg-[#f7f7f2] px-3 py-3">
+                                <div class="flex items-center">
+                                    <input wire:model='selectCategory' value="{{ $category->id }}" type="checkbox"
+                                        class="shrink-0 border-[#c9ccbd] bg-white text-[#555a42] focus:ring-[#555a42] checked:bg-[#555a42] checked:border-[#555a42]"
+                                        id="category-{{ $category->id }}">
+                                    <label for="category-{{ $category->id }}" class="ms-3 text-sm font-bold text-[#555a42]">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
+                                <span class="text-xs font-bold text-[#8c9082]">{{ $category->product_count }}</span>
+                            </div>
+                            @foreach ($category->children as $child)
+                                <div class="ms-4 flex items-center justify-between rounded-2xl bg-[#f7f7f2] px-3 py-3">
+                                    <div class="flex items-center">
+                                        <input wire:model='selectCategory' value="{{ $child->id }}" type="checkbox"
+                                            class="shrink-0 border-[#c9ccbd] bg-white text-[#555a42] focus:ring-[#555a42] checked:bg-[#555a42] checked:border-[#555a42]"
+                                            id="category-{{ $child->id }}">
+                                        <label for="category-{{ $child->id }}" class="ms-3 text-sm font-bold text-[#777c62]">
+                                            &nbsp;└ {{ $child->name }}
+                                        </label>
+                                    </div>
+                                    <span class="text-xs font-bold text-[#8c9082]">{{ $child->product_count }}</span>
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+
                 <div class="mt-7">
                     <span class="block text-sm font-black uppercase text-[#20221b]">Collections</span>
                     @error('selectCollection.*')

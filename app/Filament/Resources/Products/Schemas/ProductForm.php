@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Products\Schemas;
 
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\MarkdownEditor;
@@ -30,6 +31,12 @@ class ProductForm
                             ->unique(ignoreRecord: true),
                     TextInput::make('slug')
                             ->unique(ignoreRecord:true),
+                    Select::make('categories')
+                            ->label('Category')
+                            ->relationship('categories', 'name')
+                            ->multiple()
+                            ->searchable()
+                            ->preload(),
                     SpatieTagsInput::make('tags')
                             ->type('collection')
                             ->label('Collection'),
