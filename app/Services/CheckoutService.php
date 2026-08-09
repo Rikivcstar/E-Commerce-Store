@@ -11,8 +11,9 @@ use App\Models\Product;
 use App\Models\SalesOrder;
 use App\States\SalesOrder\Pending;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CheckoutService {
 
@@ -23,6 +24,7 @@ class CheckoutService {
             $random = strtoupper(Str::random(5));
             $items = collect([]);
             $sales_order = SalesOrder::query()->create([
+                'user_id'     => Auth::id(),
                 'trx_id' =>  "TRX-{$date}-{$random}",
                 'status' => Pending::class,
                 'customer_full_name' => $checkout_data->customer->full_name,

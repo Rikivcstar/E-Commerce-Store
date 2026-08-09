@@ -217,7 +217,7 @@
                             @endif
                             <span class="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-black/25 via-transparent to-white/25 mix-blend-multiply"></span>
                         </span>
-                        <span class="mt-4 text-center text-sm font-black uppercase leading-tight text-[#20221b] transition-colors group-hover:text-[#551a1a]">{{ $category->name }}</span>
+                        <span class="mt-4 text-center text-sm font-black uppercase leading-tight text-[#20221b] transition-colors group-hover:text-[#555a42]">{{ $category->name }}</span>
                         <span class="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[#8c9082]">{{ $category->products_count }} produk</span>
                     </a>
                 @endforeach
@@ -246,7 +246,7 @@
                         class="h-13 w-full rounded-full border-0 bg-[#f2f3ed] pl-12 pr-4 text-sm text-[#20221b] placeholder:text-[#8c9082] focus:ring-2 focus:ring-[#777c62]/30">
                 </label>
 <div class="flex gap-2 overflow-x-auto scrollbar-hide">
-                    <a href="{{ route('product-catalog') }}" class="inline-flex h-11 shrink-0 items-center rounded-full bg-[#551a1a] px-5 text-xs font-bold text-white transition hover:bg-[#3f4331]">
+                    <a href="{{ route('product-catalog') }}" class="inline-flex h-11 shrink-0 items-center rounded-full bg-[#555a42] px-5 text-xs font-bold text-white transition hover:bg-[#3f4331]">
                         {{ __('All') }}
                     </a>
                     @foreach ($categories as $category)

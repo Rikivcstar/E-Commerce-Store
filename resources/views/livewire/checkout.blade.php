@@ -271,7 +271,11 @@
                         <div class="mb-6">
                             <div class="flex justify-between items-baseline mb-3">
                                 <h3 class="linoge-sub-title">Personal Information</h3>
-                                <span class="text-xs text-neutral-500">Already have an account? <a href="#" class="underline text-neutral-900 font-semibold">Log in</a></span>
+                                @guest
+                                    <span class="text-xs text-neutral-500">Already have an account? <a href="{{ route('login') }}" class="underline text-neutral-900 font-semibold">Log in</a></span>
+                                @else
+                                    <span class="text-xs text-neutral-500">Signed in as <strong class="text-neutral-900">{{ auth()->user()->name }}</strong></span>
+                                @endguest
                             </div>
                             <div class="linoge-field-grid two">
                                 <div>

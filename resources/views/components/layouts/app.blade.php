@@ -14,9 +14,12 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
         <link rel="manifest" href="/site.webmanifest">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <script src="https://unpkg.com/lucide@latest"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('head')
-        @include('sweetalert2::index')
     </head>
 
     <body class="bg-[#f7f2e8] text-[#211b14] antialiased">
@@ -47,6 +50,26 @@
                 mirror: false,
                 anchorPlacement: 'top-bottom',
                 });
+            </script>
+            <script>lucide.createIcons();</script>
+            @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11'])
+            <script>
+                function confirmLogout(formId) {
+                    Swal.fire({
+                        title: 'Keluar dari Akun?',
+                        text: 'Apakah Anda yakin ingin keluar dari akun Anda?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#111111',
+                        cancelButtonColor: '#9ca3af',
+                        confirmButtonText: 'Ya, Keluar',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById(formId).submit();
+                        }
+                    });
+                }
             </script>
     </body>
 </html>

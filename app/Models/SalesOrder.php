@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\States\SalesOrder\SalesOrderState;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -22,6 +24,11 @@ class SalesOrder extends Model
     public function items() : HasMany
     {
         return $this->hasMany(SalesOrderItem::class);
+    }
+
+    public function user() : BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
      public function getActivitylogOptions(): LogOptions
