@@ -44,6 +44,11 @@ class CategoryForm
                     ->default(0),
                 MarkdownEditor::make('description')
                     ->nullable(),
+                \Filament\Forms\Components\SpatieMediaLibraryFileUpload::make('image')
+                    ->collection('image')
+                    ->label('Category Banner / Image')
+                    ->image()
+                    ->imageEditor(),
             ]);
     }
 }

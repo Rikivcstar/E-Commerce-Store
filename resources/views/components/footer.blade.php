@@ -48,12 +48,16 @@
 
             <!-- INFO COLUMN -->
             <div class="lg:col-span-3">
-                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">Info</h4>
+                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">Info & Help</h4>
                 <ul class="mt-5 space-y-2.5 text-xs uppercase tracking-wider text-neutral-300">
-                    <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">Account</a></li>
-                    <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">Help Center</a></li>
-                    <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">Shipping & Payments</a></li>
-                    <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">Contacts</a></li>
+                    @php
+                        $footerPages = \App\Models\Page::query()->active()->get();
+                    @endphp
+                    @forelse($footerPages as $fPage)
+                        <li><a href="{{ route('page', $fPage->slug) }}" class="hover:text-white transition font-medium">{{ $fPage->name }}</a></li>
+                    @empty
+                        <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">Pusat Informasi</a></li>
+                    @endforelse
                 </ul>
             </div>
 

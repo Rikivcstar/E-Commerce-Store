@@ -29,43 +29,77 @@
             <livewire:category-menu />
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
                 href="{{ route('product-catalog') }}">New In</a>
+            @php
+                $firstPage = \App\Models\Page::query()->active()->first();
+            @endphp
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="{{ route('page') }}">Info</a>
+                href="{{ $firstPage ? route('page', $firstPage->slug) : route('page') }}">Info</a>
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="{{ route('product-catalog') }}" :class="scrolled ? 'size-11' : 'size-10'"
-                class="hidden items-center justify-center rounded-full bg-[#f2f3ed] text-[#555a42] transition-all duration-500 hover:bg-[#e6e8de] sm:flex"
-                aria-label="Cari produk">
-                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="m21 21-4.34-4.34" />
-                    <circle cx="11" cy="11" r="8" />
-                </svg>
-            </a>
+            <livewire:global-search />
+
             @auth
-                <a href="{{ route('account.orders') }}" :class="scrolled ? 'size-11' : 'size-10'"
-                    class="hidden items-center justify-center rounded-full bg-[#f2f3ed] text-[#555a42] transition-all duration-500 hover:bg-[#e6e8de] sm:flex"
-                    aria-label="My Orders" title="My Orders">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                </a>
+                @php
+                    $userInitials = strtoupper(substr(trim(auth()->user()->name ?? 'User'), 0, 1));
+                @endphp
+                <div x-data="{ userMenuOpen: false }" class="relative hidden sm:block">
+                    <button @click="userMenuOpen = !userMenuOpen" @click.outside="userMenuOpen = false" type="button"
+                        class="group flex items-center gap-2.5 rounded-full bg-neutral-900 py-4 px-4 text-black transition-all duration-300 hover:bg-black shadow-md"
+                        aria-label="User Account" title="{{ auth()->user()->name }}">
+                        <span
+                            class="flex size-7 shrink-0 items-center justify-center rounded-full bg-amber-600 text-xs font-black text-white leading-none shadow-xs">
+                            {{ $userInitials }}
+                        </span>
+                    </button>
+
+                    <div x-show="userMenuOpen" x-transition style="display: none;"
+                        class="absolute right-0 mt-2 w-52 rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-black/10 z-50">
+                        <div class="px-3 py-2.5 border-b border-gray-100 bg-gray-50/50 rounded-xl mb-1">
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Signed in as</p>
+                            <p class="text-xs font-black text-gray-900 truncate">{{ auth()->user()->name }}</p>
+                        </div>
+                        <a href="{{ route('account.orders') }}"
+                            class="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:text-black transition">
+                            <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m7.5 4.27 9 5.15" />
+                                <path
+                                    d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                                <path d="m3.3 7 8.7 5 8.7-5" />
+                                <path d="M12 12v9.5" />
+                            </svg>
+                            My Orders
+                        </a>
+                        <form id="nav-desktop-logout-form" method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="button" onclick="confirmLogout('nav-desktop-logout-form')"
+                                class="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 transition">
+                                <svg class="size-4 text-red-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" x2="9" y1="12" y2="12" />
+                                </svg>
+                                Sign Out
+                            </button>
+                        </form>
+                    </div>
+                </div>
             @else
-                <a href="{{ route('login') }}" :class="scrolled ? 'height: 2.75rem' : 'height: 2.5rem'"
-                    style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; padding: 0 1rem; border-radius: 9999px; color: #000; font-size: 0.75rem; font-weight: 700; text-decoration: none; 
-                    aria-label="Sign
-                    In" title="Sign In">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                <a href="{{ route('login') }}"
+                    class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full  text-slate-900 text-xs font-bold uppercase tracking-wider hover:bg-black transition shadow-md"
+                    aria-label="Sign In" title="Sign In">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
                 </a>
             @endauth
+
             <livewire:cart-count />
             <button @click="mobileOpen = !mobileOpen" type="button" :class="scrolled ? 'size-11' : 'size-10'"
                 class="flex items-center justify-center rounded-full bg-[#f2f3ed] text-[#555a42] transition-all duration-500 hover:bg-[#e6e8de] md:hidden"
@@ -77,9 +111,9 @@
                     <line x1="3" x2="21" y1="12" y2="12" />
                     <line x1="3" x2="21" y1="18" y2="18" />
                 </svg>
-                <svg x-show="mobileOpen" class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
+                <svg x-show="mobileOpen" class="size-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 6 6 18" />
                     <path d="m6 6 12 12" />
                 </svg>
@@ -100,15 +134,30 @@
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
             href="{{ route('product-catalog') }}">New In</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="{{ route('page') }}">Info</a>
+            href="{{ $firstPage ? route('page', $firstPage->slug) : route('page') }}">Info</a>
         @auth
-            <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                href="{{ route('account.orders') }}">My Orders</a>
-            <form id="nav-mobile-logout-form" method="POST" action="{{ route('logout') }}" class="px-4 py-2">
-                @csrf
-                <button type="button" onclick="confirmLogout('nav-mobile-logout-form')"
-                    class="w-full text-left text-sm font-bold text-red-600 hover:text-red-800 py-1">Sign Out</button>
-            </form>
+            @php
+                $userInitials = strtoupper(substr(trim(auth()->user()->name ?? 'User'), 0, 1));
+            @endphp
+            <div class="mt-2 border-t border-black/5 pt-2">
+                <div class="flex items-center gap-3 px-4 py-2">
+                    <span
+                        class="flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-black text-white">
+                        {{ $userInitials }}
+                    </span>
+                    <div>
+                        <p class="text-xs font-black text-gray-900">{{ auth()->user()->name }}</p>
+                        <p class="text-[10px] text-emerald-600 font-bold">● Active Customer</p>
+                    </div>
+                </div>
+                <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+                    href="{{ route('account.orders') }}">My Orders</a>
+                <form id="nav-mobile-logout-form" method="POST" action="{{ route('logout') }}" class="px-4 py-1">
+                    @csrf
+                    <button type="button" onclick="confirmLogout('nav-mobile-logout-form')"
+                        class="w-full text-left text-sm font-bold text-red-600 hover:text-red-800 py-1">Sign Out</button>
+                </form>
+            </div>
         @else
             <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
                 href="{{ route('login') }}">Sign In</a>
