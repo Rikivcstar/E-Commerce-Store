@@ -101,6 +101,21 @@
                 transition: none !important
             }
         }
+
+        /* Marquee auto-scroll for popular picks */
+        .nx-marquee-track {
+            animation: nxMarqueeScroll 20s linear infinite;
+        }
+
+        @keyframes nxMarqueeScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
     </style>
 
 
@@ -303,6 +318,105 @@
         </div>
     </section>
 
+    {{-- ── PROMO BANNER SLIDER ─────────────────────────────── --}}
+    @if ($banners->isNotEmpty())
+        <section class="w-full bg-[#F7F5EF] py-4 sm:py-6">
+            <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16"
+                x-data="{
+                    current: 0,
+                    total: {{ $banners->count() }},
+                    timer: null,
+                    autoplay() {
+                        this.stop();
+                        this.timer = setInterval(() => { this.next() }, 5000);
+                    },
+                    stop() {
+                        if (this.timer) clearInterval(this.timer);
+                    },
+                    next() {
+                        this.current = (this.current + 1) % this.total;
+                    },
+                    prev() {
+                        this.current = (this.current - 1 + this.total) % this.total;
+                    }
+                }"
+                x-init="autoplay()"
+                @mouseenter="stop()"
+                @mouseleave="autoplay()">
+                
+                <div class="group relative overflow-hidden rounded-2xl shadow-xl" style="background:#1C1B14">
+                    {{-- Banner Slides --}}
+                    <div class="relative min-h-[380px] w-full sm:min-h-[460px] lg:min-h-[480px]">
+                        @foreach ($banners as $index => $banner)
+                            @php $bannerImage = $banner->getFirstMediaUrl('image'); @endphp
+                            <div x-show="current === {{ $index }}"
+                                x-transition:enter="transition ease-out duration-700 transform"
+                                x-transition:enter-start="opacity-0 scale-105"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-500 transform"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute inset-0 size-full">
+                                
+                                @if ($bannerImage)
+                                    <img src="{{ $bannerImage }}" alt="{{ $banner->title }}"
+                                        class="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" loading="lazy">
+                                    <div class="absolute inset-0" style="background:linear-gradient(90deg, rgba(17,16,8,.85) 0%, rgba(17,16,8,.45) 60%, transparent 100%)"></div>
+                                @else
+                                    <div class="absolute inset-0 flex items-center bg-gradient-to-r from-[#1C1B14] via-[#2A281E] to-[#1C1B14]"></div>
+                                @endif
+
+                                <div class="absolute inset-0 flex flex-col items-start justify-center gap-4 px-8 sm:px-14 lg:px-18 max-w-3xl">
+                                    <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1 text-xs font-bold text-[#EBE5D8] backdrop-blur-md border border-white/15">
+                                        <span class="size-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                        <span>PROMO SPESIAL</span>
+                                    </div>
+                                    <h2 class="nx-display max-w-2xl text-3xl sm:text-5xl lg:text-6xl leading-[0.95] text-[#F7F5EF] font-black tracking-tight">
+                                        {{ $banner->title }}
+                                    </h2>
+                                    @if ($banner->subtitle)
+                                        <p class="max-w-xl text-sm sm:text-base text-white/80 font-normal leading-relaxed">
+                                            {{ $banner->subtitle }}
+                                        </p>
+                                    @endif
+                                    <a href="{{ $banner->link_url ?? route('product-catalog') }}" class="nx-btn nx-btn-primary nx-focus mt-2 shadow-lg inline-flex items-center">
+                                        <span>{{ $banner->button_label ?? 'Belanja Sekarang' }}</span>
+                                        <svg class="size-4 ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    {{-- Navigation Arrows --}}
+                    @if ($banners->count() > 1)
+                        <button type="button" @click="prev()"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex size-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black hover:scale-110"
+                            aria-label="Previous slide">
+                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                        </button>
+                        <button type="button" @click="next()"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex size-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black hover:scale-110"
+                            aria-label="Next slide">
+                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+
+                        {{-- Pagination Bar --}}
+                        <div class="absolute bottom-5 right-6 z-20 flex items-center gap-2 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/15">
+                            @foreach ($banners as $index => $banner)
+                                <button type="button" @click="current = {{ $index }}"
+                                    :class="current === {{ $index }} ? 'w-7 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'"
+                                    class="h-2 rounded-full transition-all duration-300" aria-label="Slide {{ $index + 1 }}"></button>
+                            @endforeach
+                            <span class="text-[11px] font-bold text-white/80 pl-2 border-l border-white/20" x-text="`${current + 1} / ${total}`"></span>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </section>
+    @endif
+    {{-- ── END PROMO BANNER SLIDER ─────────────────────────── --}}
+
     {{-- ── CATEGORY STRIP ───────────────────────────────────── --}}
     <section class="w-full py-10" style="background:var(--nx-ink)">
         <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16">
@@ -343,6 +457,9 @@
 
     {{-- ── NEW VIBES BANNER ─────────────────────────────────── --}}
     <section class="relative w-full overflow-hidden" style="background:#EAE7DD">
+        {{-- Decorative circle --}}
+        <div class="absolute -left-20 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full opacity-[0.06]"
+            style="background:var(--nx-ink)"></div>
         <div
             class="mx-auto flex min-h-[420px] max-w-7xl flex-col items-start justify-center gap-6 px-8 py-16 sm:min-h-[480px] sm:px-12 lg:px-16">
             <p class="nx-label" style="color:var(--nx-muted)">New season</p>
@@ -354,7 +471,7 @@
                 Explore Collection
             </a>
         </div>
-        <img src="{{ asset('images/hero-outfit-women.png') }}" alt="New season"
+        <img src="{{ asset('images/hero-outfit-men.png') }}" alt="New season"
             class="nx-photo absolute bottom-0 right-8 h-[90%] w-auto object-contain object-bottom max-lg:hidden">
     </section>
 
@@ -468,8 +585,8 @@
                         <div class="relative z-10 flex h-full flex-col justify-between p-7 sm:p-8">
                             <div>
                                 <span
-                                    class="nx-mono inline-block px-3 py-1 text-[10px] font-medium tracking-widest text-white/70"
-                                    style="background:rgba(255, 255, 255, 0.97)">
+                                    class="nx-mono inline-block px-3 py-1 text-[10px] font-medium tracking-widest text-white/80 rounded-sm"
+                                    style="background:rgba(255,255,255,.12);backdrop-filter:blur(4px)">
                                     {{ $cat->products_count }} PRODUK
                                 </span>
                                 <h3 class="nx-display mt-4 text-3xl text-white sm:text-4xl">{{ $cat->name }}</h3>
@@ -488,41 +605,98 @@
                 @endforeach
             </div>
         </div>
+        {{-- ── POPULAR PICKS MARQUEE ────────────────────────────── --}}
+        @if (isset($popular_products) && count($popular_products) > 0)
+            <section class="w-full py-14 overflow-hidden" style="background:var(--nx-paper)" x-data="{ paused: false }">
+                <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16 mb-8">
+                    <p class="nx-label" style="color:var(--nx-muted)">Trending Now</p>
+                    <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)">Pilihan Populer</h2>
+                </div>
+                <div class="relative" @mouseenter="paused = true" @mouseleave="paused = false">
+                    {{-- Fade edges --}}
+                    <div class="absolute left-0 top-0 h-full w-16 sm:w-24 z-10 pointer-events-none"
+                        style="background:linear-gradient(to right, var(--nx-paper), transparent)"></div>
+                    <div class="absolute right-0 top-0 h-full w-16 sm:w-24 z-10 pointer-events-none"
+                        style="background:linear-gradient(to left, var(--nx-paper), transparent)"></div>
+
+                    <div class="nx-marquee-track flex w-fit"
+                        :style="{ animationPlayState: paused ? 'paused' : 'running' }">
+                        @for ($loop_i = 0; $loop_i < 2; $loop_i++)
+                            @foreach ($popular_products as $pp)
+                                <a href="{{ route('product', $pp->slug) }}"
+                                    class="group relative mx-3 w-52 h-72 flex-shrink-0 overflow-hidden rounded-lg block"
+                                    style="background:var(--nx-ink)">
+                                    <img src="{{ $pp->cover_url }}" alt="{{ $pp->name }}"
+                                        class="h-full w-full object-cover opacity-90 transition duration-500 group-hover:scale-105 group-hover:opacity-100">
+                                    <div
+                                        class="absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                        <p class="text-white text-sm font-semibold leading-snug line-clamp-2">
+                                            {{ $pp->name }}</p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        @endfor
+                    </div>
+                </div>
+            </section>
+        @endif
+
         {{-- ── INFORMATION & GUIDES SECTION (STATIC PAGES) ────── --}}
         @if (isset($static_pages) && $static_pages->count() > 0)
             <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
                 <div class="mx-auto max-w-7xl">
-                    <div class="mb-8 flex items-end justify-between border-b pb-4"
-                        style="border-color:var(--nx-line)">
-                        <div>
-                            <p class="nx-label" style="color:var(--nx-muted)">Information & Guides</p>
-                            <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)">Pusat Informasi
-                            </h2>
-                        </div>
+                    {{-- Section header --}}
+                    <div class="text-center mb-12">
+                        <p class="nx-label" style="color:var(--nx-muted)">Information & Guides</p>
+                        <h2 class="nx-display text-2xl sm:text-3xl mt-2" style="color:var(--nx-ink)">Pusat Informasi
+                        </h2>
+                        <p class="mt-3 text-sm max-w-lg mx-auto leading-relaxed" style="color:var(--nx-muted)">
+                            Temukan panduan, kebijakan, dan informasi penting seputar layanan kami untuk pengalaman
+                            belanja terbaik.
+                        </p>
                     </div>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+                    {{-- Cards grid --}}
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                         @foreach ($static_pages as $page)
                             @php
                                 $pageImg = $page->image_url;
+                                $pageColors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#06B6D4'];
+                                $pageColor = $pageColors[$loop->index % count($pageColors)];
                             @endphp
                             <a href="{{ route('page', $page->slug) }}"
-                                class="group nx-card-link nx-focus block border p-5 transition hover:shadow-lg"
-                                style="background:#fff;border-color:var(--nx-line)">
-                                @if ($pageImg)
-                                    <div class="relative aspect-[16/9] w-full overflow-hidden mb-4"
-                                        style="background:#EAE7DD">
+                                class="group nx-card-link nx-focus block rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                                style="background:#fff">
+                                {{-- Image --}}
+                                <div class="relative aspect-[16/10] w-full overflow-hidden"
+                                    style="background:#EAE7DD">
+                                    @if ($pageImg)
                                         <img src="{{ $pageImg }}" alt="{{ $page->name }}"
                                             class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                                    </div>
-                                @endif
-                                <h3 class="nx-display text-lg" style="color:var(--nx-ink)">{{ $page->name }}</h3>
-                                <p class="mt-2 text-xs leading-relaxed line-clamp-2" style="color:var(--nx-muted)">
-                                    {{ $page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name }}
-                                </p>
-                                <span class="nx-card-arrow nx-link mt-4 inline-flex items-center gap-1"
-                                    style="color:var(--nx-ink)">
-                                    Baca Selengkapnya &rarr;
-                                </span>
+                                    @else
+                                        <div class="h-full w-full flex items-center justify-center"
+                                            style="background:linear-gradient(135deg, {{ $pageColor }}22, {{ $pageColor }}44)">
+                                            <i data-lucide="file-text" class="size-10"
+                                                style="color:{{ $pageColor }}"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                {{-- Content --}}
+                                <div class="p-5">
+                                    <h3 class="nx-display text-lg leading-snug line-clamp-2 transition-colors duration-200 group-hover:opacity-80"
+                                        style="color:var(--nx-ink)">
+                                        {{ $page->name }}
+                                    </h3>
+                                    <p class="mt-2 text-xs leading-relaxed line-clamp-2"
+                                        style="color:var(--nx-muted)">
+                                        {{ $page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name }}
+                                    </p>
+                                    <span
+                                        class="nx-card-arrow inline-flex items-center gap-1.5 mt-4 text-xs font-bold uppercase tracking-wider"
+                                        style="color:{{ $pageColor }}">
+                                        Baca &rarr;
+                                    </span>
+                                </div>
                             </a>
                         @endforeach
                     </div>

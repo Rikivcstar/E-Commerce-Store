@@ -38,20 +38,19 @@ class SalesOrderService
                 'payment_payload' => array_merge($sales_order->payment->payload, $payload)
             ]);
 
-            return SalesOrderData::from(
+            return SalesOrderData::fromModel(
                 SalesOrder::where('trx_id', $sales_order->trx_id)->first()
             );
     }
 
     public function returnStock(SalesOrderData $sales_order) : void
     {
-        $sales_order->items->toCollection()->each(function (SalesOrderItemData $item) {
-            DB::transaction(function () use ($item) {
-                Product::lockForUpdate()->update(
-                    [
-                        'stock' => $item->quantity
-                    ]
-                );
+        DB::transaction(function () use ($sales_order) {
+            $sales_order->items->toCollection()->each(function (SalesOrderItemData $item) {
+                Product::query()
+                    ->where('sku', $item->sku)
+                    ->lockForUpdate()
+                    ->increment('stock', $item->quantity);
             });
         });
     }
@@ -66,6 +65,15 @@ class SalesOrderService
                         ->where('total', $total)
                         ->where('status', Pending::class)
                         ->first();
+
+            if (! $sales_order) {
+                \Illuminate\Support\Facades\Log::warning('SalesOrder not found or not pending for payment approval', [
+                    'trx_id' => $trx_id,
+                    'total' => $total
+                ]);
+
+                return;
+            }
 
             $sales_order->status->transitionTo(Progress::class);
     }

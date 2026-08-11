@@ -45,10 +45,10 @@
                 @endphp
                 <div x-data="{ userMenuOpen: false }" class="relative hidden sm:block">
                     <button @click="userMenuOpen = !userMenuOpen" @click.outside="userMenuOpen = false" type="button"
-                        class="group flex items-center gap-2.5 rounded-full bg-neutral-900 py-4 px-4 text-black transition-all duration-300 hover:bg-black shadow-md"
+                        class="group flex items-center gap-2.5 rounded-full py-2 px-2 text-black transition-all duration-300 hover:opacity-60 shadow-md"
                         aria-label="User Account" title="{{ auth()->user()->name }}">
                         <span
-                            class="flex size-7 shrink-0 items-center justify-center rounded-full bg-amber-600 text-xs font-black text-white leading-none shadow-xs">
+                            class="flex size-7 shrink-0 items-center justify-center rounded-full text-sm font-black text-slate-900 leading-none shadow-xs">
                             {{ $userInitials }}
                         </span>
                     </button>
@@ -72,6 +72,26 @@
                             </svg>
                             My Orders
                         </a>
+                        <a href="{{ route('account.wishlist') }}"
+                            class="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:text-black transition">
+                            <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg>
+                            My Wishlist
+                        </a>
+                        <a href="{{ route('account.addresses') }}"
+                            class="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:text-black transition">
+                            <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            Addresses
+                        </a>
                         <form id="nav-desktop-logout-form" method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="button" onclick="confirmLogout('nav-desktop-logout-form')"
@@ -92,8 +112,9 @@
                 <a href="{{ route('login') }}"
                     class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full  text-slate-900 text-xs font-bold uppercase tracking-wider hover:bg-black transition shadow-md"
                     aria-label="Sign In" title="Sign In">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
@@ -152,6 +173,10 @@
                 </div>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
                     href="{{ route('account.orders') }}">My Orders</a>
+                <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+                    href="{{ route('account.wishlist') }}">My Wishlist</a>
+                <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+                    href="{{ route('account.addresses') }}">Addresses</a>
                 <form id="nav-mobile-logout-form" method="POST" action="{{ route('logout') }}" class="px-4 py-1">
                     @csrf
                     <button type="button" onclick="confirmLogout('nav-mobile-logout-form')"

@@ -7,8 +7,6 @@ use App\Data\RegionData;
 use App\Models\Region;
 use Spatie\LaravelData\DataCollection;
 
-use function Amp\Dns\query;
-
 class RegionQueryService{
     public function searchRegionByName(string $keyword, int $limit = 5) : DataCollection
     {

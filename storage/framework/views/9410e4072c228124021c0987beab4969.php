@@ -1,0 +1,104 @@
+<footer class="w-full bg-[#0d0d0d] text-white">
+    <div class="mx-auto max-w-[92rem] px-4 py-12 sm:px-6 lg:px-8">
+        <!-- TOP CTA SECTION -->
+        <div class="grid grid-cols-1 gap-8 border-b border-neutral-800 pb-16 lg:grid-cols-12 lg:items-end">
+            <div class="lg:col-span-4">
+                <h3 class="font-display text-xl font-bold uppercase tracking-wider text-white sm:text-2xl">
+                    GET IN TOUCH<br>WITH <?php echo e(strtoupper(config('app.name'))); ?>
+
+                </h3>
+                <p class="mt-3 text-xs leading-relaxed text-neutral-400 max-w-sm">
+                    Contact us and our managers will be happy to answer all your questions.
+                </p>
+            </div>
+            <div class="lg:col-span-8 lg:text-right">
+                <h2
+                    class="font-display text-4xl font-black uppercase leading-[0.9] tracking-tighter text-white sm:text-6xl lg:text-7xl">
+                    CREATE YOUR<br>OWN UNIQUE<br>LOOK
+                </h2>
+            </div>
+        </div>
+
+        <!-- LOWER NAVIGATION & INFO SECTION -->
+        <div class="grid grid-cols-1 gap-10 pt-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12">
+            <!-- BRAND & LEGAL COLUMN -->
+            <div class="flex flex-col justify-between lg:col-span-3">
+                <div>
+                    <a href="<?php echo e(url('/')); ?>"
+                        class="font-display text-2xl font-black uppercase tracking-tight text-white hover:opacity-90 transition">
+                        <?php echo e(config('app.name')); ?>
+
+                    </a>
+                    <div class="mt-4 space-y-1.5 text-xs text-neutral-400">
+                        <p><a href="<?php echo e(route('page')); ?>" class="hover:text-white transition">Terms & Conditions</a></p>
+                        <p><a href="<?php echo e(route('page')); ?>" class="hover:text-white transition">Privacy Policy</a></p>
+                    </div>
+                </div>
+                <div class="mt-8 text-[11px] text-neutral-500">
+                    &copy; <?php echo e(date('Y')); ?> <?php echo e(config('app.name')); ?>. All rights reserved.
+                </div>
+            </div>
+
+            <!-- NAVIGATION COLUMN -->
+            <div class="lg:col-span-3">
+                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">Navigation</h4>
+                <ul class="mt-5 space-y-2.5 text-xs uppercase tracking-wider text-neutral-300">
+                    <li><a href="<?php echo e(url('/')); ?>" class="hover:text-white transition font-medium">Home</a></li>
+                    <li><a href="<?php echo e(route('product-catalog')); ?>"
+                            class="hover:text-white transition font-medium">Catalog</a></li>
+                    <li><a href="<?php echo e(route('product-catalog')); ?>" class="hover:text-white transition font-medium">New
+                            In</a></li>
+                    <li><a href="<?php echo e(route('cart')); ?>" class="hover:text-white transition font-medium">Shopping Bag</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- INFO COLUMN -->
+            <div class="lg:col-span-3">
+                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">Info & Help</h4>
+                <ul class="mt-5 space-y-2.5 text-xs uppercase tracking-wider text-neutral-300">
+                    <?php
+                        $footerPages = \App\Models\Page::query()->active()->get();
+                    ?>
+                    <?php $__empty_1 = true; $__currentLoopData = $footerPages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fPage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <li><a href="<?php echo e(route('page', $fPage->slug)); ?>"
+                                class="hover:text-white transition font-medium"><?php echo e($fPage->name); ?></a></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <li><a href="<?php echo e(route('page')); ?>" class="hover:text-white transition font-medium">Pusat
+                                Informasi</a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+
+            <!-- NEWSLETTER & PAYMENTS COLUMN -->
+            <div class="lg:col-span-3">
+
+                <!-- Payment Methods Badges -->
+                <div class="mt-8 flex flex-wrap items-center gap-2.5 text-neutral-400">
+                    <!-- Apple Pay Badge -->
+                    <span
+                        class="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-tighter bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded-sm text-white">
+                        Qris
+                    </span>
+                    <!-- G Pay Badge -->
+                    <span
+                        class="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-tighter bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded-sm text-white">
+                        BCA
+                    </span>
+                    <!-- Visa Badge -->
+                    <span
+                        class="inline-flex items-center text-[11px] font-black italic tracking-tighter bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded-sm text-white">
+                        VISA
+                    </span>
+                    <!-- Mastercard Badge -->
+                    <span
+                        class="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-tighter bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded-sm text-white">
+                        <span class="size-2.5 rounded-full bg-red-500 inline-block"></span>
+                        <span class="size-2.5 rounded-full bg-yellow-500 inline-block -ml-2 opacity-80"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<?php /**PATH C:\laraherd\webstore\resources\views/components/footer.blade.php ENDPATH**/ ?>

@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Data\CartItemData;
 use App\Data\CheckoutData;
 use App\Data\SalesOrderData;
+use App\Services\SalesOrderService;
 use App\Events\SalesOrderCreatedEvent;
 use App\Models\Product;
 use App\Models\SalesOrder;
@@ -37,13 +38,11 @@ class CheckoutService {
                 'origin_district' => $checkout_data->origin->district,
                 'origin_sub_district' => $checkout_data->origin->sub_district,
                 'origin_postal_code' => $checkout_data->origin->postal_code,
-                'origin_postal_code' => $checkout_data->origin->postal_code,
                 'destination_code' => $checkout_data->destination->code,
                 'destination_province' => $checkout_data->destination->province,
                 'destination_city' => $checkout_data->destination->city,
                 'destination_district' => $checkout_data->destination->district,
                 'destination_sub_district' => $checkout_data->destination->sub_district,
-                'destination_postal_code' => $checkout_data->destination->postal_code,
                 'destination_postal_code' => $checkout_data->destination->postal_code,
                 'shipping_driver' => $checkout_data->shipping->driver,
                 'shipping_receipt_number' => '',
@@ -56,6 +55,8 @@ class CheckoutService {
                 'payment_method' => $checkout_data->payment->method,
                 'payment_label' => $checkout_data->payment->label,
                 'payment_payload' => $checkout_data->payment->payload,
+                'coupon_code' => $checkout_data->coupon_code,
+                'discount_total' => $checkout_data->discount_total,
                 'sub_total' => $checkout_data->sub_total,
                 'shipping_total' => $checkout_data->shipping_cost,
                 'total' => $checkout_data->grand_total,
@@ -68,7 +69,7 @@ class CheckoutService {
                     $product = Product::where('sku', $item->sku)->lockForUpdate()->firstOrFail();
                     if($product->stock < $item->quantity)
                         {
-                            throw new \Exception("stock not Availabel");
+                            throw new \RuntimeException("Stok tidak mencukupi untuk SKU {$product->sku}.");
                         }
 
                     $product->stock -= $item->quantity;
@@ -89,6 +90,10 @@ class CheckoutService {
                 }
 
             $sales_order->items()->createMany($items);
+
+            if ($checkout_data->coupon_code) {
+                app(CouponService::class)->incrementUsage($checkout_data->coupon_code);
+            }
 
             return $sales_order;
         });

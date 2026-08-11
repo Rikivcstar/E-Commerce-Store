@@ -23,7 +23,6 @@
         <a href="{{ route('product-catalog') }}"
             class="flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-bold text-[#20221b] transition hover:bg-[#f2f3ed]">
             All products
-            <span class="text-xs font-bold text-[#8c9082]">↗</span>
         </a>
         @foreach ($categories as $category)
             <a href="{{ route('product-catalog', ['selectCategory' => [$category->id]]) }}"

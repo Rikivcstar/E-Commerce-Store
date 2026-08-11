@@ -1,14 +1,18 @@
 <div class="bg-[#f7f7f2] px-3 pb-14 pt-6 text-[#20221b] sm:px-5 lg:px-8">
     <div class="mx-auto max-w-[92rem]">
-        <div class="mb-6 overflow-hidden rounded-[1.5rem] bg-[#e6e8de] p-6 sm:p-8">
-            <div class="grid items-end gap-6 lg:grid-cols-[1fr_.7fr]">
-                <div>
+        {{-- ── CATALOG BANNER ───────────────────────────────────── --}}
+        <div class="relative mb-6 overflow-hidden rounded-[1.5rem] shadow-sm">
+            <img src="{{ asset('images/catalog-banner.png') }}" alt="Catalog Banner"
+                class="h-44 w-full object-cover object-right sm:h-56 sm:object-center md:h-64 lg:h-72">
+            <div class="absolute inset-0 flex items-center bg-gradient-to-r from-[#f7f4ed] via-[#f7f4ed]/85 to-transparent p-6 sm:p-10">
+                <div class="max-w-md">
                     <p class="text-xs font-black uppercase tracking-[0.14em] text-[#777c62]">Catalog</p>
-                    <h1 class="mt-2 font-display text-4xl font-black uppercase leading-none text-[#20221b] sm:text-5xl">Temukan produk favoritmu</h1>
-                    <p class="mt-4 max-w-2xl text-sm leading-6 text-[#65685c]">Filter koleksi, urutkan produk, dan lanjutkan belanja tanpa mengubah alur checkout yang sudah berjalan.</p>
-                </div>
-                <div class="rounded-[1.25rem] bg-white/70 p-4 ring-1 ring-black/5 backdrop-blur">
-                    <div class="font-medium text-[#686c60]">Result: <span class="font-black text-[#20221b]">{{ ($products) ? $products->total () : '0' }}</span> items</div>
+                    <h1 class="mt-2 font-display text-3xl font-black uppercase leading-none text-[#20221b] sm:text-4xl lg:text-5xl">
+                        Temukan produk favoritmu
+                    </h1>
+                    <div class="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/80 px-3.5 py-1.5 ring-1 ring-black/5 backdrop-blur-sm">
+                        <span class="text-xs font-medium text-[#686c60]">Result: <span class="font-black text-[#20221b]">{{ ($products) ? $products->total() : '0' }}</span> items</span>
+                    </div>
                 </div>
             </div>
         </div>

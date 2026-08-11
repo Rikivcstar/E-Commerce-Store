@@ -23,10 +23,12 @@ class CheckoutData extends Data
         public RegionData $destination,
         public CartData $cart,
         public ShippingData $shipping,
-        public PaymentData $payment
+        public PaymentData $payment,
+        public string|null $coupon_code = null,
+        public float $discount_total = 0.0
     ) {
         $this->sub_total = $cart->total;
         $this->shipping_cost = $shipping->cost;
-        $this->grand_total = $this->sub_total + $this->shipping_cost;
+        $this->grand_total = $this->sub_total + $this->shipping_cost - $this->discount_total;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Enums\Fit;
@@ -22,9 +23,25 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Category::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    public function wishlistedBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
+    }
+
+    public function salesOrderItems(): HasMany
+    {
+        return $this->hasMany(SalesOrderItem::class, 'sku', 'sku');
+    }
+
     public function registerMediaCollections(): void
         {
-            $this->addMediaCollection('images')->useDisk('public');
+            $this->addMediaCollection('cover')->singleFile()->useDisk('public');
+            $this->addMediaCollection('gallery')->useDisk('public');
         }
 
 

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Data\ProductData;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
@@ -12,6 +13,12 @@ class HomePage extends Component
 {
     public function render()
     {
+        $banners = Banner::query()
+            ->active()
+            ->orderBy('order_column')
+            ->orderByDesc('id')
+            ->get();
+
         $feature_products = ProductData::collect(
             Product::query()->inRandomOrder()->limit(8)->get()
         );
@@ -36,6 +43,6 @@ class HomePage extends Component
             ->take(6)
             ->get();
 
-        return view('livewire.home-page', compact('feature_products', 'latest_products', 'popular_products', 'categories', 'static_pages'));
+        return view('livewire.home-page', compact('banners', 'feature_products', 'latest_products', 'popular_products', 'categories', 'static_pages'));
     }
 }

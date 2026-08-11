@@ -38,6 +38,9 @@ class Checkout extends Component
         'sub_total_formatted' => '-',
         'shipping_total' => null,
         'shipping_total_formatted' => '-',
+        'discounted_total' => null,
+        'discounted_total_formatted' => '-',
+        'coupon_code' => null,
         'grand_total' => null,
         'grand_total_formatted' => '-',
     ];
@@ -49,6 +52,10 @@ class Checkout extends Component
     public array $region_selector = [
         'keyword' => null,
         'region_selected' => null
+    ];
+
+    public array $address_selector = [
+        'address_id' => null,
     ];
 
     public function rules()
@@ -119,9 +126,43 @@ class Checkout extends Component
 
     public function updatedRegionSelectorRegionSelected($value)
     {
-         data_set($this->data, 'destination_region_code', $value);
-         data_set($this->data, 'shipping_hash', null);
-         $this->calculateTotal();
+        $this->selectDestinationRegion((string) $value);
+    }
+
+    public function getSavedAddressesProperty(): \Illuminate\Support\Collection
+    {
+        if (! auth()->check()) {
+            return collect();
+        }
+
+        return auth()->user()->addresses()->get();
+    }
+
+    public function applyAddress(): void
+    {
+        $addressId = data_get($this->address_selector, 'address_id');
+
+        if (! $addressId) {
+            return;
+        }
+
+        $address = auth()->user()->addresses()->findOrFail((int) $addressId);
+
+        data_set($this->data, 'full_name', $address->full_name);
+        data_set($this->data, 'phone', $address->phone);
+        data_set($this->data, 'address_line', $address->address_line);
+
+        $this->selectDestinationRegion($address->region_code);
+
+        toast('Alamat diterapkan.', 'success');
+    }
+
+    protected function selectDestinationRegion(string $region_code): void
+    {
+        data_set($this->data, 'destination_region_code', $region_code);
+        data_set($this->data, 'shipping_hash', null);
+        data_set($this->region_selector, 'region_selected', $region_code);
+        $this->calculateTotal();
     }
 
     public function calculateTotal()

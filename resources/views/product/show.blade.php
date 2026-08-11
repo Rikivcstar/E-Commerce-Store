@@ -435,8 +435,13 @@
                     <h1 class="product-title">{{ $product->name }}</h1>
                     <span class="product-price">{{ $product->price_formatted }}</span>
 
-                    <div class="product-divider"></div>
-                    <livewire:add-to-card :product="$product" />
+<div class="product-divider"></div>
+                    <div style="display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
+                        <div style="flex:1 1 12rem; min-width: 0;">
+                            <livewire:add-to-card :product="$product" />
+                        </div>
+                        <livewire:wishlist-toggle :product="$product" wire:key="wish-{{ $product->sku }}" />
+                    </div>
                     <div class="product-divider"></div>
 
                     <div class="product-benefits">
@@ -480,35 +485,9 @@
                 </aside>
             </div>
 
-            <section aria-label="Product reviews">
+<section aria-label="Product reviews">
                 <h2 class="review-section-title">Rating &amp; Reviews</h2>
-                <div class="below-grid">
-                    <div class="rating-panel">
-                        <div>
-                            <div class="rating-score">4.5<small>/5</small></div>
-                            <p class="rating-caption">Based on customer reviews</p>
-                        </div>
-                        <div class="rating-bars">
-                            @foreach ([92, 76, 48, 24, 10] as $index => $width)
-                                <div class="rating-bar">
-                                    <span>{{ 5 - $index }} &#9733;</span>
-                                    <span class="bar-track"><span class="bar-fill" style="width: {{ $width }}%"></span></span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <article class="review-card">
-                        <div class="review-head">
-                            <div>
-                                <p class="review-name">Nexora Customer</p>
-                                <p class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                            </div>
-                            <span class="review-date">Verified review</span>
-                        </div>
-                        <p class="review-text">Produk terasa clean, rapi, dan mudah dipadukan. Detail belanja juga jelas sehingga proses checkout terasa lebih nyaman.</p>
-                    </article>
-                </div>
+                <livewire:product-reviews :product="$product" />
             </section>
 
             @if ($recommendations->count())

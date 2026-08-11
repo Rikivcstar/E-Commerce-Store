@@ -299,6 +299,27 @@
                         <!-- Shipping Information -->
                         <div>
                             <h3 class="linoge-sub-title">Shipping Information</h3>
+
+                            @auth
+                                @if ($this->saved_addresses->isNotEmpty())
+                                    <div class="mb-4">
+                                        <label class="linoge-label">Use saved address</label>
+                                        <div class="linoge-promocode-row" style="margin-top:0;">
+                                            <select wire:model='address_selector.address_id' class="linoge-input" style="flex-grow:1;">
+                                                <option value="">— Pilih alamat tersimpan —</option>
+                                                @foreach ($this->saved_addresses as $saved)
+                                                    <option value="{{ $saved->id }}">{{ $saved->label }} &middot; {{ $saved->address_line }}, {{ $saved->city }}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="button" wire:click='applyAddress' class="linoge-promocode-btn">APPLY</button>
+                                        </div>
+                                    </div>
+                                @endif
+                                <p class="mb-3 text-xs text-neutral-500">
+                                    <a href="{{ route('account.addresses') }}" class="underline text-neutral-900 font-semibold">Kelola alamat</a>
+                                </p>
+                            @endauth
+
                             <div class="linoge-field-grid">
                                 <div>
                                     <label class="linoge-label">Street address</label>

@@ -18,6 +18,7 @@ class SalesOrderDetail extends Component
         $sales_order_data = SalesOrderData::fromModel($this->sales_order);
         return view('livewire.sales-order-detail', [
             'order' => $sales_order_data,
+            'timeline' => $this->sales_order->status_timeline,
             'is_redirect' =>  $service->shouldShowButton($sales_order_data),
             'redirect_url' => $service->getRedirectUrl($sales_order_data)
         ]);
