@@ -2,11 +2,6 @@
 
 namespace App\Data;
 
-use App\Data\CustomerData;
-use App\Data\RegionData;
-use App\Data\SalesOrderItemData;
-use App\Data\SalesPaymentData;
-use App\Data\SalesShippingData;
 use App\Models\SalesOrder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Number;
@@ -44,7 +39,6 @@ class SalesOrderData extends Data
         #[DataCollectionOf(SalesOrderItemData::class)]
         public DataCollection $items,
 
-
         public SalesShippingData $shipping,
         public SalesPaymentData $payment,
 
@@ -54,7 +48,7 @@ class SalesOrderData extends Data
 
         public Carbon $due_date_at,
         public Carbon $create_at,
-        public string|null $status_label
+        public ?string $status_label
 
     ) {
         $this->sub_total_formatted = Number::currency($sub_total);
@@ -65,7 +59,7 @@ class SalesOrderData extends Data
         $this->due_date_at_formatted = $due_date_at->translatedFormat('d F Y, H:i');
     }
 
-    public static function fromModel(SalesOrder $sales_order) : self
+    public static function fromModel(SalesOrder $sales_order): self
     {
         return new self(
             trx_id: $sales_order->trx_id,

@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\SalesOrderCompletedEvent;
 use App\Mail\SalesOrderCompletedMail;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
 class SalesOrderCompletedListener
@@ -27,6 +25,6 @@ class SalesOrderCompletedListener
             new SalesOrderCompletedMail(
                 $event->sales_order
             )
-            );
+        );
     }
 }

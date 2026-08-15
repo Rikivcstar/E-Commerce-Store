@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\States\SalesOrder\Transition;
@@ -14,25 +15,21 @@ class PendingToProgress extends Transition
 {
     public function __construct(
         private SalesOrder $sales_order
-    )
-    {
-
-    }
+    ) {}
 
     public function handle()
     {
         $this->sales_order->update(
             [
                 'status' => Progress::class,
-                'payment_paid_at' => Carbon::now()
+                'payment_paid_at' => Carbon::now(),
             ]
         );
 
-         event(new SalesOrderProgressedEvent(
+        event(new SalesOrderProgressedEvent(
             SalesOrderData::fromModel($this->sales_order)
         ));
 
         return $this->sales_order;
     }
 }
-?>

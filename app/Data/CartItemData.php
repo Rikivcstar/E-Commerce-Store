@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -15,7 +16,6 @@ class CartItemData extends Data
         public int $quantity,
         public float $price,
         public int $weight
-
 
     ) {}
 

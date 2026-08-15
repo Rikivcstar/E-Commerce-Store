@@ -1,12 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Data;
 
 use App\Models\Product;
-use Spatie\LaravelData\Data;
 use Illuminate\Support\Number;
-use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Attributes\Computed;
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class ProductData extends Data
 {
@@ -24,13 +26,23 @@ class ProductData extends Data
         public float $price,
         public int $weight,
         public string $cover_url,
-        public Optional|array $gallery = new Optional()
+        public Optional|array $gallery = new Optional
     ) {
         $this->price_formatted = Number::currency($price);
     }
 
     public static function fromModel(Product $product, bool $with_gallery = false): self
     {
+        $coverUrl = $product->cover_url;
+
+        $gallery = $with_gallery
+            ? $product->getMedia('gallery')->map(fn ($record) => $record->getUrl())->toArray()
+            : new Optional;
+
+        if (is_array($gallery) && empty($gallery)) {
+            $gallery = [$coverUrl];
+        }
+
         return new self(
             $product->name,
             $product->tags()->where('type', 'collection')->pluck('name')->implode(', '),
@@ -40,8 +52,8 @@ class ProductData extends Data
             $product->stock,
             floatval($product->price),
             $product->weight,
-            $product->getFirstMediaUrl('cover'),
-            gallery: $with_gallery ? $product->getMedia('gallery')->map(fn($record) => $record->getUrl())->toArray() : new Optional()
+            $coverUrl,
+            gallery: $gallery
         );
     }
 }

@@ -46,7 +46,19 @@ class CouponService
 
     public function incrementUsage(string $code): void
     {
-        Coupon::query()->where('code', $code)->increment('used_count');
+        // Kunci baris kupon di dalam transaksi order agar pemakaian bersamaan
+        // tidak melampaui usage_limit.
+        $coupon = Coupon::query()->where('code', $code)->lockForUpdate()->first();
+
+        if (! $coupon) {
+            return;
+        }
+
+        if ($coupon->usage_limit !== null && $coupon->used_count >= $coupon->usage_limit) {
+            throw new \RuntimeException('Kode promo sudah mencapai batas pemakaian.');
+        }
+
+        $coupon->increment('used_count');
     }
 
     protected function invalidReason(Coupon $coupon, float $sub_total): string
@@ -56,7 +68,7 @@ class CouponService
         }
 
         if ($coupon->min_order_amount > 0 && $sub_total < $coupon->min_order_amount) {
-            return "Kode promo berlaku untuk minimal belanja " . number_format($coupon->min_order_amount, 0, ',', '.');
+            return 'Kode promo berlaku untuk minimal belanja '.number_format($coupon->min_order_amount, 0, ',', '.');
         }
 
         if (! $coupon->is_active) {

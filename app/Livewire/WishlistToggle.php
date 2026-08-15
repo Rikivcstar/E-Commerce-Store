@@ -13,9 +13,16 @@ class WishlistToggle extends Component
 
     public bool $isInWishlist = false;
 
-    public function mount(ProductData $product)
+    public string $variant = 'button';
+
+    public function mount(ProductData|Product $product, string $variant = 'button')
     {
+        if ($product instanceof Product) {
+            $product = ProductData::fromModel($product);
+        }
+
         $this->sku = $product->sku;
+        $this->variant = $variant;
         $this->isInWishlist = $this->hasInWishlist();
     }
 

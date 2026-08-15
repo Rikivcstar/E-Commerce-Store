@@ -19,8 +19,8 @@ class ValidPaymentMethodHash implements ValidationRule
 
         $found = $query->getPaymentMethodByHash($value);
 
-        if(! $found){
-            $fail("Payment Method Not Valid");
+        if (! $found) {
+            $fail('Payment Method Not Valid');
         }
     }
 }

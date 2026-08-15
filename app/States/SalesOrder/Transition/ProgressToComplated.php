@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\States\SalesOrder\Transition;
@@ -13,24 +14,20 @@ class ProgressToComplated extends Transition
 {
     public function __construct(
         private SalesOrder $sales_order
-    )
-    {
-
-    }
+    ) {}
 
     public function handle()
     {
         $this->sales_order->update(
             [
-                'status' => Completed::class
+                'status' => Completed::class,
             ]
         );
 
-         event(new SalesOrderCompletedEvent(
+        event(new SalesOrderCompletedEvent(
             SalesOrderData::fromModel($this->sales_order)
         ));
 
         return $this->sales_order;
     }
 }
-?>

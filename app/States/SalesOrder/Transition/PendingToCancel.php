@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\States\SalesOrder\Transition;
@@ -8,23 +9,19 @@ use App\Events\SalesOrderCancelledEvent;
 use App\Models\SalesOrder;
 use App\Services\SalesOrderService;
 use App\States\SalesOrder\Cancel;
-use Monolog\Handler\NewRelicHandler;
 use Spatie\ModelStates\Transition;
 
 class PendingToCancel extends Transition
 {
     public function __construct(
         private SalesOrder $sales_order
-    )
-    {
-
-    }
+    ) {}
 
     public function handle()
     {
         $this->sales_order->update(
             [
-                'status' => Cancel::class
+                'status' => Cancel::class,
             ]
         );
 
@@ -37,4 +34,3 @@ class PendingToCancel extends Transition
         return $this->sales_order;
     }
 }
-?>

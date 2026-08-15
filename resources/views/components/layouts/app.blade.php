@@ -16,7 +16,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -34,28 +33,17 @@
     <x-footer />
     <x-toast />
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        AOS.init({
-            disable: false,
-            startEvent: 'DOMContentLoaded',
-            initClassName: 'aos-init',
-            animatedClassName: 'aos-animate',
-            useClassNames: false,
-            disableMutationObserver: false,
-            debounceDelay: 50,
-            throttleDelay: 99,
-            offset: 80,
-            delay: 0,
-            duration: 500,
-            easing: 'ease-out',
-            once: true,
-            mirror: false,
-            anchorPlacement: 'top-bottom',
+        function initLucide() {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', initLucide);
+        document.addEventListener('livewire:navigated', initLucide);
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.hook('morph.updated', initLucide);
         });
-    </script>
-    <script>
-        lucide.createIcons();
     </script>
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11'])
     <script>

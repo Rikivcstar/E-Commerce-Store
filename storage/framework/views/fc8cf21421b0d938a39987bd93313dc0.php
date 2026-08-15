@@ -1,19 +1,19 @@
-<div class="nexora-buybox">
+<div class="riva-buybox">
     <style>
-        .nexora-buybox { margin-top: 1.25rem; }
-        .nexora-buybox-row { display: flex; align-items: center; gap: .75rem; width: 100%; flex-wrap: wrap; }
-        .nexora-qty { display: inline-flex; align-items: center; gap: .55rem; height: 3rem; padding: 0 .75rem; border: 1px solid #d7c7ad; background: #fffaf2; border-radius: 999px; }
-        .nexora-qty button { width: 1.8rem; height: 1.8rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid #dfd0b7; background: #f4ead9; color: #4d4634; cursor: pointer; transition: .2s ease; }
-        .nexora-qty button:hover { background: #e7d7bd; }
-        .nexora-qty input { width: 2rem; padding: 0; border: 0; background: transparent; color: #211b14; font-weight: 900; text-align: center; outline: none; }
-        .nexora-add-btn { min-height: 3rem; flex: 1 1 13rem; display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: 0 1.35rem; border: 1px solid #4d4634; border-radius: 999px; background: #4d4634; color: #fffaf2; font-size: .85rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 26px rgba(77,70,52,.16); transition: transform .2s ease, background .2s ease; }
-        .nexora-add-btn:hover { transform: translateY(-2px); background: #2f2a20; }
-        .nexora-stock { margin-top: .8rem; color: #77664c; font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
-        .nexora-error { margin-top: .75rem; color: #b42318; font-size: .75rem; font-weight: 800; text-transform: uppercase; }
+        .riva-buybox { margin-top: 1.25rem; }
+        .riva-buybox-row { display: flex; align-items: center; gap: .75rem; width: 100%; flex-wrap: wrap; }
+        .riva-qty { display: inline-flex; align-items: center; gap: .55rem; height: 3rem; padding: 0 .75rem; border: 1px solid #d7c7ad; background: #fffaf2; border-radius: 999px; }
+        .riva-qty button { width: 1.8rem; height: 1.8rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid #dfd0b7; background: #f4ead9; color: #4d4634; cursor: pointer; transition: .2s ease; }
+        .riva-qty button:hover { background: #e7d7bd; }
+        .riva-qty input { width: 2rem; padding: 0; border: 0; background: transparent; color: #211b14; font-weight: 900; text-align: center; outline: none; }
+        .riva-add-btn { min-height: 3rem; flex: 1 1 13rem; display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: 0 1.35rem; border: 1px solid #4d4634; border-radius: 999px; background: #4d4634; color: #fffaf2; font-size: .85rem; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 26px rgba(77,70,52,.16); transition: transform .2s ease, background .2s ease; }
+        .riva-add-btn:hover { transform: translateY(-2px); background: #2f2a20; }
+        .riva-stock { margin-top: .8rem; color: #77664c; font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+        .riva-error { margin-top: .75rem; color: #b42318; font-size: .75rem; font-weight: 800; text-transform: uppercase; }
     </style>
 
-    <div class="nexora-buybox-row" x-data="{ quantity: <?php if ((object) ('quantity') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'->value()); ?>')<?php echo e('quantity'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'); ?>')<?php endif; ?> }">
-        <div class="nexora-qty">
+    <div class="riva-buybox-row" x-data="{ quantity: <?php if ((object) ('quantity') instanceof \Livewire\WireDirective) : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'->value()); ?>')<?php echo e('quantity'->hasModifier('live') ? '.live' : ''); ?><?php else : ?>window.Livewire.find('<?php echo e($__livewire->getId()); ?>').entangle('<?php echo e('quantity'); ?>')<?php endif; ?> }">
+        <div class="riva-qty">
             <button type="button" @click="if(quantity > 0) quantity--" aria-label="Kurangi jumlah">
                 <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
             </button>
@@ -23,7 +23,7 @@
             </button>
         </div>
 
-        <button wire:click='addCard' type="button" class="nexora-add-btn">
+        <button wire:click='addCard' type="button" class="riva-add-btn">
             <?php echo e($label); ?>
 
             <div wire:loading class="animate-spin inline-block size-4 border-3 border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"><span class="sr-only">Loading...</span></div>
@@ -31,13 +31,13 @@
         </button>
     </div>
 
-    <div class="nexora-stock">Stock: <?php echo e($stock); ?> left</div>
+    <div class="riva-stock">Stock: <?php echo e($stock); ?> left</div>
     <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['quantity'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-        <div class="nexora-error"><?php echo e($message); ?></div>
+        <div class="riva-error"><?php echo e($message); ?></div>
     <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;

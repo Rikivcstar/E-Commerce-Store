@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Page;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class PageSeeder extends Seeder
 {
@@ -21,7 +20,7 @@ class PageSeeder extends Seeder
                 'context' => <<<'MARKDOWN'
 # Panduan Ukuran & Perawatan Produk
 
-Selamat datang di panduan resmi NEXORA. Kami ingin memastikan setiap produk yang Anda beli pas di badan dan memiliki daya tahan maksimal.
+Selamat datang di panduan resmi Riva & Co. Kami ingin memastikan setiap produk yang Anda beli pas di badan dan memiliki daya tahan maksimal.
 
 ---
 
@@ -78,7 +77,7 @@ MARKDOWN,
                 'context' => <<<'MARKDOWN'
 # Kebijakan Pengembalian & Garansi 15 Hari
 
-Di NEXORA, kepuasan Anda adalah prioritas utama kami. Jika produk yang Anda terima tidak sesuai, mengalami cacat pabrik, atau ukurannya kurang pas, kami menyediakan fasilitas pengembalian dan penukaran barang yang mudah dan cepat.
+Di Riva & Co., kepuasan Anda adalah prioritas utama kami. Jika produk yang Anda terima tidak sesuai, mengalami cacat pabrik, atau ukurannya kurang pas, kami menyediakan fasilitas pengembalian dan penukaran barang yang mudah dan cepat.
 
 ---
 
@@ -88,8 +87,8 @@ Di NEXORA, kepuasan Anda adalah prioritas utama kami. Jika produk yang Anda teri
 2. **Kondisi Produk**:
    - Produk dalam kondisi baru, belum pernah dipakai atau dicuci.
    - Hangtag dan label harga masih terpasang utuh.
-   - Dikemas kembali rapi menggunakan kemasan asli NEXORA.
-3. **Produk Cacat / Salah Kirim**: Seluruh ongkos kirim retur dan pengiriman ulang akan ditanggung penuh oleh NEXORA.
+   - Dikemas kembali rapi menggunakan kemasan asli Riva & Co.
+3. **Produk Cacat / Salah Kirim**: Seluruh ongkos kirim retur dan pengiriman ulang akan ditanggung penuh oleh Riva & Co.
 4. **Penukaran Ukuran (Size Exchange)**: Penukaran ukuran dapat dilakukan selama stok masih tersedia.
 
 ---
@@ -116,7 +115,7 @@ MARKDOWN,
                 'context' => <<<'MARKDOWN'
 # Metode Pembayaran & Keamanan Transaksi
 
-NEXORA mendukung sistem pembayaran yang serba otomatis, aman, dan instan untuk memudahkan Anda berbelanja kapan saja dan di mana saja.
+Riva & Co. mendukung sistem pembayaran yang serba otomatis, aman, dan instan untuk memudahkan Anda berbelanja kapan saja dan di mana saja.
 
 ---
 
@@ -139,7 +138,7 @@ Kami menerima kartu berpintu **Visa**, **Mastercard**, dan **JCB** dengan protek
 
 ## Keamanan & Proteksi Data Pembeli
 
-Sistem pembayaran NEXORA terhubung langsung dengan *Payment Gateway* terlisensi resmi yang diawasi oleh Bank Indonesia dan OJK.
+Sistem pembayaran Riva & Co. terhubung langsung dengan *Payment Gateway* terlisensi resmi yang diawasi oleh Bank Indonesia dan OJK.
 
 - **SSL 256-bit Encryption**: Seluruh data transaksi dienkripsi dengan standar enkripsi tertinggi.
 - **Privacy Assurance**: Data pribadi dan informasi kartu kredit Anda tidak pernah disimpan di server kami.
@@ -193,14 +192,14 @@ MARKDOWN,
             [
                 'name' => 'Syarat & Ketentuan Layanan',
                 'slug' => 'syarat-dan-ketentuan-layanan',
-                'excerpt' => 'Aturan dan ketentuan resmi penggunaan platform belanja NEXORA, pembuatan akun pengguna, serta hukum yang berlaku.',
+                'excerpt' => 'Aturan dan ketentuan resmi penggunaan platform belanja Riva & Co., pembuatan akun pengguna, serta hukum yang berlaku.',
                 'is_active' => true,
                 'is_featured' => false,
                 'image_url' => 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=1200&q=80',
                 'context' => <<<'MARKDOWN'
 # Syarat & Ketentuan Layanan
 
-Selamat datang di platform NEXORA. Dengan mengakses dan berbelanja di situs web ini, Anda dianggap telah membaca, memahami, dan menyetujui seluruh Syarat & Ketentuan yang berlaku di bawah ini.
+Selamat datang di platform Riva & Co. Dengan mengakses dan berbelanja di situs web ini, Anda dianggap telah membaca, memahami, dan menyetujui seluruh Syarat & Ketentuan yang berlaku di bawah ini.
 
 ---
 
@@ -210,11 +209,11 @@ Selamat datang di platform NEXORA. Dengan mengakses dan berbelanja di situs web 
 
 ## 2. Pemesanan & Pembatalan
 - Pesanan yang telah dikonfirmasi dan dibayar tidak dapat dibatalkan secara sepihak kecuali stok barang habis.
-- NEXORA berhak membatalkan transaksi apabila terindikasi adanya kecurangan atau pelanggaran syarat penggunaan promo.
+- Riva & Co. berhak membatalkan transaksi apabila terindikasi adanya kecurangan atau pelanggaran syarat penggunaan promo.
 
 ## 3. Hak Kekayaan Intelektual
-- Seluruh konten pada situs ini, termasuk nama merek NEXORA, logo, desain grafis, foto produk, dan tulisan adalah hak cipta terdaftar milik NEXORA.
-- Dilarang keras menggandakan atau mengompilasi ulang materi tanpa izin tertulis dari manajemen NEXORA.
+- Seluruh konten pada situs ini, termasuk nama merek Riva & Co., logo, desain grafis, foto produk, dan tulisan adalah hak cipta terdaftar milik Riva & Co.
+- Dilarang keras menggandakan atau mengompilasi ulang materi tanpa izin tertulis dari manajemen Riva & Co.
 
 ---
 
@@ -236,12 +235,12 @@ MARKDOWN,
             );
 
             // Attach Cover Image using Spatie Media Library
-            if ($page->getMedia('image')->isEmpty() && !empty($pData['image_url'])) {
+            if ($page->getMedia('image')->isEmpty() && ! empty($pData['image_url'])) {
                 try {
                     $page->addMediaFromUrl($pData['image_url'])
                         ->toMediaCollection('image');
                 } catch (\Throwable $e) {
-                    logger()->error("Failed to download image for page {$page->slug}: " . $e->getMessage());
+                    logger()->error("Failed to download image for page {$page->slug}: ".$e->getMessage());
                 }
             }
         }

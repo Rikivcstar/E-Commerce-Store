@@ -16,7 +16,7 @@ use Spatie\Tags\HasTags;
 class Product extends Model implements HasMedia
 {
     //
-    use InteractsWithMedia, HasTags, LogsActivity;
+    use HasTags, InteractsWithMedia, LogsActivity;
 
     public function categories(): BelongsToMany
     {
@@ -39,24 +39,40 @@ class Product extends Model implements HasMedia
     }
 
     public function registerMediaCollections(): void
-        {
-            $this->addMediaCollection('cover')->singleFile()->useDisk('public');
-            $this->addMediaCollection('gallery')->useDisk('public');
-        }
-
+    {
+        $this->addMediaCollection('cover')->singleFile()->useDisk('public');
+        $this->addMediaCollection('gallery')->useDisk('public');
+    }
 
     public function registerAllMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('cover')
-                    ->fit(Fit::Contain, 300, 300)
-                    ->nonQueued();
+            ->fit(Fit::Contain, 300, 300)
+            ->nonQueued();
     }
 
-     public function getActivitylogOptions(): LogOptions
+    public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['name', 'slug', 'stock']);
+            ->logOnly(['name', 'slug', 'stock']);
     }
 
+    public function scopeLowStock($query, int $threshold = 5)
+    {
+        return $query->where('stock', '<=', $threshold);
+    }
 
+    public function getCoverUrlAttribute(): string
+    {
+        $url = $this->getFirstMediaUrl('cover');
+
+        return $url ?: asset('images/placeholder.png');
+    }
+
+    public function getGalleryUrlsAttribute(): array
+    {
+        $gallery = $this->getMedia('gallery')->map(fn ($record) => $record->getUrl())->toArray();
+
+        return count($gallery) > 0 ? $gallery : [$this->cover_url];
+    }
 }

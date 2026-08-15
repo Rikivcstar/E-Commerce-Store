@@ -3,15 +3,20 @@
 namespace App\Livewire;
 
 use App\Contract\CartServiceInterface;
-use Livewire\Component;
 use App\Data\ProductData;
+use App\Models\Product;
+use Livewire\Component;
 
 class CartRemove extends Component
 {
     public string $sku;
 
-    public function mount(ProductData $product)
+    public function mount(ProductData|Product $product)
     {
+        if ($product instanceof Product) {
+            $product = ProductData::from($product);
+        }
+
         $this->sku = $product->sku;
     }
 
@@ -21,7 +26,7 @@ class CartRemove extends Component
 
         toast('Produk berhasil dihapus dari keranjang.', 'info');
 
-        $this->dispatch('cart_updated');
+        $this->dispatch('cartUpdated');
 
         return redirect()->route('cart');
     }

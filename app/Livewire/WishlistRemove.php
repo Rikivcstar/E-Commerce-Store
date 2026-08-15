@@ -11,8 +11,12 @@ class WishlistRemove extends Component
 {
     public string $sku;
 
-    public function mount(ProductData $product)
+    public function mount(ProductData|Product $product)
     {
+        if ($product instanceof Product) {
+            $product = ProductData::from($product);
+        }
+
         $this->sku = $product->sku;
     }
 

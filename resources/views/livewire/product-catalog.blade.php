@@ -10,8 +10,13 @@
                     <h1 class="mt-2 font-display text-3xl font-black uppercase leading-none text-[#20221b] sm:text-4xl lg:text-5xl">
                         Temukan produk favoritmu
                     </h1>
-                    <div class="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/80 px-3.5 py-1.5 ring-1 ring-black/5 backdrop-blur-sm">
-                        <span class="text-xs font-medium text-[#686c60]">Result: <span class="font-black text-[#20221b]">{{ ($products) ? $products->total() : '0' }}</span> items</span>
+<div class="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/80 px-3.5 py-1.5 ring-1 ring-black/5 backdrop-blur-sm">
+                        <span wire:loading.remove class="text-xs font-medium text-[#686c60]">Result: <span class="font-black text-[#20221b]">{{ ($products) ? $products->total() : '0' }}</span> items</span>
+                        <span wire:loading class="inline-flex items-center gap-2 text-xs font-medium text-[#686c60]">
+                            Result:
+                            <span class="inline-block h-3.5 w-10 animate-pulse rounded-full bg-neutral-200/80"></span>
+                            items
+                        </span>
                     </div>
                 </div>
             </div>
@@ -90,7 +95,7 @@
                 </div>
 
                 <div class="mt-7 grid grid-cols-2 gap-3">
-                    <button wire:click='applySeacrh' wire:loading.attr='disabled' type="button"
+                    <button wire:click='applySearch' wire:loading.attr='disabled' type="button"
                         class="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#555a42] px-4 text-sm font-black text-white transition hover:bg-[#3f4331] disabled:pointer-events-none disabled:opacity-50">
                         Apply
                         <div wire:loading class="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-white" role="status" aria-label="loading">
@@ -107,8 +112,15 @@
             <section>
                 <div class="mb-5 flex flex-col gap-3 rounded-[1.5rem] bg-white p-3 shadow-sm ring-1 ring-black/5 sm:flex-row sm:items-center sm:justify-between">
                     <div class="flex gap-2 overflow-x-auto scrollbar-hide">
-                        @foreach (['All', 'Newest', 'Popular', 'Sale'] as $chip)
-                            <span class="inline-flex h-10 shrink-0 items-center rounded-full bg-[#f2f3ed] px-4 text-xs font-black text-[#555a42]">{{ $chip }}</span>
+                        @foreach ([
+                            ['label' => 'Newest', 'sort' => 'newest'],
+                            ['label' => 'Popular', 'sort' => 'popular'],
+                            ['label' => 'Sale', 'sort' => 'price_asc'],
+                        ] as $chip)
+                            <button type="button" wire:click="applySort('{{ $chip['sort'] }}')"
+                                class="inline-flex h-10 shrink-0 items-center rounded-full px-4 text-xs font-black transition {{ $shortBy === $chip['sort'] ? 'bg-[#555a42] text-white' : 'bg-[#f2f3ed] text-[#555a42] hover:bg-[#e6e8de]' }}">
+                                {{ $chip['label'] }}
+                            </button>
                         @endforeach
                     </div>
                     <div class="flex items-center gap-3">
@@ -118,16 +130,16 @@
                         @enderror
                         <select wire:model='shortBy'
                             class="h-10 rounded-full border-0 bg-[#f2f3ed] px-4 pe-9 text-sm font-bold text-[#555a42] focus:ring-2 focus:ring-[#777c62]/30 disabled:pointer-events-none disabled:opacity-50">
-                            <option selected="">Sort by latest</option>
                             <option value="newest">Product Newest</option>
                             <option value="latest">Product Latest</option>
+                            <option value="popular">Product Popular</option>
                             <option value="price_asc">Product Price A-Z</option>
                             <option value="price_desc">Product Price Z-A</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+<div wire:loading.remove class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     @forelse ($products as $product )
                         <x-single-product-card :product="$product"/>
                     @empty
@@ -136,6 +148,12 @@
                             <p class="mt-2 text-sm text-[#777b6d]">Coba kata kunci atau filter koleksi lain.</p>
                         </div>
                     @endforelse
+                </div>
+
+                <div wire:loading aria-hidden="true">
+                    <x-skeleton.product-grid
+                        :count="12"
+                        grid="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" />
                 </div>
 
                 @if($products)

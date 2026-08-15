@@ -7,17 +7,13 @@
         class="mx-auto flex items-center justify-between px-4 backdrop-blur-xl transition-all duration-500 ease-out sm:px-6">
         <a class="group flex items-center gap-3 focus:outline-hidden focus:opacity-80" href="<?php echo e(url('/')); ?>"
             aria-label="Brand">
-            <span :class="scrolled ? 'size-10 rounded-2xl' : 'size-9 rounded-xl'"
-                class="relative flex items-center justify-center bg-[#eef0e7] text-[#555a42] transition-all duration-500">
-                <span class="absolute h-0.5 w-6 -rotate-[18deg] rounded-full bg-[#555a42]"></span>
-                <span class="absolute mt-2 h-0.5 w-4 -rotate-[18deg] rounded-full bg-[#8d9476]"></span>
-            </span>
+            <img src="<?php echo e(asset('images/logo.png')); ?>" :class="scrolled ? 'size-10' : 'size-9'"
+                class="object-contain rounded-full transition-all duration-500 shadow-xs border border-amber-900/10 bg-white" alt="<?php echo e(config('app.name')); ?>">
             <span class="leading-none">
                 <span :class="scrolled ? 'text-xl' : 'text-lg'"
                     class="block font-display font-black uppercase tracking-normal text-[#20221b] transition-all duration-500"><?php echo e(config('app.name')); ?></span>
                 <span :class="scrolled ? 'opacity-100 translate-y-0 max-h-4' : 'opacity-0 -translate-y-1 max-h-0'"
-                    class="mt-1 hidden overflow-hidden text-[10px] font-black uppercase tracking-[0.18em] text-[#878b7c] transition-all duration-500 sm:block">Move
-                    ahead</span>
+                    class="mt-1 hidden overflow-hidden text-[10px] font-black uppercase tracking-[0.18em] text-[#878b7c] transition-all duration-500 sm:block">Curated Goods</span>
             </span>
         </a>
 
@@ -42,13 +38,19 @@ unset($__params);
 unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
-            <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="<?php echo e(route('product-catalog')); ?>">New In</a>
             <?php
                 $firstPage = \App\Models\Page::query()->active()->first();
             ?>
+            <a class="relative inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
+                href="<?php echo e(route('product-catalog', ['shortBy' => 'price_asc'])); ?>">
+                Sale
+                <span class="relative flex size-1.5">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                    <span class="relative inline-flex size-1.5 rounded-full bg-red-500"></span>
+                </span>
+            </a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="<?php echo e($firstPage ? route('page', $firstPage->slug) : route('page')); ?>">Info</a>
+                href="<?php echo e($firstPage ? route('page', $firstPage->slug) : url('/')); ?>">About</a>
         </div>
 
         <div class="flex items-center gap-2">
@@ -86,12 +88,12 @@ if (isset($__slots)) unset($__slots);
 
                     <div x-show="userMenuOpen" x-transition style="display: none;"
                         class="absolute right-0 mt-2 w-52 rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-black/10 z-50">
-                        <div class="px-3 py-2.5 border-b border-gray-100 bg-gray-50/50 rounded-xl mb-1">
+                        <div class="px-3 py-3 border-b border-gray-100 rounded-xl mb-1">
                             <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Signed in as</p>
                             <p class="text-xs font-black text-gray-900 truncate"><?php echo e(auth()->user()->name); ?></p>
                         </div>
                         <a href="<?php echo e(route('account.orders')); ?>"
-                            class="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:text-black transition">
+                            class="flex items-center gap-2.5 rounded-full px-3 py-3 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:opacity-60 transition">
                             <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -141,7 +143,7 @@ if (isset($__slots)) unset($__slots);
                 </div>
             <?php else: ?>
                 <a href="<?php echo e(route('login')); ?>"
-                    class="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full  text-slate-900 text-xs font-bold uppercase tracking-wider hover:bg-black transition shadow-md"
+                    class="hidden sm:inline-flex items-center justify-center gap-2 px-3 py-3 rounded-full  text-slate-900 text-xs font-bold uppercase tracking-wider hover:opacity-60 transition shadow-md"
                     aria-label="Sign In" title="Sign In">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -156,9 +158,25 @@ if (isset($__slots)) unset($__slots);
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('cart-count', []);
+[$__name, $__params] = $__split('wishlist-count', []);
 
 $__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-2', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
+            <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('cart-count', []);
+
+$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-3', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -202,7 +220,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('category-menu', []);
 
-$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-3', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'lw-3744725179-4', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -213,10 +231,16 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
         </div>
+        <a class="flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+            href="<?php echo e(route('product-catalog', ['shortBy' => 'price_asc'])); ?>">
+            Sale
+            <span class="relative flex size-1.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex size-1.5 rounded-full bg-red-500"></span>
+            </span>
+        </a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="<?php echo e(route('product-catalog')); ?>">New In</a>
-        <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="<?php echo e($firstPage ? route('page', $firstPage->slug) : route('page')); ?>">Info</a>
+            href="<?php echo e($firstPage ? route('page', $firstPage->slug) : url('/')); ?>">About</a>
         <?php if(auth()->guard()->check()): ?>
             <?php
                 $userInitials = strtoupper(substr(trim(auth()->user()->name ?? 'User'), 0, 1));

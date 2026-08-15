@@ -248,7 +248,7 @@
                 };
             @endphp
 
-            <div class="oh-card" data-aos="fade-up">
+            <div class="oh-card">
                 <div class="oh-card-header">
                     <div>
                         <div class="oh-trx">{{ $order->trx_id }}</div>

@@ -39,6 +39,15 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
         Number::useCurrency('IDR');
 
+        // Perbolehkan cek akses oleh guest (parameter nullable) agar tidak TypeError.
+        Gate::before(function (?User $user, string $ability) {
+            if ($user && $user->hasRole('super_admin')) {
+                return true;
+            }
+
+            return null;
+        });
+
         Gate::define('is_stock_available', function (?User $user = null) {
             try {
                 ValidateCartStock::run();

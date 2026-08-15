@@ -8,7 +8,9 @@ use Livewire\Component;
 class CustomerLogin extends Component
 {
     public string $email = '';
+
     public string $password = '';
+
     public bool $remember = false;
 
     public function mount(): void
@@ -21,7 +23,7 @@ class CustomerLogin extends Component
     protected function rules(): array
     {
         return [
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'string', 'min:6'],
         ];
     }
@@ -29,7 +31,7 @@ class CustomerLogin extends Component
     protected function validationAttributes(): array
     {
         return [
-            'email'    => 'Email',
+            'email' => 'Email',
             'password' => 'Password',
         ];
     }
@@ -42,6 +44,7 @@ class CustomerLogin extends Component
             session()->regenerate();
             toast('Berhasil Sign In!', 'success');
             $this->redirect(route('account.orders'), navigate: false);
+
             return;
         }
 

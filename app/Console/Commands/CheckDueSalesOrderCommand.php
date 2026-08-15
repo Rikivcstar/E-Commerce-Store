@@ -7,6 +7,7 @@ use App\States\SalesOrder\Cancel;
 use App\States\SalesOrder\Pending;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CheckDueSalesOrderCommand extends Command
 {
@@ -31,13 +32,28 @@ class CheckDueSalesOrderCommand extends Command
     {
         $now = Carbon::now()->startOfMinute();
 
-        $due_orders = SalesOrder::where('due_date_at', '<=', $now)
-                ->where('status', Pending::class)
-                ->get()->each(function(SalesOrder $sales_order) {
-            $this->info("Due Date Found : #{$sales_order->trx_id}");
+        SalesOrder::where('due_date_at', '<=', $now)
+            ->where('status', Pending::class)
+            ->get()
+            ->each(function (SalesOrder $sales_order) use ($now) {
+                DB::transaction(function () use ($sales_order, $now) {
+                    // Kunci baris agar tidak terjadi balapan dengan webhook pembayaran.
+                    $locked = SalesOrder::whereKey($sales_order->getKey())
+                        ->lockForUpdate()
+                        ->first();
 
-            $sales_order->status->transitionTo(Cancel::class);
-        });
+                    if (! $locked) {
+                        return;
+                    }
 
-     }
+                    if (! ($locked->status instanceof Pending) || $locked->due_date_at > $now) {
+                        return;
+                    }
+
+                    $this->info("Due Date Found : #{$locked->trx_id}");
+
+                    $locked->status->transitionTo(Cancel::class);
+                });
+            });
+    }
 }

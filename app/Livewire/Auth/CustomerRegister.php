@@ -10,8 +10,11 @@ use Livewire\Component;
 class CustomerRegister extends Component
 {
     public string $name = '';
+
     public string $email = '';
+
     public string $password = '';
+
     public string $password_confirmation = '';
 
     public function mount(): void
@@ -24,9 +27,9 @@ class CustomerRegister extends Component
     protected function rules(): array
     {
         return [
-            'name'                  => ['required', 'string', 'min:3', 'max:255'],
-            'email'                 => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password'              => ['required', 'string', 'min:6', 'confirmed'],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required'],
         ];
     }
@@ -34,9 +37,9 @@ class CustomerRegister extends Component
     protected function validationAttributes(): array
     {
         return [
-            'name'                  => 'Name',
-            'email'                 => 'Email',
-            'password'              => 'Password',
+            'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password',
             'password_confirmation' => 'Password confirmation',
         ];
     }
@@ -53,8 +56,8 @@ class CustomerRegister extends Component
         $validated = $this->validate();
 
         $user = User::create([
-            'name'     => $validated['name'],
-            'email'    => $validated['email'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 

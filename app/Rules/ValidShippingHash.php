@@ -17,7 +17,7 @@ class ValidShippingHash implements ValidationRule
     {
         $found = app(ShippingMethodService::class)->getShippingMethod($value);
 
-        if(! $found ){
+        if (! $found) {
             $fail('Shipping Method Not Valid');
         }
     }

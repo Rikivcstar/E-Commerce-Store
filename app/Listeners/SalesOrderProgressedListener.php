@@ -8,8 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SalesOrderProgressedListener
+class SalesOrderProgressedListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
     /**
      * Create the event listener.
      */
@@ -23,8 +25,7 @@ class SalesOrderProgressedListener
      */
     public function handle(SalesOrderProgressedEvent $event): void
     {
-        Mail::queue(
-            new SalesOrderProgressedMail($event->sales_order)
-        );
+        Mail::to($event->sales_order->customer->email)
+            ->queue(new SalesOrderProgressedMail($event->sales_order));
     }
 }

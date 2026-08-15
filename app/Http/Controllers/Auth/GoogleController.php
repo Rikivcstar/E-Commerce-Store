@@ -23,19 +23,21 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
         } catch (\Exception $e) {
-            logger()->error('Google Auth Exception: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            Alert::error('Gagal Login Google', 'Autentikasi gagal: ' . $e->getMessage());
+            logger()->error('Google Auth Exception: '.$e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            Alert::error('Gagal Login Google', 'Autentikasi gagal: '.$e->getMessage());
+
             return redirect('http://webstore.test/login');
         }
 
-        if (!$googleUser || !$googleUser->getEmail()) {
+        if (! $googleUser || ! $googleUser->getEmail()) {
             Alert::error('Gagal Login Google', 'Tidak dapat mengambil informasi email dari akun Google.');
+
             return redirect('http://webstore.test/login');
         }
 
         $user = User::where('google_id', $googleUser->getId())->first();
 
-        if (!$user) {
+        if (! $user) {
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if ($user) {
@@ -44,26 +46,27 @@ class GoogleController extends Controller
                 ]);
             } else {
                 $user = User::create([
-                    'name'      => $googleUser->getName() ?: ($googleUser->getNickname() ?: 'User Google'),
-                    'email'     => $googleUser->getEmail(),
+                    'name' => $googleUser->getName() ?: ($googleUser->getNickname() ?: 'User Google'),
+                    'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'password'  => Hash::make(Str::random(24)),
+                    'password' => Hash::make(Str::random(24)),
                 ]);
             }
         }
 
         $authToken = Str::random(40);
-        Cache::put('google_auth_token_' . $authToken, $user->id, now()->addMinutes(5));
+        Cache::put('google_auth_token_'.$authToken, $user->id, now()->addMinutes(5));
 
-        return redirect('http://webstore.test/auth/google/token-login/' . $authToken);
+        return redirect('http://webstore.test/auth/google/token-login/'.$authToken);
     }
 
     public function tokenLogin(string $token)
     {
-        $userId = Cache::pull('google_auth_token_' . $token);
+        $userId = Cache::pull('google_auth_token_'.$token);
 
-        if (!$userId) {
+        if (! $userId) {
             Alert::error('Autentikasi Gagal', 'Sesi login Google telah kadaluarsa atau tidak valid. Silakan coba lagi.');
+
             return redirect('http://webstore.test/login');
         }
 

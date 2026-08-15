@@ -5,19 +5,29 @@ namespace App\Livewire;
 use App\Contract\CartServiceInterface;
 use App\Data\CartItemData;
 use App\Data\ProductData;
+use App\Models\Product;
 use Livewire\Component;
 
 class AddToCard extends Component
 {
     public int $quantity;
+
     public string $sku;
+
     public int $stock;
+
     public float $price;
+
     public int $weight;
+
     public string $label = 'add to cart';
 
-    public function mount(ProductData $product, CartServiceInterface $cart, string $label = 'add to cart')
+    public function mount(ProductData|Product $product, CartServiceInterface $cart, string $label = 'add to cart')
     {
+        if ($product instanceof Product) {
+            $product = ProductData::from($product);
+        }
+
         $this->sku = $product->sku;
         $this->stock = $product->stock;
         $this->price = $product->price;
@@ -46,7 +56,7 @@ class AddToCard extends Component
     protected function rules(): array
     {
         return [
-            'quantity' => ['min:1', "max:{$this->stock}", 'required', 'integer']
+            'quantity' => ['min:1', "max:{$this->stock}", 'required', 'integer'],
         ];
     }
 

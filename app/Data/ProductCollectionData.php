@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -21,8 +22,8 @@ class ProductCollectionData extends Data
 
         return new self(
             $tag->id,
-            (String) $tag->name,
-            (String) $tag->slug,
+            (string) $tag->name,
+            (string) $tag->slug,
             $tag->products_count
         );
     }

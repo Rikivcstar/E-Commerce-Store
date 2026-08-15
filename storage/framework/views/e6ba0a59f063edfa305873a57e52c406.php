@@ -308,8 +308,8 @@
                 <span>Track order</span>
             </div>
             <div class="nx-hero-eyebrow">Fashion<br>that moves<br>with you.</div>
-            <div class="nx-hero-word">NEXORA</div>
-            <img class="nx-hero-img" src="<?php echo e(asset('images/hero-outfit-women.png')); ?>" alt="Nexora collection">
+            <div class="nx-hero-word">RIVA &amp; CO.</div>
+            <img class="nx-hero-img" src="<?php echo e(asset('images/hero-outfit-women.png')); ?>" alt="Riva & Co. collection">
             <div class="nx-hero-tag">New<br>collection<br>2026</div>
             <div class="nx-hero-actions">
                 <a class="nx-btn nx-btn-primary nx-focus" href="<?php echo e(route('product-catalog')); ?>">Shop now</a>
@@ -321,29 +321,26 @@
     
     <!--[if BLOCK]><![endif]--><?php if($banners->isNotEmpty()): ?>
         <section class="w-full bg-[#F7F5EF] py-4 sm:py-6">
-            <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16"
-                x-data="{
-                    current: 0,
-                    total: <?php echo e($banners->count()); ?>,
-                    timer: null,
-                    autoplay() {
-                        this.stop();
-                        this.timer = setInterval(() => { this.next() }, 5000);
-                    },
-                    stop() {
-                        if (this.timer) clearInterval(this.timer);
-                    },
-                    next() {
-                        this.current = (this.current + 1) % this.total;
-                    },
-                    prev() {
-                        this.current = (this.current - 1 + this.total) % this.total;
-                    }
-                }"
-                x-init="autoplay()"
-                @mouseenter="stop()"
-                @mouseleave="autoplay()">
-                
+            <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16" x-data="{
+                current: 0,
+                total: <?php echo e($banners->count()); ?>,
+                timer: null,
+                autoplay() {
+                    this.stop();
+                    this.timer = setInterval(() => { this.next() }, 5000);
+                },
+                stop() {
+                    if (this.timer) clearInterval(this.timer);
+                },
+                next() {
+                    this.current = (this.current + 1) % this.total;
+                },
+                prev() {
+                    this.current = (this.current - 1 + this.total) % this.total;
+                }
+            }" x-init="autoplay()"
+                @mouseenter="stop()" @mouseleave="autoplay()">
+
                 <div class="group relative overflow-hidden rounded-2xl shadow-xl" style="background:#1C1B14">
                     
                     <div class="relative min-h-[380px] w-full sm:min-h-[460px] lg:min-h-[480px]">
@@ -355,71 +352,92 @@
                                 x-transition:enter-end="opacity-100 scale-100"
                                 x-transition:leave="transition ease-in duration-500 transform"
                                 x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute inset-0 size-full">
-                                
+                                x-transition:leave-end="opacity-0 scale-95" class="absolute inset-0 size-full">
+
                                 <!--[if BLOCK]><![endif]--><?php if($bannerImage): ?>
                                     <img src="<?php echo e($bannerImage); ?>" alt="<?php echo e($banner->title); ?>"
-                                        class="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" loading="lazy">
-                                    <div class="absolute inset-0" style="background:linear-gradient(90deg, rgba(17,16,8,.85) 0%, rgba(17,16,8,.45) 60%, transparent 100%)"></div>
+                                        class="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        loading="lazy">
+                                    <div class="absolute inset-0"
+                                        style="background:linear-gradient(90deg, rgba(17,16,8,.85) 0%, rgba(17,16,8,.45) 60%, transparent 100%)">
+                                    </div>
                                 <?php else: ?>
-                                    <div class="absolute inset-0 flex items-center bg-gradient-to-r from-[#1C1B14] via-[#2A281E] to-[#1C1B14]"></div>
+                                    <div
+                                        class="absolute inset-0 flex items-center bg-gradient-to-r from-[#1C1B14] via-[#2A281E] to-[#1C1B14]">
+                                    </div>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
-                                <div class="absolute inset-0 flex flex-col items-start justify-center gap-4 px-8 sm:px-14 lg:px-18 max-w-3xl">
-                                    <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1 text-xs font-bold text-[#EBE5D8] backdrop-blur-md border border-white/15">
-                                        <span class="size-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                <div
+                                    class="absolute inset-0 flex flex-col items-start justify-center gap-4 px-8 sm:px-14 lg:px-18 max-w-3xl">
+                                    <div
+                                        class="inline-flex items-center gap-2 rounded-full  px-3.5 py-1 text-xs font-bold text-[#EBE5D8] backdrop-blur-md ">
                                         <span>PROMO SPESIAL</span>
                                     </div>
-                                    <h2 class="nx-display max-w-2xl text-3xl sm:text-5xl lg:text-6xl leading-[0.95] text-[#F7F5EF] font-black tracking-tight">
+                                    <h2
+                                        class="nx-display max-w-2xl text-3xl sm:text-5xl lg:text-6xl leading-[0.95] text-[#F7F5EF] font-black tracking-tight">
                                         <?php echo e($banner->title); ?>
 
                                     </h2>
                                     <!--[if BLOCK]><![endif]--><?php if($banner->subtitle): ?>
-                                        <p class="max-w-xl text-sm sm:text-base text-white/80 font-normal leading-relaxed">
+                                        <p
+                                            class="max-w-xl text-sm sm:text-base text-white/80 font-normal leading-relaxed">
                                             <?php echo e($banner->subtitle); ?>
 
                                         </p>
                                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-                                    <a href="<?php echo e($banner->link_url ?? route('product-catalog')); ?>" class="nx-btn nx-btn-primary nx-focus mt-2 shadow-lg inline-flex items-center">
+                                    <a href="<?php echo e($banner->link_url ?? route('product-catalog')); ?>"
+                                        class="nx-btn nx-btn-primary nx-focus mt-2 shadow-lg inline-flex items-center">
                                         <span><?php echo e($banner->button_label ?? 'Belanja Sekarang'); ?></span>
-                                        <svg class="size-4 ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                        <svg class="size-4 ml-1" xmlns="http://www.w3.org/2000/svg" width="24"
+                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M5 12h14" />
+                                            <path d="m12 5 7 7-7 7" />
+                                        </svg>
                                     </a>
                                 </div>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                     </div>
 
-                    
                     <!--[if BLOCK]><![endif]--><?php if($banners->count() > 1): ?>
                         <button type="button" @click="prev()"
                             class="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex size-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black hover:scale-110"
                             aria-label="Previous slide">
-                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6" />
+                            </svg>
                         </button>
                         <button type="button" @click="next()"
                             class="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex size-11 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black hover:scale-110"
                             aria-label="Next slide">
-                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
                         </button>
 
-                        
-                        <div class="absolute bottom-5 right-6 z-20 flex items-center gap-2 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/15">
+                        <div
+                            class="absolute bottom-5 right-6 z-20 flex items-center gap-2 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/15">
                             <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <button type="button" @click="current = <?php echo e($index); ?>"
-                                    :class="current === <?php echo e($index); ?> ? 'w-7 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'"
-                                    class="h-2 rounded-full transition-all duration-300" aria-label="Slide <?php echo e($index + 1); ?>"></button>
+                                    :class="current === <?php echo e($index); ?> ? 'w-7 bg-white' :
+                                        'w-2 bg-white/40 hover:bg-white/70'"
+                                    class="h-2 rounded-full transition-all duration-300"
+                                    aria-label="Slide <?php echo e($index + 1); ?>"></button>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
-                            <span class="text-[11px] font-bold text-white/80 pl-2 border-l border-white/20" x-text="`${current + 1} / ${total}`"></span>
+                            <span class="text-[11px] font-bold text-white/80 pl-2 border-l border-white/20"
+                                x-text="`${current + 1} / ${total}`"></span>
                         </div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
             </div>
         </section>
     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-    
 
-    
     <section class="w-full py-10" style="background:var(--nx-ink)">
         <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16">
             <div class="grid grid-cols-1 divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0"
@@ -465,9 +483,11 @@
         <div
             class="mx-auto flex min-h-[420px] max-w-7xl flex-col items-start justify-center gap-6 px-8 py-16 sm:min-h-[480px] sm:px-12 lg:px-16">
             <p class="nx-label" style="color:var(--nx-muted)">New season</p>
-            <h2 class="nx-display max-w-sm text-6xl leading-[0.9] sm:text-8xl" style="color:var(--nx-ink)">New<br>Vibes
+            <h2 class="nx-display max-w-sm text-6xl leading-[0.9] sm:text-8xl" style="color:var(--nx-ink)">
+                New<br>Vibes
             </h2>
-            <p class="max-w-xs text-sm leading-relaxed" style="color:var(--nx-muted)">Discover everything new and now —
+            <p class="max-w-xs text-sm leading-relaxed" style="color:var(--nx-muted)">Discover everything new and now
+                —
                 engineered for daily comfort and bold contemporary style.</p>
             <a href="<?php echo e(route('product-catalog')); ?>" class="nx-btn nx-btn-primary nx-focus mt-2">
                 Explore Collection
@@ -481,19 +501,53 @@
     <section class="w-full border-y py-8" style="background:var(--nx-paper);border-color:var(--nx-line)">
         <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16">
             <div class="grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4">
-                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = [['truck', 'Fast Delivery', 'Quick & safe delivery'], ['rotate-ccw', 'Easy Returns', 'Within 15 days'], ['shield-check', 'Quality Assured', 'Best fashion, best quality'], ['lock', 'Secure Payment', '100% secure checkout']]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$icon, $title, $desc]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="flex items-center gap-4">
-                        <div class="flex size-11 shrink-0 items-center justify-center rounded-full border"
-                            style="border-color:var(--nx-ink)">
-                            <i data-lucide="<?php echo e($icon); ?>" class="size-5" style="color:var(--nx-ink)"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">
-                                <?php echo e($title); ?></p>
-                            <p class="mt-0.5 text-xs" style="color:var(--nx-muted)"><?php echo e($desc); ?></p>
-                        </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-full border border-[--nx-ink]">
+                        <svg class="size-5 text-[--nx-ink]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>
+                        </svg>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Fast Delivery</p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">Quick & safe delivery</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-full border border-[--nx-ink]">
+                        <svg class="size-5 text-[--nx-ink]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Easy Returns</p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">Within 15 days</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-full border border-[--nx-ink]">
+                        <svg class="size-5 text-[--nx-ink]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Quality Assured</p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">Best fashion, best quality</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-full border border-[--nx-ink]">
+                        <svg class="size-5 text-[--nx-ink]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Secure Payment</p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">100% secure checkout</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -502,7 +556,7 @@
     <section id="featured" class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
         <div class="mx-auto max-w-7xl">
             <div class="mb-8 flex items-end justify-between border-b pb-4" style="border-color:var(--nx-line)">
-                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)">Best of Nexora</h2>
+                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)">Best of Riva &amp; Co.</h2>
                 <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)">View
                     All</a>
             </div>
@@ -684,66 +738,238 @@
 
         
         <!--[if BLOCK]><![endif]--><?php if(isset($static_pages) && $static_pages->count() > 0): ?>
-            <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
+            <section
+                class="w-full py-20 px-4 sm:px-8 lg:px-16"
+                style="background:var(--nx-paper)"
+                x-data="{
+                    loaded: false,
+                    activeCard: null,
+                    bookmarks: [],
+                    toggleBookmark(id, event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        this.bookmarks.includes(id)
+                            ? this.bookmarks = this.bookmarks.filter(b => b !== id)
+                            : this.bookmarks.push(id);
+                    },
+                    isBookmarked(id) { return this.bookmarks.includes(id); }
+                }"
+                x-init="requestAnimationFrame(() => setTimeout(() => loaded = true, 80))"
+                @keydown.escape.window="activeCard = null"
+            >
                 <div class="mx-auto max-w-7xl">
+
                     
-                    <div class="text-center mb-12">
-                        <p class="nx-label" style="color:var(--nx-muted)">Information & Guides</p>
-                        <h2 class="nx-display text-2xl sm:text-3xl mt-2" style="color:var(--nx-ink)">Pusat Informasi
-                        </h2>
-                        <p class="mt-3 text-sm max-w-lg mx-auto leading-relaxed" style="color:var(--nx-muted)">
-                            Temukan panduan, kebijakan, dan informasi penting seputar layanan kami untuk pengalaman
-                            belanja terbaik.
+                    <div
+                        class="mb-12 transition-all duration-700 ease-out"
+                        :class="loaded ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 -translate-y-4 blur-sm'"
+                    >
+                        <p class="text-xs font-bold uppercase tracking-[0.18em] mb-3" style="color:var(--nx-muted)">Information &amp; Guides</p>
+                        <h2 class="font-display text-4xl sm:text-5xl font-bold leading-[1.05]" style="color:var(--nx-ink)">Pusat Informasi</h2>
+                        <p class="mt-3 text-sm max-w-md leading-relaxed" style="color:var(--nx-muted)">
+                            Panduan, kebijakan, dan informasi penting seputar layanan kami untuk pengalaman belanja terbaik.
                         </p>
+
+                        
+                        <div class="mt-6 space-y-1.5">
+                            <div class="h-px rounded-full bg-[--nx-ink] opacity-80 transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
+                                :style="loaded ? 'width:100%' : 'width:0%'" style="transition-delay:0.3s"></div>
+                            <div class="h-px rounded-full bg-[--nx-ink] opacity-50 transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
+                                :style="loaded ? 'width:66%' : 'width:0%'" style="transition-delay:0.42s"></div>
+                            <div class="h-px rounded-full bg-[--nx-ink] opacity-25 transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
+                                :style="loaded ? 'width:33%' : 'width:0%'" style="transition-delay:0.54s"></div>
+                        </div>
                     </div>
 
                     
-                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8">
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $static_pages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
-                                $pageImg = $page->image_url;
-                                $pageColors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#06B6D4'];
-                                $pageColor = $pageColors[$loop->index % count($pageColors)];
+                                $pageImg   = $page->image_url;
+                                $accentMap = ['#3B82F6','#8B5CF6','#10B981','#F59E0B','#EF4444','#06B6D4'];
+                                $accent    = $accentMap[$loop->index % count($accentMap)];
+                                $delay     = 0.55 + ($loop->index * 0.12);
+                                $cardId    = 'page-' . $page->id;
+                                $excerpt   = $page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name;
                             ?>
-                            <a href="<?php echo e(route('page', $page->slug)); ?>"
-                                class="group nx-card-link nx-focus block rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                                style="background:#fff">
+
+                            <article
+                                class="group relative flex flex-col overflow-hidden rounded-xl border cursor-pointer"
+                                style="background:#fff; border-color:rgba(0,0,0,0.08);"
+                                :class="loaded ? 'opacity-100 translate-y-0 scale-100 blur-none' : 'opacity-0 translate-y-8 scale-90 blur-md'"
+                                :style="'transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease; transition-delay: <?php echo e($delay); ?>s'"
+                                x-on:click="activeCard = '<?php echo e($cardId); ?>'"
+                                x-on:mouseenter="$el.style.transform = 'translateY(-5px) scale(1.01)'; $el.style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)'"
+                                x-on:mouseleave="$el.style.transform = ''; $el.style.boxShadow = ''"
+                            >
                                 
-                                <div class="relative aspect-[16/10] w-full overflow-hidden"
-                                    style="background:#EAE7DD">
+                                <div class="relative overflow-hidden shrink-0" style="height:14rem;">
                                     <!--[if BLOCK]><![endif]--><?php if($pageImg): ?>
-                                        <img src="<?php echo e($pageImg); ?>" alt="<?php echo e($page->name); ?>"
-                                            class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                                        <img
+                                            src="<?php echo e($pageImg); ?>"
+                                            alt="<?php echo e($page->name); ?>"
+                                            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                        >
                                     <?php else: ?>
-                                        <div class="h-full w-full flex items-center justify-center"
-                                            style="background:linear-gradient(135deg, <?php echo e($pageColor); ?>22, <?php echo e($pageColor); ?>44)">
-                                            <i data-lucide="file-text" class="size-10"
-                                                style="color:<?php echo e($pageColor); ?>"></i>
+                                        <div
+                                            class="h-full w-full flex items-center justify-center"
+                                            style="background: linear-gradient(135deg, <?php echo e($accent); ?>18, <?php echo e($accent); ?>38)"
+                                        >
+                                            <i data-lucide="file-text" class="size-12 opacity-60" style="color:<?php echo e($accent); ?>"></i>
                                         </div>
                                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-                                </div>
-                                
-                                <div class="p-5">
-                                    <h3 class="nx-display text-lg leading-snug line-clamp-2 transition-colors duration-200 group-hover:opacity-80"
-                                        style="color:var(--nx-ink)">
-                                        <?php echo e($page->name); ?>
 
-                                    </h3>
-                                    <p class="mt-2 text-xs leading-relaxed line-clamp-2"
-                                        style="color:var(--nx-muted)">
-                                        <?php echo e($page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name); ?>
+                                    
+                                    <div class="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+
+                                    
+                                    <button
+                                        type="button"
+                                        class="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full backdrop-blur-sm border border-white/20 transition-all duration-200 hover:scale-110 active:scale-95 z-10"
+                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? 'bg-yellow-400 text-yellow-900 border-yellow-300' : 'bg-black/35 text-white/80 hover:text-white'"
+                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)"
+                                        title="Simpan"
+                                    >
+                                        <i data-lucide="bookmark" class="size-3.5 transition-all"
+                                           :style="isBookmarked('<?php echo e($cardId); ?>') ? 'fill:currentColor' : ''"></i>
+                                    </button>
+
+                                    
+                                    <div class="absolute bottom-3 left-3 text-white z-10">
+                                        <p class="text-[10px] font-semibold uppercase tracking-widest opacity-85">Panduan &amp; Informasi</p>
+                                        <p class="text-[10px] opacity-60 mt-0.5">Riva &amp; Co.</p>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="flex flex-col flex-1 p-5">
+                                    <span
+                                        class="inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider mb-3"
+                                        style="background:<?php echo e($accent); ?>18; color:<?php echo e($accent); ?>"
+                                    >
+                                        <span class="size-1.5 rounded-full shrink-0 inline-block" style="background:<?php echo e($accent); ?>"></span>
+                                        Info
+                                    </span>
+
+                                    <h3
+                                        class="font-display font-semibold text-[1.05rem] leading-snug line-clamp-3 transition-opacity duration-200 group-hover:opacity-70"
+                                        style="color:var(--nx-ink)"
+                                    ><?php echo e($page->name); ?></h3>
+
+                                    <p class="mt-2 text-xs leading-relaxed line-clamp-2 flex-1" style="color:var(--nx-muted)">
+                                        <?php echo e($excerpt); ?>
 
                                     </p>
+
                                     <span
-                                        class="nx-card-arrow inline-flex items-center gap-1.5 mt-4 text-xs font-bold uppercase tracking-wider"
-                                        style="color:<?php echo e($pageColor); ?>">
-                                        Baca &rarr;
+                                        class="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider"
+                                        style="color:<?php echo e($accent); ?>"
+                                    >
+                                        Baca selengkapnya
+                                        <i data-lucide="arrow-right" class="size-3 transition-transform duration-200 group-hover:translate-x-1"></i>
                                     </span>
                                 </div>
-                            </a>
+                            </article>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                     </div>
                 </div>
+
+                
+                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $static_pages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                        $pageImg = $page->image_url;
+                        $accentMap = ['#3B82F6','#8B5CF6','#10B981','#F59E0B','#EF4444','#06B6D4'];
+                        $accent  = $accentMap[$loop->index % count($accentMap)];
+                        $cardId  = 'page-' . $page->id;
+                        $excerpt = $page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name;
+                    ?>
+
+                    
+                    <div
+                        x-show="activeCard === '<?php echo e($cardId); ?>'"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
+                        style="display:none"
+                    >
+                        
+                        <div
+                            class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            x-on:click="activeCard = null"
+                        ></div>
+
+                        
+                        <div
+                            x-show="activeCard === '<?php echo e($cardId); ?>'"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 scale-95 translate-y-5"
+                            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            class="relative z-10 w-full max-w-2xl max-h-[88vh] overflow-hidden rounded-2xl shadow-2xl flex flex-col"
+                            style="background:#fff; display:none"
+                        >
+                            
+                            <button
+                                type="button"
+                                class="absolute top-4 right-4 z-20 flex size-8 items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/55 transition-all duration-200 hover:scale-110 active:scale-95"
+                                x-on:click="activeCard = null"
+                            >
+                                <i data-lucide="x" class="size-4"></i>
+                            </button>
+
+                            
+                            <div class="relative h-56 sm:h-64 shrink-0 overflow-hidden" style="background:#EAE7DD">
+                                <!--[if BLOCK]><![endif]--><?php if($pageImg): ?>
+                                    <img src="<?php echo e($pageImg); ?>" alt="<?php echo e($page->name); ?>" class="h-full w-full object-cover">
+                                <?php else: ?>
+                                    <div class="h-full w-full flex items-center justify-center"
+                                         style="background:linear-gradient(135deg, <?php echo e($accent); ?>18, <?php echo e($accent); ?>38)">
+                                        <i data-lucide="file-text" class="size-16 opacity-50" style="color:<?php echo e($accent); ?>"></i>
+                                    </div>
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent"></div>
+                                <div class="absolute bottom-4 left-5 text-white">
+                                    <p class="text-[11px] font-bold uppercase tracking-widest opacity-85">Panduan &amp; Informasi</p>
+                                    <p class="text-[11px] opacity-55 mt-0.5">Riva &amp; Co.</p>
+                                </div>
+                            </div>
+
+                            
+                            <div class="overflow-y-auto p-6 sm:p-8 flex flex-col gap-4">
+                                <span
+                                    class="inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
+                                    style="background:<?php echo e($accent); ?>18; color:<?php echo e($accent); ?>"
+                                >
+                                    <span class="size-1.5 rounded-full inline-block" style="background:<?php echo e($accent); ?>"></span>
+                                    Info
+                                </span>
+
+                                <h2 class="font-display text-2xl font-bold leading-snug -mt-1" style="color:var(--nx-ink)">
+                                    <?php echo e($page->name); ?>
+
+                                </h2>
+                                <p class="text-sm leading-relaxed" style="color:var(--nx-muted)">
+                                    <?php echo e($excerpt); ?>
+
+                                </p>
+                                <a
+                                    href="<?php echo e(route('page', $page->slug)); ?>"
+                                    class="mt-1 inline-flex w-fit items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-95"
+                                    style="background:<?php echo e($accent); ?>"
+                                >
+                                    Baca Artikel Lengkap
+                                    <i data-lucide="arrow-right" class="size-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
             </section>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 

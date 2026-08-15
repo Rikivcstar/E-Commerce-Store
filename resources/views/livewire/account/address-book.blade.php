@@ -225,7 +225,7 @@
         </div>
 
         @if ($showForm)
-            <form wire:submit="save" class="ab-form" data-aos="fade-up">
+            <form wire:submit="save" class="ab-form">
                 <div class="ab-form-title">{{ $editingId ? 'Edit Address' : 'New Address' }}</div>
                 <div class="ab-field-grid">
                     <div>
@@ -284,7 +284,7 @@
         @endif
 
         @forelse ($addresses as $address)
-            <div class="ab-card" data-aos="fade-up">
+            <div class="ab-card">
                 <div class="ab-card-head">
                     <div class="ab-card-label">
                         {{ $address->label }}

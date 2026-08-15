@@ -10,12 +10,12 @@ class Region extends Model
 {
     public $timestamps = false;
 
-    public function parent() : BelongsTo
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Region::class, 'parent_code', 'code');
     }
 
-    public function children() : HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(Region::class, 'parent_code', 'code');
     }

@@ -1,5 +1,5 @@
 <div>
-    <x-store-layout>
+    <x-layouts.app>
         @push('head')
             <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
             <script type="text/javascript" defer>
@@ -38,8 +38,7 @@
         @endpush
 
         <div class="container mx-auto max-w-2xl px-3 sm:px-5 py-6">
-            <div class="print-container relative overflow-hidden rounded-2xl bg-white p-5 sm:p-6 shadow-md border border-[#e2e8f0]"
-                data-aos="fade-up">
+            <div class="print-container relative overflow-hidden rounded-2xl bg-white p-5 sm:p-6 shadow-md border border-[#e2e8f0]">
 
                 <div
                     class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[#f0f0eb] pb-4">
@@ -264,7 +263,7 @@
                         @else
                             <span
                                 class="text-xs font-bold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-xl border border-amber-200">
-                                Silakan Hubungi CS WhatsApp: 08999999999
+                                Silakan Hubungi CS WhatsApp: {{ config('services.contact.whatsapp') }}
                             </span>
                         @endif
                     </div>
@@ -272,5 +271,5 @@
 
             </div>
         </div>
-    </x-store-layout>
+    </x-layouts.app>
 </div>

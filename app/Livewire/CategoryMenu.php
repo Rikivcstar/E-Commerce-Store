@@ -9,13 +9,15 @@ class CategoryMenu extends Component
 {
     public function render()
     {
-        $categories = Category::query()
-            ->active()
-            ->whereNull('parent_id')
-            ->with(['children' => fn ($query) => $query->active()->orderBy('order_column')])
-            ->withCount('products')
-            ->orderBy('order_column')
-            ->get();
+        $categories = \Illuminate\Support\Facades\Cache::remember('menu_categories', now()->addHour(), function () {
+            return Category::query()
+                ->active()
+                ->whereNull('parent_id')
+                ->with(['children' => fn ($query) => $query->active()->orderBy('order_column')])
+                ->withCount('products')
+                ->orderBy('order_column')
+                ->get();
+        });
 
         return view('livewire.category-menu', compact('categories'));
     }

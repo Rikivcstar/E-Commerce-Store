@@ -3,15 +3,13 @@
 namespace App\Events;
 
 use App\Data\SalesOrderData;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SalesOrderCancelledEvent
+class SalesOrderCancelledEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,8 +18,7 @@ class SalesOrderCancelledEvent
      */
     public function __construct(
         public SalesOrderData $sales_order
-    )
-    {
+    ) {
         //
     }
 
@@ -33,7 +30,12 @@ class SalesOrderCancelledEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('orders.'.$this->sales_order->trx_id),
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'status.updated';
     }
 }

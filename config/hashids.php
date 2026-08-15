@@ -31,7 +31,7 @@ return [
         'main' => [
             'salt' => env('HASH_ID_SALT'),
             'length' => 0,
-            'alphabet' => 'abcdfghjklmnpqrstuvwxyz23456789'
+            'alphabet' => 'abcdfghjklmnpqrstuvwxyz23456789',
         ],
 
         'alternative' => [

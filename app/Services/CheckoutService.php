@@ -1,12 +1,12 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Services;
 
 use App\Data\CartItemData;
 use App\Data\CheckoutData;
 use App\Data\SalesOrderData;
-use App\Services\SalesOrderService;
 use App\Events\SalesOrderCreatedEvent;
 use App\Models\Product;
 use App\Models\SalesOrder;
@@ -16,17 +16,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class CheckoutService {
-
-    public function makeAndOrder(CheckoutData $checkout_data) : SalesOrderData
+class CheckoutService
+{
+    public function makeAndOrder(CheckoutData $checkout_data): SalesOrderData
     {
-        $sales_order = DB::transaction(function() use ($checkout_data) {
+        $sales_order = DB::transaction(function () use ($checkout_data) {
             $date = Carbon::now()->format('Ymd');
-            $random = strtoupper(Str::random(5));
             $items = collect([]);
+
+            // Validasi ulang kupon di server — jangan percaya angka dari form.
+            $discount_total = (float) $checkout_data->discount_total;
+
+            if ($checkout_data->coupon_code) {
+                $coupon_service = app(CouponService::class);
+                $coupon = $coupon_service->resolve($checkout_data->coupon_code, $checkout_data->sub_total);
+                $discount_total = $coupon_service->discount($coupon, $checkout_data->sub_total);
+            }
+
+            $total = max(0, $checkout_data->sub_total + $checkout_data->shipping_cost - $discount_total);
+
             $sales_order = SalesOrder::query()->create([
-                'user_id'     => Auth::id(),
-                'trx_id' =>  "TRX-{$date}-{$random}",
+                'user_id' => Auth::id(),
+                'trx_id' => $this->generateUniqueTrxId($date),
                 'status' => Pending::class,
                 'customer_full_name' => $checkout_data->customer->full_name,
                 'customer_email' => $checkout_data->customer->email,
@@ -56,38 +67,36 @@ class CheckoutService {
                 'payment_label' => $checkout_data->payment->label,
                 'payment_payload' => $checkout_data->payment->payload,
                 'coupon_code' => $checkout_data->coupon_code,
-                'discount_total' => $checkout_data->discount_total,
+                'discount_total' => $discount_total,
                 'sub_total' => $checkout_data->sub_total,
                 'shipping_total' => $checkout_data->shipping_cost,
-                'total' => $checkout_data->grand_total,
-                'due_date_at' => Carbon::now()->addHour(24)
+                'total' => $total,
+                'due_date_at' => Carbon::now()->addHour(24),
             ]);
 
             /** @var CartItemData $item */
-            foreach($checkout_data->cart->items as $item)
-                {
-                    $product = Product::where('sku', $item->sku)->lockForUpdate()->firstOrFail();
-                    if($product->stock < $item->quantity)
-                        {
-                            throw new \RuntimeException("Stok tidak mencukupi untuk SKU {$product->sku}.");
-                        }
-
-                    $product->stock -= $item->quantity;
-                    $product->save();
-
-                    $items->push([
-                        'name' => $item->product()->name,
-                        'short_desc' => $item->product()->short_desc ?? '-',
-                        'sku' => $item->product()->sku,
-                        'slug' => $item->product()->slug,
-                        'description' => $item->product()->description ?? '',
-                        'cover_url' => $item->product()->cover_url,
-                        'quantity' => $item->quantity,
-                        'price' => $item->price,
-                        'total' => $item->price * $item->quantity,
-                        'weight' => $item->weight
-                    ]);
+            foreach ($checkout_data->cart->items as $item) {
+                $product = Product::where('sku', $item->sku)->lockForUpdate()->firstOrFail();
+                if ($product->stock < $item->quantity) {
+                    throw new \RuntimeException("Stok tidak mencukupi untuk SKU {$product->sku}.");
                 }
+
+                $product->stock -= $item->quantity;
+                $product->save();
+
+                $items->push([
+                    'name' => $item->product()->name,
+                    'short_desc' => $item->product()->short_desc ?? '-',
+                    'sku' => $item->product()->sku,
+                    'slug' => $item->product()->slug,
+                    'description' => $item->product()->description ?? '',
+                    'cover_url' => $item->product()->cover_url,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price,
+                    'total' => $item->price * $item->quantity,
+                    'weight' => $item->weight,
+                ]);
+            }
 
             $sales_order->items()->createMany($items);
 
@@ -104,5 +113,14 @@ class CheckoutService {
 
         return $data;
     }
+
+    private function generateUniqueTrxId(string $date): string
+    {
+        do {
+            $random = strtoupper(Str::random(6));
+            $candidate = "TRX-{$date}-{$random}";
+        } while (SalesOrder::query()->where('trx_id', $candidate)->exists());
+
+        return $candidate;
+    }
 }
-?>

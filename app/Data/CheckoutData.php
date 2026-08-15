@@ -24,7 +24,7 @@ class CheckoutData extends Data
         public CartData $cart,
         public ShippingData $shipping,
         public PaymentData $payment,
-        public string|null $coupon_code = null,
+        public ?string $coupon_code = null,
         public float $discount_total = 0.0
     ) {
         $this->sub_total = $cart->total;

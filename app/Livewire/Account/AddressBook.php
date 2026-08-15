@@ -3,7 +3,6 @@
 namespace App\Livewire\Account;
 
 use App\Data\RegionData;
-use App\Models\UserAddress;
 use App\Services\RegionQueryService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;

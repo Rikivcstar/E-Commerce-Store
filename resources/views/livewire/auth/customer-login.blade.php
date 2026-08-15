@@ -407,9 +407,7 @@
             <div class="auth-form-wrap">
                 {{-- Mobile Logo --}}
                 <a href="{{ url('/') }}" class="auth-mobile-logo">
-                    <div class="auth-mobile-logo-icon">
-                        <i data-lucide="zap"></i>
-                    </div>
+                    <img src="{{ asset('images/logo.png') }}" class="size-8 object-contain rounded-full bg-white p-0.5 shadow-sm border border-amber-900/10" alt="{{ config('app.name') }}">
                     <span class="auth-mobile-logo-text">{{ config('app.name') }}</span>
                 </a>
 

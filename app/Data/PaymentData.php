@@ -17,6 +17,6 @@ class PaymentData extends Data
         public array $payload = []
 
     ) {
-        $this->hash = md5("{$driver}|{$method}|". json_encode($payload));
+        $this->hash = md5("{$driver}|{$method}|".json_encode($payload));
     }
 }

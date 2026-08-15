@@ -16,8 +16,8 @@ class GlobalSearch extends Component
 
         if (strlen($queryText) >= 2) {
             $matchingProducts = Product::query()
-                ->where('name', 'like', '%' . $queryText . '%')
-                ->orWhere('description', 'like', '%' . $queryText . '%')
+                ->where('name', 'like', '%'.$queryText.'%')
+                ->orWhere('description', 'like', '%'.$queryText.'%')
                 ->latest()
                 ->take(6)
                 ->get();

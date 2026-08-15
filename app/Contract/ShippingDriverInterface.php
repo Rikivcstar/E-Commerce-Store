@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Contract;
 
@@ -10,11 +10,10 @@ use App\Data\ShippingData;
 use App\Data\ShippingServiceData;
 use Spatie\LaravelData\DataCollection;
 
-
-interface ShippingDriverInterface{
+interface ShippingDriverInterface
+{
     /** @return DataCollection<ShippingServiceData> */
-    public function getServices() : DataCollection;
-
+    public function getServices(): DataCollection;
 
     public function getRate(
         RegionData $origin,
@@ -24,6 +23,3 @@ interface ShippingDriverInterface{
 
     ): ?ShippingData;
 }
-
-
-?>

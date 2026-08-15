@@ -228,19 +228,32 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $pData) {
             $slug = Str::slug($pData['name']);
-            $sku = 'SKU-' . strtoupper(Str::random(6));
 
-            $product = Product::updateOrCreate(
-                ['slug' => $slug],
-                [
+            // Jangan pernah me-regenerate SKU pada update ulang — SKU dipakai
+            // sebagai relasi ke sales_order_items (dashboard, report, dll).
+            $product = Product::where('slug', $slug)->first();
+
+            if (! $product) {
+                $sku = 'SKU-'.strtoupper(Str::random(6));
+
+                $product = Product::create([
+                    'slug' => $slug,
                     'name' => $pData['name'],
                     'sku' => $sku,
                     'description' => $pData['description'],
                     'stock' => $pData['stock'],
                     'price' => $pData['price'],
                     'weight' => $pData['weight'],
-                ]
-            );
+                ]);
+            } else {
+                $product->update([
+                    'name' => $pData['name'],
+                    'description' => $pData['description'],
+                    'stock' => $pData['stock'],
+                    'price' => $pData['price'],
+                    'weight' => $pData['weight'],
+                ]);
+            }
 
             // Attach Category
             if (isset($categories[$pData['category']])) {

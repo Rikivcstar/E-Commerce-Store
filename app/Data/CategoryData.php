@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -13,7 +14,7 @@ class CategoryData extends Data
         public int $id,
         public string $name,
         public string $slug,
-        public int|null $parent_id,
+        public ?int $parent_id,
         public int $product_count,
         public array $children,
     ) {}

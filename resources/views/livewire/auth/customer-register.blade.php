@@ -327,11 +327,7 @@
             <img src="{{ asset('images/final-image-ilus.png') }}" class="auth-panel-img" alt="Illustration">
             <div class="auth-panel-content">
                 <a href="{{ url('/') }}" class="auth-panel-logo">
-                    <div class="auth-panel-logo-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                        </svg>
-                    </div>
+                    <img src="{{ asset('images/logo.png') }}" class="size-9 object-contain rounded-full bg-white p-0.5 shadow-sm border border-amber-900/10" alt="{{ config('app.name') }}">
                     <span class="auth-panel-logo-text">{{ config('app.name') }}</span>
                 </a>
             </div>
@@ -342,9 +338,7 @@
             <div class="auth-form-wrap">
                 {{-- Mobile Logo --}}
                 <a href="{{ url('/') }}" class="auth-mobile-logo">
-                    <div class="auth-mobile-logo-icon">
-                        <i data-lucide="zap"></i>
-                    </div>
+                    <img src="{{ asset('images/logo.png') }}" class="size-8 object-contain rounded-full bg-white p-0.5 shadow-sm border border-amber-900/10" alt="{{ config('app.name') }}">
                     <span class="auth-mobile-logo-text">{{ config('app.name') }}</span>
                 </a>
 

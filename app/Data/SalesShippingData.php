@@ -8,7 +8,7 @@ class SalesShippingData extends Data
 {
     public function __construct(
         public string $driver,
-        public string|null $receipt_number,
+        public ?string $receipt_number,
         public string $courier,
         public string $service,
         public string $estimated_delivery,

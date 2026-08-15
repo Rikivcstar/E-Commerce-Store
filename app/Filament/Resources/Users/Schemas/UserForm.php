@@ -35,15 +35,15 @@ class UserForm
                             ->password()
                             ->maxLength(255)
                             ->revealable()
-                            ->required(fn($record) => $record == null)
-                            ->dehydrateStateUsing(fn($state) => ! empty($state) ? Hash::make($state) : ''),
+                            ->required(fn ($record) => $record == null)
+                            ->dehydrateStateUsing(fn ($state) => ! empty($state) ? Hash::make($state) : ''),
                         TextInput::make('password_confirmation')
                             ->password()
                             ->required()
                             ->dehydrated(false)
                             ->revealable()
-                            ->maxLength(255)
-                    ])
+                            ->maxLength(255),
+                    ]),
             ])
             ->columns(1);
     }

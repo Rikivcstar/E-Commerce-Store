@@ -11,7 +11,7 @@ class OrderHistory extends Component
 {
     public function mount(): void
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             redirect()->route('login');
         }
     }
@@ -20,7 +20,7 @@ class OrderHistory extends Component
     {
         return Auth::user()
             ->salesOrders
-            ->map(fn($order) => SalesOrderData::fromModel($order));
+            ->map(fn ($order) => SalesOrderData::fromModel($order));
     }
 
     public function render()

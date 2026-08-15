@@ -2,20 +2,29 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use App\Contract\CartServiceInterface;
 use App\Data\ProductData;
 use App\Models\Product;
 use Illuminate\Support\Collection;
-use App\Contract\CartServiceInterface;
+use Livewire\Attributes\Lazy;
+use Livewire\Component;
 
+#[Lazy]
 class Cart extends Component
 {
     public string $subTotal;
 
     public string $total;
 
-    public function mount(CartServiceInterface $cart)
+    public function placeholder()
     {
+        return view('livewire.cart-skeleton');
+    }
+
+    public function mount()
+    {
+        $cart = app(CartServiceInterface::class);
+
         $all = $cart->all();
 
         $this->subTotal = $all->total_formatted;

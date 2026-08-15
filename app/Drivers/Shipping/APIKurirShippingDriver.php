@@ -84,7 +84,7 @@ class APIKurirShippingDriver implements ShippingDriverInterface
                 ]);
 
             if ($response->failed()) {
-                Log::error('APIKurir Rate API Error: ' . $response->body());
+                Log::error('APIKurir Rate API Error: '.$response->body());
 
                 return null;
             }
@@ -94,7 +94,7 @@ class APIKurirShippingDriver implements ShippingDriverInterface
             if (empty($data)) {
                 return null;
             }
-            $est = data_get($data, 'minDuration') . ' - ' . data_get($data, 'maxDuration') . ' ' . data_get($data, 'durationType');
+            $est = data_get($data, 'minDuration').' - '.data_get($data, 'maxDuration').' '.data_get($data, 'durationType');
 
             return new ShippingData(
                 $this->driver,
@@ -108,7 +108,7 @@ class APIKurirShippingDriver implements ShippingDriverInterface
                 data_get($data, 'logoUrl')
             );
         } catch (\Throwable $e) {
-            Log::error('APIKurir Driver Exception: ' . $e->getMessage());
+            Log::error('APIKurir Driver Exception: '.$e->getMessage());
 
             return null;
         }

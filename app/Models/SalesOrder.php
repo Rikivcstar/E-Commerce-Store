@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use App\States\SalesOrder\Cancel;
 use App\States\SalesOrder\Completed;
 use App\States\SalesOrder\Pending;
@@ -20,25 +19,26 @@ class SalesOrder extends Model
     use HasStates, LogsActivity;
 
     protected $with = ['items'];
+
     protected $casts = [
         'status' => SalesOrderState::class,
-        'payment_payload' => 'json'
+        'payment_payload' => 'json',
     ];
 
-    public function items() : HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(SalesOrderItem::class);
     }
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-     public function getActivitylogOptions(): LogOptions
+    public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['status', 'total']);
+            ->logOnly(['status', 'total']);
     }
 
     public function getStatusTimelineAttribute(): array

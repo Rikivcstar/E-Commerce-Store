@@ -15,12 +15,14 @@ class CartCount extends Component
         $this->count = $cart->all()->total_quantity;
 
     }
+
     #[On('cartUpdated')]
-   public function updateCount(CartServiceInterface $cart)
+    public function updateCount(CartServiceInterface $cart)
     {
         $this->count = $cart->all()->total_quantity;
 
     }
+
     public function render()
     {
         return view('livewire.cart-count');

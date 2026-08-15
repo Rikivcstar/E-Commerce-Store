@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 // Mode strict, supaya PHP lebih ketat dalam cek tipe data (int, string, dll)
 
 namespace App\Services;
+
 // Namespace = lokasi class agar tidak bentrok dengan class lain
 
 // Import class dan library yang dipakai
@@ -10,7 +12,7 @@ use App\Contract\CartServiceInterface; // Interface yang wajib diimplementasi
 use App\Data\CartData;                 // Representasi data keranjang
 use App\Data\CartItemData;             // Representasi data item keranjang
 use Illuminate\Support\Collection;     // Koleksi Laravel (mirip array tapi lebih kuat)
-use Illuminate\Support\Facades\Session;// Akses session Laravel
+use Illuminate\Support\Facades\Session; // Akses session Laravel
 use Spatie\LaravelData\DataCollection; // Koleksi data dari package spatie
 
 class SessionCartService implements CartServiceInterface
@@ -26,13 +28,15 @@ class SessionCartService implements CartServiceInterface
     {
         // Ambil data dari session, default [] kalau tidak ada
         $raw = Session::get($this->session_key, []);
+
         // Bungkus data ke dalam DataCollection dengan tipe CartItemData
         return new DataCollection(CartItemData::class, $raw);
     }
 
     /**
      * Fungsi save: menyimpan data cart ke session
-     * @param Collection<int, CartItemData> $items
+     *
+     * @param  Collection<int, CartItemData>  $items
      */
     protected function save(Collection $items): void
     {
@@ -54,8 +58,10 @@ class SessionCartService implements CartServiceInterface
             // Jika SKU sama → update dengan item baru
             if ($i->sku == $item->sku) {
                 $updated = true;
+
                 return $item;
             }
+
             // Jika SKU berbeda → biarkan item lama
             return $i;
         })->values()->collect(); // rapikan index array
@@ -76,7 +82,7 @@ class SessionCartService implements CartServiceInterface
     {
         $cart = $this->load()->toCollection()
             // Buang item yang SKU-nya sama
-            ->reject(fn(CartItemData $i) => $i->sku == $sku)
+            ->reject(fn (CartItemData $i) => $i->sku == $sku)
             ->values()  // rapikan index array
             ->collect();
 
@@ -91,10 +97,10 @@ class SessionCartService implements CartServiceInterface
     public function getItemBySku(string $sku): ?CartItemData
     {
         return $this->load()->toCollection()
-            ->first(fn(CartItemData $item) => $item->sku == $sku);
+            ->first(fn (CartItemData $item) => $item->sku == $sku);
     }
 
-    public function clear() : void
+    public function clear(): void
     {
         Session::forget($this->session_key);
     }

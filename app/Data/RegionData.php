@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -24,7 +25,7 @@ class RegionData extends Data
         $this->label = "$sub_district, $district, $city, $province, $postal_code";
     }
 
-    public static function fromModel(Region $region) : self
+    public static function fromModel(Region $region): self
     {
         return new self(
             code: $region->code,

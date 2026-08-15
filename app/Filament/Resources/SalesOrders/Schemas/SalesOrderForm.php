@@ -18,38 +18,38 @@ class SalesOrderForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make("Sales Order General Information")
-                ->description("Meta & Customer Info")
-                ->schema([
-                    TextEntry::make('trx_id')
-                        ->label('TRX ID')
-                        ->inlineLabel(),
-                    TextEntry::make('status')
-                        ->formatStateUsing(fn($state) => $state->label())
-                        ->inlineLabel(),
-                    TextEntry::make('due_date_at')
-                        ->label('Due Date')
-                        ->inlineLabel(),
-                    TextEntry::make('customer_full_name')
-                        ->label("Customer")
-                        ->inlineLabel(),
-                    TextEntry::make('customer_email')
-                        ->label("Customer Email")
-                        ->inlineLabel(),
-                    TextEntry::make('customer_phone')
-                        ->label('Customer Phone')
-                        ->inlineLabel(),
-                    TextEntry::make('address_line')
-                        ->label('Shipping Address')
-                        ->inlineLabel()
-                        ->formatStateUsing(function($state, SalesOrder $sales_order) {
-                            $region = app(RegionQueryService::class)->searchRegionByCode(
-                                $sales_order->destination_code
-                            );
+                Section::make('Sales Order General Information')
+                    ->description('Meta & Customer Info')
+                    ->schema([
+                        TextEntry::make('trx_id')
+                            ->label('TRX ID')
+                            ->inlineLabel(),
+                        TextEntry::make('status')
+                            ->formatStateUsing(fn ($state) => $state->label())
+                            ->inlineLabel(),
+                        TextEntry::make('due_date_at')
+                            ->label('Due Date')
+                            ->inlineLabel(),
+                        TextEntry::make('customer_full_name')
+                            ->label('Customer')
+                            ->inlineLabel(),
+                        TextEntry::make('customer_email')
+                            ->label('Customer Email')
+                            ->inlineLabel(),
+                        TextEntry::make('customer_phone')
+                            ->label('Customer Phone')
+                            ->inlineLabel(),
+                        TextEntry::make('address_line')
+                            ->label('Shipping Address')
+                            ->inlineLabel()
+                            ->formatStateUsing(function ($state, SalesOrder $sales_order) {
+                                $region = app(RegionQueryService::class)->searchRegionByCode(
+                                    $sales_order->destination_code
+                                );
 
-                            return "$state {$region->label}";
-                        }),
-                ]),
+                                return "$state {$region->label}";
+                            }),
+                    ]),
 
                 Section::make('Shipping Details')
                     ->collapsed()
@@ -67,38 +67,50 @@ class SalesOrderForm
                             ->suffix('gram')
                             ->inlineLabel(),
                         TextEntry::make('shipping_receipt_number')
-                            ->inlineLabel()
+                            ->inlineLabel(),
                     ]),
                 RepeatableEntry::make('items')
                     ->schema([
                         TextEntry::make('name')
-                            ->formatStateUsing(fn($state, Model $record) => "({$record->sku}) $state"),
+                            ->formatStateUsing(fn ($state, Model $record) => "({$record->sku}) $state"),
                         TextEntry::make('quantity'),
                         TextEntry::make('price')
-                            ->formatStateUsing(fn($state) => Number::currency($state)),
+                            ->formatStateUsing(fn ($state) => Number::currency($state)),
                         TextEntry::make('total')
-                            ->formatStateUsing(fn($state) => Number::currency($state))
+                            ->formatStateUsing(fn ($state) => Number::currency($state)),
                     ])
                     ->hiddenLabel()
                     ->columnSpanFull()
                     ->columns(4),
-                Section::make("Summaries")
+                Section::make('Summaries')
                     ->schema([
                         TextEntry::make('payment_label')
+                            ->label('Metode Pembayaran')
                             ->inlineLabel(),
                         TextEntry::make('payment_paid_at')
-                            ->label('Paid At')
+                            ->label('Waktu Pembayaran')
                             ->inlineLabel(),
                         TextEntry::make('sub_total')
                             ->label('Sub Total')
-                            ->formatStateUsing(fn($state) => Number::currency($state))
+                            ->formatStateUsing(fn ($state) => Number::currency($state, 'IDR'))
+                            ->inlineLabel(),
+                        TextEntry::make('coupon_code')
+                            ->label('Kode Kupon')
+                            ->placeholder('-')
+                            ->inlineLabel(),
+                        TextEntry::make('discount_total')
+                            ->label('Diskon Kupon')
+                            ->formatStateUsing(fn ($state) => Number::currency($state ?? 0, 'IDR'))
                             ->inlineLabel(),
                         TextEntry::make('shipping_total')
-                            ->label("Shpping Total")
-                            ->formatStateUsing(fn($state) => Number::currency($state))
-                            ->inlineLabel()
-
-                    ])
+                            ->label('Ongkos Kirim')
+                            ->formatStateUsing(fn ($state) => Number::currency($state, 'IDR'))
+                            ->inlineLabel(),
+                        TextEntry::make('total')
+                            ->label('Grand Total')
+                            ->formatStateUsing(fn ($state) => Number::currency($state, 'IDR'))
+                            ->inlineLabel(),
+                    ]),
             ]);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SalesOrderItem extends Model
 {
-    public function salesOrder() : BelongsTo
+    public function salesOrder(): BelongsTo
     {
         return $this->belongsTo(SalesOrder::class);
     }

@@ -25,9 +25,12 @@
             <div class="flex flex-col justify-between lg:col-span-3">
                 <div>
                     <a href="<?php echo e(url('/')); ?>"
-                        class="font-display text-2xl font-black uppercase tracking-tight text-white hover:opacity-90 transition">
-                        <?php echo e(config('app.name')); ?>
-
+                        class="flex items-center gap-3 font-display text-2xl font-black uppercase tracking-tight text-white hover:opacity-90 transition">
+                        <img src="<?php echo e(asset('images/logo.png')); ?>" class="size-10 object-contain rounded-full bg-white p-0.5 border border-amber-400/30" alt="<?php echo e(config('app.name')); ?>">
+                        <div>
+                            <span class="block leading-none"><?php echo e(config('app.name')); ?></span>
+                            <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300/80 mt-1">Curated Goods</span>
+                        </div>
                     </a>
                     <div class="mt-4 space-y-1.5 text-xs text-neutral-400">
                         <p><a href="<?php echo e(route('page')); ?>" class="hover:text-white transition">Terms & Conditions</a></p>

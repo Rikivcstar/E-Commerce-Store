@@ -19,7 +19,7 @@ class SalesOrderItemData extends Data
         public string $short_desc,
         public string $sku,
         public string $slug,
-        public string|null $description,
+        public ?string $description,
         public string $cover_url,
         public int $quantity,
         public float $price,

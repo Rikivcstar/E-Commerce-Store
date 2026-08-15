@@ -407,9 +407,7 @@
             <div class="auth-form-wrap">
                 
                 <a href="<?php echo e(url('/')); ?>" class="auth-mobile-logo">
-                    <div class="auth-mobile-logo-icon">
-                        <i data-lucide="zap"></i>
-                    </div>
+                    <img src="<?php echo e(asset('images/logo.png')); ?>" class="size-8 object-contain rounded-full bg-white p-0.5 shadow-sm border border-amber-900/10" alt="<?php echo e(config('app.name')); ?>">
                     <span class="auth-mobile-logo-text"><?php echo e(config('app.name')); ?></span>
                 </a>
 

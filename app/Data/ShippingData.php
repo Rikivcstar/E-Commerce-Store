@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -27,12 +28,12 @@ class ShippingData extends Data
         public int $weight,
         public RegionData $origin,
         public RegionData $destination,
-        public string|null $logo_url
+        public ?string $logo_url
 
     ) {
         $this->cost_formatted = Number::currency($cost);
         $courier_label = ucfirst($courier);
-        $this->label ="$courier_label ($estimated_delivery)";
+        $this->label = "$courier_label ($estimated_delivery)";
         $this->hash = md5("$origin->code-$destination->code-$driver-$courier-$service-$estimated_delivery-$cost");
     }
 }

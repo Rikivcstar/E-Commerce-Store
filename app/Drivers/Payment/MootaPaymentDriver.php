@@ -8,13 +8,12 @@ use App\Contract\PaymentDriverInterface;
 use App\Data\PaymentData;
 use App\Data\SalesOrderData;
 use App\Data\SalesOrderItemData;
-use App\Models\SalesOrder;
 use App\Services\SalesOrderService;
 use Illuminate\Support\Facades\Http;
 use Spatie\LaravelData\DataCollection;
 
-class MootaPaymentDriver implements PaymentDriverInterface {
-
+class MootaPaymentDriver implements PaymentDriverInterface
+{
     public readonly string $driver;
 
     public function __construct()
@@ -22,8 +21,8 @@ class MootaPaymentDriver implements PaymentDriverInterface {
         $this->driver = 'moota';
     }
 
-     /** @return DataCollection<PaymentData> */
-    public function getMethods() : DataCollection
+    /** @return DataCollection<PaymentData> */
+    public function getMethods(): DataCollection
     {
         $accounts = json_decode(config('services.moota.accounts') ?? '[]', true);
 
@@ -50,20 +49,20 @@ class MootaPaymentDriver implements PaymentDriverInterface {
                         'name' => $item->name,
                         'description' => $item->short_desc,
                         'qty' => $item->quantity,
-                        'price' => $item->price
+                        'price' => $item->price,
                     ];
                 })->merge([
                     [
                         'name' => $sales_order->shipping->courier,
                         'description' => $sales_order->shipping->estimated_delivery,
                         'qty' => 1,
-                        'price' => $sales_order->shipping_cost
-                    ]
+                        'price' => $sales_order->shipping_cost,
+                    ],
                 ])->toArray(),
                 'description' => '',
                 'note' => '',
                 'redirect_url' => route('order-confirmed', $sales_order->trx_id),
-                'total' => $sales_order->total
+                'total' => $sales_order->total,
             ]);
 
         if ($response->failed()) {
@@ -77,7 +76,7 @@ class MootaPaymentDriver implements PaymentDriverInterface {
         }
 
         return app(SalesOrderService::class)->updateShippingPayload($sales_order, [
-            'moota_payload' => $response->json('data')
+            'moota_payload' => $response->json('data'),
         ]);
     }
 

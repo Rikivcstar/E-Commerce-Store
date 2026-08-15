@@ -17,12 +17,13 @@ use App\Services\ShippingMethodService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
+use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Spatie\LaravelData\DataCollection;
 
+#[Lazy]
 class Checkout extends Component
 {
-
     public array $data = [
         'full_name' => null,
         'email' => null,
@@ -30,33 +31,40 @@ class Checkout extends Component
         'address_line' => null,
         'destination_region_code' => null,
         'shipping_hash' => null,
-        'payment_method_hash' => null
+        'payment_method_hash' => null,
     ];
+
+    public string $coupon_input = '';
 
     public array $summary = [
         'sub_total' => null,
         'sub_total_formatted' => '-',
         'shipping_total' => null,
         'shipping_total_formatted' => '-',
-        'discounted_total' => null,
-        'discounted_total_formatted' => '-',
+        'discount_total' => 0.0,
+        'discount_total_formatted' => 'Rp 0',
         'coupon_code' => null,
         'grand_total' => null,
         'grand_total_formatted' => '-',
     ];
 
     public array $payment_method_selector = [
-        'payment_method_selected' => null
+        'payment_method_selected' => null,
     ];
 
     public array $region_selector = [
         'keyword' => null,
-        'region_selected' => null
+        'region_selected' => null,
     ];
 
     public array $address_selector = [
         'address_id' => null,
     ];
+
+    public function placeholder()
+    {
+        return view('livewire.checkout-skeleton');
+    }
 
     public function rules()
     {
@@ -65,9 +73,9 @@ class Checkout extends Component
             'data.email' => ['required', 'email', 'max:255', 'min:3'],
             'data.phone' => ['required', 'string', 'max:13', 'min:7'],
             'data.address_line' => ['required', 'string', 'max:500'],
-            'data.destination_region_code' => ['required','exists:regions,code'],
-            'data.shipping_hash' => ['required', new ValidShippingHash()],
-            'data.payment_method_hash' => ['required', new ValidPaymentMethodHash()],
+            'data.destination_region_code' => ['required', 'exists:regions,code'],
+            'data.shipping_hash' => ['required', new ValidShippingHash],
+            'data.payment_method_hash' => ['required', new ValidPaymentMethodHash],
         ];
     }
 
@@ -75,53 +83,48 @@ class Checkout extends Component
     {
         return
         [
-            'data.full_name' => "Name",
-            'data.email' => "Email",
-            'data.phone' => "Phone",
-            'data.address_line' => "Address",
+            'data.full_name' => 'Name',
+            'data.email' => 'Email',
+            'data.phone' => 'Phone',
+            'data.address_line' => 'Address',
             'data.destination_region_code' => 'Region',
-            'data.shipping_hash' => "Shipping Method",
-            'data.payment_method_hash' => 'Payment Method'
+            'data.shipping_hash' => 'Shipping Method',
+            'data.payment_method_hash' => 'Payment Method',
         ];
     }
 
-
-
     public function mount()
     {
-        if(!Gate::inspect('is_stock_available')->allow()){
+        if (! Gate::inspect('is_stock_available')->allow()) {
             return redirect()->route('cart');
         }
 
         $this->calculateTotal();
     }
 
-    public function getRegionsProperty(RegionQueryService $query_service) : DataCollection
+    public function getRegionsProperty(RegionQueryService $query_service): DataCollection
     {
 
         $keyword = data_get($this->region_selector, 'keyword');
 
-        if(!$keyword)
-            {
-                 return new DataCollection(RegionData::class, []);
-            }
+        if (! $keyword) {
+            return new DataCollection(RegionData::class, []);
+        }
 
         return $query_service->searchRegionByName(
             (string) $keyword
         );
 
-
     }
 
-    public function getRegionProperty(RegionQueryService $query_service) : ?RegionData
+    public function getRegionProperty(RegionQueryService $query_service): ?RegionData
     {
         $region_selected = data_get($this->region_selector, 'region_selected');
-        if(!$region_selected)
-            {
-                return null;
-            }
+        if (! $region_selected) {
+            return null;
+        }
 
-            return $query_service->searchRegionByCode((string) $region_selected);
+        return $query_service->searchRegionByCode((string) $region_selected);
     }
 
     public function updatedRegionSelectorRegionSelected($value)
@@ -165,35 +168,92 @@ class Checkout extends Component
         $this->calculateTotal();
     }
 
+    public function applyCoupon(): void
+    {
+        $code = trim(strtoupper($this->coupon_input));
+
+        if (empty($code)) {
+            $this->addError('coupon_input', 'Masukan kode kupon.');
+
+            return;
+        }
+
+        $coupon = \App\Models\Coupon::where('code', $code)->first();
+
+        if (! $coupon) {
+            $this->addError('coupon_input', 'Kode kupon tidak ditemukan.');
+            toast('Kode kupon tidak valid.', 'error');
+
+            return;
+        }
+
+        if (! $coupon->isValid($this->cart->total)) {
+            $this->addError('coupon_input', 'Kupon tidak memenuhi syarat atau sudah kadaluarsa/habis.');
+            toast('Kupon tidak memenuhi syarat atau sudah kadaluarsa.', 'error');
+
+            return;
+        }
+
+        data_set($this->summary, 'coupon_code', $coupon->code);
+        $this->coupon_input = '';
+        $this->resetErrorBag('coupon_input');
+        $this->calculateTotal();
+
+        toast("Kupon {$coupon->code} berhasil diterapkan!", 'success');
+    }
+
+    public function removeCoupon(): void
+    {
+        data_set($this->summary, 'coupon_code', null);
+        $this->coupon_input = '';
+        $this->calculateTotal();
+        toast('Kupon dibatalkan.', 'info');
+    }
+
     public function calculateTotal()
     {
-        data_set($this->summary, 'sub_total', $this->cart->total);
+        $subTotal = $this->cart->total;
+        data_set($this->summary, 'sub_total', $subTotal);
         data_set($this->summary, 'sub_total_formatted', $this->cart->total_formatted);
 
         $shipping_cost = $this->shippingMethod?->cost ?? 0;
         data_set($this->summary, 'shipping_total', $shipping_cost);
-        data_set($this->summary, 'shipping_total_formatted', Number::currency($shipping_cost));
+        data_set($this->summary, 'shipping_total_formatted', Number::currency($shipping_cost, 'IDR'));
 
-        $grand_total = $this->cart->total + $shipping_cost;
+        $discountTotal = 0.0;
+        $couponCode = data_get($this->summary, 'coupon_code');
+
+        if ($couponCode) {
+            $coupon = \App\Models\Coupon::where('code', $couponCode)->first();
+            if ($coupon && $coupon->isValid($subTotal)) {
+                $discountTotal = $coupon->discountFor($subTotal);
+            } else {
+                data_set($this->summary, 'coupon_code', null);
+            }
+        }
+
+        data_set($this->summary, 'discount_total', $discountTotal);
+        data_set($this->summary, 'discount_total_formatted', Number::currency($discountTotal, 'IDR'));
+
+        $grand_total = max(0, $subTotal + $shipping_cost - $discountTotal);
         data_set($this->summary, 'grand_total', $grand_total);
-        data_set($this->summary, 'grand_total_formatted', Number::currency($grand_total));
+        data_set($this->summary, 'grand_total_formatted', Number::currency($grand_total, 'IDR'));
     }
 
-    public function getCartProperty(CartServiceInterface $cart) : CartData
+    public function getCartProperty(CartServiceInterface $cart): CartData
     {
         return $cart->all();
     }
 
-     /** @return Collection<string, Collection<int, ShippingData>> */
+    /** @return Collection<string, Collection<int, ShippingData>> */
     public function getShippingMethodsProperty(
         RegionQueryService $region_query,
         ShippingMethodService $shipping_service
-    ) : Collection
-    {
+    ): Collection {
 
         $destination_code = data_get($this->data, 'destination_region_code');
 
-        if(!$destination_code){
+        if (! $destination_code) {
             return collect();
         }
 
@@ -204,17 +264,15 @@ class Checkout extends Component
             $region_query->searchRegionByCode((string) $destination_code),
             $this->cart,
         )->toCollection()->groupBy('service');
-     }
+    }
 
-     public function getShippingMethodProperty(
+    public function getShippingMethodProperty(
         ShippingMethodService $shipping_service
-     ) : ?ShippingData
-     {
-        if(
+    ): ?ShippingData {
+        if (
             empty(data_get($this->data, 'shipping_hash')) ||
             empty(data_get($this->data, 'destination_region_code'))
-        )
-        {
+        ) {
             return null;
         }
 
@@ -224,36 +282,33 @@ class Checkout extends Component
             (string) $shipping_hash
         );
 
-        if($data == null){
-            $this->addError('shipping_hash', "Shipping Cost Missing");
+        if ($data == null) {
+            $this->addError('shipping_hash', 'Shipping Cost Missing');
             redirect()->route('checkout');
         }
 
-
         return $data;
-     }
+    }
 
-     public  function getPaymentMethodsProperty(
+    public function getPaymentMethodsProperty(
         PaymentMethodQueryService $query_service
-     ) : DataCollection
-     {
+    ): DataCollection {
         return $query_service->getPaymentMethods();
-     }
-     public function updatedPaymentMethodSelectorPaymentMethodSelected($value)
-     {
+    }
+
+    public function updatedPaymentMethodSelectorPaymentMethodSelected($value)
+    {
         data_set($this->data, 'payment_method_hash', $value);
-     }
+    }
 
-     public function updatedDataShippingHash()
-     {
+    public function updatedDataShippingHash()
+    {
         $this->calculateTotal();
-     }
-
+    }
 
     public function placeAnOrder(
         CartServiceInterface $cart
-    )
-    {
+    ) {
         $validate = $this->validate();
         $shipping_method = app(ShippingMethodService::class)->getShippingMethod(data_get($validate, 'data.shipping_hash')
         );
@@ -268,7 +323,9 @@ class Checkout extends Component
             'destination' => $shipping_method->destination,
             'cart' => $this->cart,
             'shipping' => $shipping_method,
-            'payment' => $payment_method
+            'payment' => $payment_method,
+            'coupon_code' => data_get($this->summary, 'coupon_code'),
+            'discount_total' => (float) data_get($this->summary, 'discount_total', 0.0),
         ]);
 
         $service = app(CheckoutService::class);
@@ -282,7 +339,7 @@ class Checkout extends Component
     {
         return view('livewire.checkout', [
             'cart' => $this->cart,
-            'summary' => $this->summary
+            'summary' => $this->summary,
         ]);
     }
 }

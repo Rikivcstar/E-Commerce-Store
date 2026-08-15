@@ -20,17 +20,17 @@ class ViewSalesOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make("Proses")
+            Action::make('Proses')
                 ->icon('heroicon-o-arrow-path-rounded-square')
                 ->modalWidth('sm')
-                ->visible(fn() => in_array(get_class($this->record->status), [
+                ->visible(fn () => in_array(get_class($this->record->status), [
                     Pending::class,
-                    Progress::class
+                    Progress::class,
                 ]))
-                ->form(function() {
+                ->form(function () {
                     $transition = $this->record->status->transitionableStates();
-                    $options = collect($transition)->mapWithKeys(fn($class) => [
-                        $class => (new $class($this->record))->label()
+                    $options = collect($transition)->mapWithKeys(fn ($class) => [
+                        $class => (new $class($this->record))->label(),
                     ])->toArray();
 
                     return [
@@ -38,10 +38,10 @@ class ViewSalesOrder extends ViewRecord
                             ->label('Status')
                             ->options($options)
                             ->required()
-                            ->inline()
+                            ->inline(),
                     ];
                 })
-                ->action(function(array $data) {
+                ->action(function (array $data) {
                     $this->record->status->transitionTo(data_get($data, 'status'));
                 }),
 
@@ -49,12 +49,12 @@ class ViewSalesOrder extends ViewRecord
                 ->icon('heroicon-o-truck')
                 ->modalWidth('sm')
                 ->modalHeading('Input Nomor Resi')
-                ->visible(function() {
+                ->visible(function () {
                     $status = get_class($this->record->status);
 
                     $valid_statuses = [
                         Progress::class,
-                        Completed::class
+                        Completed::class,
                     ];
 
                     return in_array($status, $valid_statuses) &&
@@ -63,13 +63,13 @@ class ViewSalesOrder extends ViewRecord
                 ->form([
                     TextInput::make('shipping_receipt_number')
                         ->label('Nomor Receipt')
-                        ->required()
-                ])->action(function(array $data) {
-                        app(SalesOrderService::class)->updateShippingReceipt(
-                            SalesOrderData::fromModel($this->record),
-                            data_get($data, 'shipping_receipt_number')
-                        );
-                })
+                        ->required(),
+                ])->action(function (array $data) {
+                    app(SalesOrderService::class)->updateShippingReceipt(
+                        SalesOrderData::fromModel($this->record),
+                        data_get($data, 'shipping_receipt_number')
+                    );
+                }),
         ];
     }
 }
