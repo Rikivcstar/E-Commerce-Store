@@ -7,6 +7,7 @@ use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
+use App\Services\RecommendationService;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
@@ -29,15 +30,13 @@ class HomePage extends Component
                 ->get();
         });
 
-        $feature_products = ProductData::collect(
-            Product::query()->inRandomOrder()->limit(8)->get()
-        );
+        $recommendation_service = app(RecommendationService::class);
+
+        $feature_products = ProductData::collect($recommendation_service->popular(8));
         $latest_products = ProductData::collect(
             Product::query()->latest()->limit(4)->get()
         );
-        $popular_products = ProductData::collect(
-            Product::query()->inRandomOrder()->limit(4)->get()
-        );
+        $popular_products = ProductData::collect($recommendation_service->popular(4, days: 30));
 
         $categories = Cache::remember('home_categories', now()->addHour(), function () {
             return Category::query()

@@ -224,115 +224,76 @@
         <p class="oh-eyebrow">My Account</p>
         <h1 class="oh-title">Order<br>History</h1>
 
-        {{-- User bar --}}
+        
         <div class="oh-user-bar">
             <div>
-                <div class="oh-user-name">{{ auth()->user()->name }}</div>
-                <div class="oh-user-email">{{ auth()->user()->email }}</div>
+                <div class="oh-user-name"><?php echo e(auth()->user()->name); ?></div>
+                <div class="oh-user-email"><?php echo e(auth()->user()->email); ?></div>
             </div>
-            <form id="account-logout-form" method="POST" action="{{ route('logout') }}">
-                @csrf
+            <form id="account-logout-form" method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
                 <button type="button" onclick="confirmLogout('account-logout-form')" class="oh-logout-btn">Sign Out</button>
             </form>
         </div>
 
-        {{-- Filter status --}}
-        <div class="flex flex-wrap gap-2 mb-4">
-            @php
-                $filters = ['all' => 'Semua', 'pending' => 'Menunggu', 'progress' => 'Proses', 'completed' => 'Selesai', 'cancel' => 'Batal'];
-            @endphp
-            @foreach ($filters as $key => $label)
-                <button type="button" wire:click="filter('{{ $key }}')"
-                    class="text-[0.68rem] font-black uppercase tracking-wider px-3 py-1.5 border transition cursor-pointer {{ $statusFilter === $key ? 'bg-[#111111] text-white border-[#111111]' : 'bg-white text-[#555555] border-[#d4cec4] hover:bg-[#f0ede6]' }}">
-                    {{ $label }}
-                </button>
-            @endforeach
-
-            @if ($orders->count() > 0)
-                <span class="ml-auto self-center text-[0.7rem] font-bold text-[#888]">
-                    {{ $orders->total() }} order
-                </span>
-            @endif
-        </div>
-
-        {{-- Orders --}}
-        @forelse ($orders as $order)
-            @php
+        
+        <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <?php
                 $statusClass = match(true) {
                     str_contains(strtolower($order->status_label ?? ''), 'paid')      => 'paid',
                     str_contains(strtolower($order->status_label ?? ''), 'ship')      => 'shipped',
-                    str_contains(strtolower($order->status_label ?? ''), 'proses')    => 'shipped',
                     str_contains(strtolower($order->status_label ?? ''), 'done')      => 'done',
-                    str_contains(strtolower($order->status_label ?? ''), 'batal')     => 'cancelled',
                     str_contains(strtolower($order->status_label ?? ''), 'cancel')    => 'cancelled',
                     default => 'pending',
                 };
-            @endphp
+            ?>
 
             <div class="oh-card">
                 <div class="oh-card-header">
                     <div>
-                        <div class="oh-trx">{{ $order->trx_id }}</div>
-                        <div class="oh-date">{{ $order->created_at_formatted }}</div>
+                        <div class="oh-trx"><?php echo e($order->trx_id); ?></div>
+                        <div class="oh-date"><?php echo e($order->created_at_formatted); ?></div>
                     </div>
-                    <span class="oh-status {{ $statusClass }}">{{ $order->status_label }}</span>
+                    <span class="oh-status <?php echo e($statusClass); ?>"><?php echo e($order->status_label); ?></span>
                 </div>
 
                 <div class="oh-card-body">
                     <ul class="oh-items-list">
-                        @foreach ($order->items as $item)
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $order->items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="oh-item">
-                                @if ($item->cover_url)
-                                    <img src="{{ $item->cover_url }}" alt="{{ $item->name }}" class="oh-item-img">
-@else
-            <div class="oh-empty">
-                <div class="oh-empty-icon">🛍️</div>
-                <div class="oh-empty-title">No orders yet</div>
-                <p class="oh-empty-desc">Your order history will appear here after you make a purchase.</p>
-                <a href="{{ route('product-catalog') }}" class="oh-shop-btn">Start Shopping</a>
-            </div>
-        @endforelse
-
-        @if ($orders->hasPages())
-            <div class="mt-6">
-                {{ $orders->links() }}
-            </div>
-        @endif
-    </div>
-</div>
-                                @endif
-                                <span class="oh-item-name">{{ $item->name }}</span>
-                                <span class="oh-item-qty">× {{ $item->quantity }}</span>
-                                <span class="oh-item-price">{{ $item->total_formatted }}</span>
+                                <!--[if BLOCK]><![endif]--><?php if($item->cover_url): ?>
+                                    <img src="<?php echo e($item->cover_url); ?>" alt="<?php echo e($item->name); ?>" class="oh-item-img">
+                                <?php else: ?>
+                                    <div class="oh-item-img" style="display:flex;align-items:center;justify-content:center;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                    </div>
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                                <span class="oh-item-name"><?php echo e($item->name); ?></span>
+                                <span class="oh-item-qty">× <?php echo e($item->quantity); ?></span>
+                                <span class="oh-item-price"><?php echo e($item->total_formatted); ?></span>
                             </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                     </ul>
                 </div>
 
                 <div class="oh-card-footer">
                     <div>
                         <div class="oh-total-label">Total paid</div>
-                        <div class="oh-total-amount">{{ $order->total_formatted }}</div>
+                        <div class="oh-total-amount"><?php echo e($order->total_formatted); ?></div>
                     </div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <button type="button" wire:click="buyAgain('{{ $order->trx_id }}')"
-                            wire:loading.attr="disabled" class="oh-view-btn">
-                            <span wire:loading.remove wire:target="buyAgain('{{ $order->trx_id }}')">Beli Lagi</span>
-                            <span wire:loading wire:target="buyAgain('{{ $order->trx_id }}')">Menambahkan...</span>
-                        </button>
-                        <a href="{{ route('order-confirmed', $order->trx_id) }}" class="oh-view-btn">
-                            View Order →
-                        </a>
-                    </div>
+                    <a href="<?php echo e(route('order-confirmed', $order->trx_id)); ?>" class="oh-view-btn">
+                        View Order →
+                    </a>
                 </div>
             </div>
-        @empty
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <div class="oh-empty">
                 <div class="oh-empty-icon">🛍️</div>
                 <div class="oh-empty-title">No orders yet</div>
                 <p class="oh-empty-desc">Your order history will appear here after you make a purchase.</p>
-                <a href="{{ route('product-catalog') }}" class="oh-shop-btn">Start Shopping</a>
+                <a href="<?php echo e(route('product-catalog')); ?>" class="oh-shop-btn">Start Shopping</a>
             </div>
-        @endforelse
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
     </div>
 </div>
+<?php /**PATH C:\laraherd\webstore\resources\views/livewire/account/order-history.blade.php ENDPATH**/ ?>

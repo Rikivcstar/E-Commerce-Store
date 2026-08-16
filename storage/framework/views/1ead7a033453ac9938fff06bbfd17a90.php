@@ -51,6 +51,8 @@ if (isset($__slots)) unset($__slots);
             </a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
                 href="<?php echo e($firstPage ? route('page', $firstPage->slug) : url('/')); ?>">About</a>
+            <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
+                href="<?php echo e(route('track-order')); ?>">Lacak Pesanan</a>
         </div>
 
         <div class="flex items-center gap-2">
@@ -241,6 +243,8 @@ if (isset($__slots)) unset($__slots);
         </a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
             href="<?php echo e($firstPage ? route('page', $firstPage->slug) : url('/')); ?>">About</a>
+        <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+            href="<?php echo e(route('track-order')); ?>">Lacak Pesanan</a>
         <?php if(auth()->guard()->check()): ?>
             <?php
                 $userInitials = strtoupper(substr(trim(auth()->user()->name ?? 'User'), 0, 1));

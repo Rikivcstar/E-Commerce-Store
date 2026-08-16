@@ -1,5 +1,14 @@
 <div>
-    <x-layouts.app title="Wishlist">
+    <?php if (isset($component)) { $__componentOriginal5863877a5171c196453bfa0bd807e410 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5863877a5171c196453bfa0bd807e410 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Wishlist']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('layouts.app'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => 'Wishlist']); ?>
         <style>
             .wishlist-page {
                 max-width: 92rem;
@@ -114,49 +123,56 @@
             <h1 class="wishlist-title">Wishlist</h1>
             <p class="wishlist-subtitle">Produk yang Anda simpan untuk dibeli nanti.</p>
 
-            @if ($items->isEmpty())
+            <!--[if BLOCK]><![endif]--><?php if($items->isEmpty()): ?>
                 <div class="wish-empty">
                     <p>Wishlist Anda masih kosong.</p>
-                    <a href="{{ route('product-catalog') }}">Jelajahi Produk</a>
+                    <a href="<?php echo e(route('product-catalog')); ?>">Jelajahi Produk</a>
                 </div>
-            @else
+            <?php else: ?>
                 <div class="wishlist-grid">
-                    @foreach ($items as $item)
-                        <div class="wish-card">
+                    <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <a class="wish-card" href="<?php echo e(route('product', $item->slug)); ?>">
                             <div class="wish-remove">
-                                <livewire:wishlist-remove :product="$item" wire:key="wish-{{ $item->sku }}" />
+                                <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('wishlist-remove', ['product' => $item]);
+
+$__html = app('livewire')->mount($__name, $__params, 'wish-'.e($item->sku).'', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
                             </div>
-                            <a href="{{ route('product', $item->slug) }}" class="block">
-                                <div class="wish-media">
-                                    <img src="{{ $item->cover_url }}" alt="{{ $item->name }}" loading="lazy">
-                                </div>
-                                <div class="wish-info">
-                                    <h3 class="wish-name">{{ $item->name }}</h3>
-                                </div>
-                            </a>
-                            <div class="wish-info" style="padding-top:0;">
+                            <div class="wish-media">
+                                <img src="<?php echo e($item->cover_url); ?>" alt="<?php echo e($item->name); ?>" loading="lazy">
+                            </div>
+                            <div class="wish-info">
+                                <h3 class="wish-name"><?php echo e($item->name); ?></h3>
                                 <div class="wish-row">
-                                    <p class="wish-price">{{ $item->price_formatted }}</p>
-                                    <span class="text-xs font-black text-zinc-400">{{ $item->sku }}</span>
+                                    <p class="wish-price"><?php echo e($item->price_formatted); ?></p>
+                                    <span class="text-xs font-black text-zinc-400"><?php echo e($item->sku); ?></span>
                                 </div>
-                                <button type="button" wire:click="addToCart('{{ $item->sku }}')"
-                                    wire:loading.attr="disabled"
-                                    class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#4d4634] bg-[#4d4634] px-4 py-2 text-[.75rem] font-black uppercase tracking-wider text-[#fffaf2] transition hover:bg-[#2f2a20] cursor-pointer">
-                                    <span wire:loading.remove wire:target="addToCart('{{ $item->sku }}')">
-                                        <svg class="inline size-3.5 -mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 11 4-7"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4"/></svg>
-                                        Tambah ke Keranjang
-                                    </span>
-                                    <span wire:loading wire:target="addToCart('{{ $item->sku }}')"
-                                        class="inline-flex items-center gap-2">
-                                        <span class="inline-block size-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
-                                        Menambahkan...
-                                    </span>
-                                </button>
                             </div>
-                        </div>
-                    @endforeach
+                        </a>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
-            @endif
+            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         </div>
-    </x-layouts.app>
-</div>
+     <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $attributes = $__attributesOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__attributesOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+</div><?php /**PATH C:\laraherd\webstore\resources\views/livewire/wishlist.blade.php ENDPATH**/ ?>

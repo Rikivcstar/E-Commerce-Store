@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Livewire\Account\AddressBook;
+use App\Livewire\Account\Dashboard;
 use App\Livewire\Account\OrderHistory;
 use App\Livewire\Auth\CustomerLogin;
 use App\Livewire\Auth\CustomerRegister;
@@ -13,6 +14,7 @@ use App\Livewire\PageStatic;
 use App\Livewire\ProductCatalog;
 use App\Livewire\ProductDetail;
 use App\Livewire\SalesOrderDetail;
+use App\Livewire\TrackOrder;
 use App\Livewire\Wishlist;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,7 @@ Route::get('/cart', Cart::class)->name('cart');
 Route::get('/checkout', Checkout::class)->middleware('throttle:15,1')->name('checkout');
 Route::get('/order-confirmed/{sales_order:trx_id}', SalesOrderDetail::class)->name('order-confirmed');
 Route::get('/page/{page:slug?}', PageStatic::class)->name('page');
+Route::get('/track-order', TrackOrder::class)->name('track-order');
 Route::webhooks('moota/callback')->middleware('throttle:60,1');
 
 Route::middleware(['guest', 'throttle:10,1'])->group(function () {
@@ -36,6 +39,7 @@ Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name
 Route::get('/auth/google/token-login/{token}', [GoogleController::class, 'tokenLogin'])->name('auth.google.token-login');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/account', Dashboard::class)->name('account.dashboard');
     Route::get('/account/orders', OrderHistory::class)->name('account.orders');
     Route::get('/account/wishlist', Wishlist::class)->name('account.wishlist');
     Route::get('/account/addresses', AddressBook::class)->name('account.addresses');

@@ -544,6 +544,28 @@
                     </div>
                 </section>
             @endif
+
+            @if (isset($recently_viewed) && $recently_viewed->count())
+                <section class="recommend-section" aria-label="Recently viewed products">
+                    <h2 class="recommend-title">Recently viewed</h2>
+                    <div class="recommend-grid">
+                        @foreach ($recently_viewed as $item)
+                            <a class="recommend-card" href="{{ route('product', $item->slug) }}">
+                                <div class="recommend-media">
+                                    <img src="{{ $item->cover_url }}" alt="{{ $item->name }}">
+                                </div>
+                                <div class="recommend-info">
+                                    <h3 class="recommend-name">{{ $item->name }}</h3>
+                                    <div class="recommend-row">
+                                        <p class="recommend-price">{{ $item->price_formatted }}</p>
+                                        <span class="recommend-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </section>
+            @endif
         </div>
     </div>
 </div>

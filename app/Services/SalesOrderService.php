@@ -9,12 +9,25 @@ use App\Data\SalesOrderItemData;
 use App\Events\ShippingReceiptNumberUpdateEvent;
 use App\Models\Product;
 use App\Models\SalesOrder;
+use App\Models\User;
 use App\States\SalesOrder\Pending;
 use App\States\SalesOrder\Progress;
 use Illuminate\Support\Facades\DB;
 
 class SalesOrderService
 {
+    /**
+     * Menautkan pesanan tamu (user_id null) dengan email yang sama ke akun user.
+     * Dipanggil setelah login/register agar order checkout-tamu bisa dipantau di akun.
+     */
+    public function linkGuestOrders(User $user): int
+    {
+        return SalesOrder::query()
+            ->whereNull('user_id')
+            ->where('customer_email', $user->email)
+            ->update(['user_id' => $user->id]);
+    }
+
     public function updateShippingReceipt(SalesOrderData $sales_order, string $number): SalesOrderData
     {
         $query = SalesOrder::query()->where('trx_id', $sales_order->trx_id)->first();

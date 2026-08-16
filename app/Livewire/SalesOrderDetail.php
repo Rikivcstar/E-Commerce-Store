@@ -33,6 +33,7 @@ class SalesOrderDetail extends Component
             'timeline' => $this->sales_order->status_timeline,
             'is_redirect' => $service->shouldShowButton($sales_order_data),
             'redirect_url' => $service->getRedirectUrl($sales_order_data),
+            'can_claim_order' => $this->sales_order->user_id === null && ! Auth::check(),
         ]);
     }
 }

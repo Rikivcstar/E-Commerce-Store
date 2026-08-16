@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Contract\CartServiceInterface;
 use App\Data\ProductData;
-use App\Models\Product;
+use App\Services\RecommendationService;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
@@ -47,11 +47,7 @@ class Cart extends Component
         $cartSkus = $this->items->pluck('sku')->all();
 
         $recommendations = ProductData::collect(
-            Product::query()
-                ->when($cartSkus !== [], fn ($query) => $query->whereNotIn('sku', $cartSkus))
-                ->inRandomOrder()
-                ->limit(4)
-                ->get()
+            app(RecommendationService::class)->popular(limit: 4, exceptSkus: $cartSkus)
         );
 
         return view('livewire.cart', [

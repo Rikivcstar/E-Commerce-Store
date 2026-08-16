@@ -245,6 +245,19 @@ class Checkout extends Component
         return $cart->all();
     }
 
+    public function getCurrentStepProperty(): int
+    {
+        if (data_get($this->data, 'shipping_hash')) {
+            return 3;
+        }
+
+        if (data_get($this->data, 'destination_region_code')) {
+            return 2;
+        }
+
+        return 1;
+    }
+
     /** @return Collection<string, Collection<int, ShippingData>> */
     public function getShippingMethodsProperty(
         RegionQueryService $region_query,

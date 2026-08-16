@@ -15,67 +15,6 @@
             margin-bottom: 2.5rem;
         }
 
-        .linoge-steps {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-top: 1.25rem;
-        }
-
-        .linoge-step {
-            display: flex;
-            align-items: center;
-            gap: 0.55rem;
-        }
-
-        .linoge-step-dot {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 1.6rem;
-            height: 1.6rem;
-            border-radius: 999px;
-            border: 1px solid #d4d4d0;
-            background: #f4f4f2;
-            color: #999999;
-            font-size: 0.72rem;
-            font-weight: 800;
-            transition: all 0.2s ease;
-        }
-
-        .linoge-step.active .linoge-step-dot {
-            background: #111111;
-            border-color: #111111;
-            color: #ffffff;
-        }
-
-        .linoge-step.done .linoge-step-dot {
-            background: #d8d8d4;
-            border-color: #111111;
-            color: #111111;
-        }
-
-        .linoge-step-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #999999;
-            transition: color 0.2s ease;
-        }
-
-        .linoge-step.active .linoge-step-label,
-        .linoge-step.done .linoge-step-label {
-            color: #111111;
-        }
-
-        .linoge-step-line {
-            flex: 1 1 auto;
-            min-width: 1.5rem;
-            height: 1px;
-            background: #d4d4d0;
-        }
-
         .linoge-title {
             font-family: 'Syne', 'Finlandica', sans-serif;
             font-weight: 900;
@@ -357,31 +296,6 @@
             <!-- PAGE HEADER -->
             <div class="linoge-header">
                 <h1 class="linoge-title">CHECKOUT</h1>
-                @php($currentStep = $this->current_step)
-                <div class="linoge-steps">
-                    @foreach ([1 => 'Information', 2 => 'Delivery', 3 => 'Payment'] as $stepNumber => $stepLabel)
-                        @php
-                            $stepState = $currentStep > $stepNumber ? 'done' : ($currentStep === $stepNumber ? 'active' : '');
-                        @endphp
-                        <div class="linoge-step {{ $stepState }}">
-                            <span class="linoge-step-dot">
-                                @if ($currentStep > $stepNumber)
-                                    <svg class="size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20 6 9 17l-5-5" />
-                                    </svg>
-                                @else
-                                    {{ $stepNumber }}
-                                @endif
-                            </span>
-                            <span class="linoge-step-label">{{ $stepLabel }}</span>
-                        </div>
-                        @if (! $loop->last)
-                            <span class="linoge-step-line"></span>
-                        @endif
-                    @endforeach
-                </div>
             </div>
 
             <div class="linoge-grid">
@@ -395,42 +309,84 @@
                         <div class="mb-6">
                             <div class="flex justify-between items-baseline mb-3">
                                 <h3 class="linoge-sub-title">Personal Information</h3>
-                                @guest
+                                <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->guest()): ?>
                                     <span class="text-xs text-neutral-500">Already have an account? <a
-                                            href="{{ route('login') }}" class="underline text-neutral-900 font-semibold">Log
+                                            href="<?php echo e(route('login')); ?>" class="underline text-neutral-900 font-semibold">Log
                                             in</a></span>
-                                @else
+                                <?php else: ?>
                                     <span class="text-xs text-neutral-500">Signed in as <strong
-                                            class="text-neutral-900">{{ auth()->user()->name }}</strong></span>
-                                @endguest
+                                            class="text-neutral-900"><?php echo e(auth()->user()->name); ?></strong></span>
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             </div>
                             <div class="linoge-field-grid two">
                                 <div>
                                     <label class="linoge-label">Full name</label>
                                     <input wire:model='data.full_name' type="text"
-                                        class="linoge-input @error('data.full_name') border-red-600 @enderror"
+                                        class="linoge-input <?php $__errorArgs = ['data.full_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-600 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                         placeholder="Full name">
-                                    @error('data.full_name')
-                                        <p class="linoge-error">{{ $message }}</p>
-                                    @enderror
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.full_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="linoge-error"><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
                                 <div>
                                     <label class="linoge-label">Email address</label>
                                     <input type="text" wire:model='data.email'
-                                        class="linoge-input @error('data.email') border-red-600 @enderror"
+                                        class="linoge-input <?php $__errorArgs = ['data.email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-600 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                         placeholder="Email address">
-                                    @error('data.email')
-                                        <p class="linoge-error">{{ $message }}</p>
-                                    @enderror
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="linoge-error"><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label class="linoge-label">Phone number</label>
                                     <input type="text" wire:model='data.phone'
-                                        class="linoge-input @error('data.phone') border-red-600 @enderror"
+                                        class="linoge-input <?php $__errorArgs = ['data.phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-600 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                         placeholder="Phone number">
-                                    @error('data.phone')
-                                        <p class="linoge-error">{{ $message }}</p>
-                                    @enderror
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="linoge-error"><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
                             </div>
                         </div>
@@ -439,44 +395,58 @@
                         <div>
                             <h3 class="linoge-sub-title">Shipping Information</h3>
 
-                            @auth
-                                @if ($this->saved_addresses->isNotEmpty())
+                            <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>
+                                <!--[if BLOCK]><![endif]--><?php if($this->saved_addresses->isNotEmpty()): ?>
                                     <div class="mb-4">
                                         <label class="linoge-label">Use saved address</label>
                                         <div class="linoge-promocode-row" style="margin-top:0;">
                                             <select wire:model='address_selector.address_id' class="linoge-input"
                                                 style="flex-grow:1;">
                                                 <option value="">— Pilih alamat tersimpan —</option>
-                                                @foreach ($this->saved_addresses as $saved)
-                                                    <option value="{{ $saved->id }}">{{ $saved->label }} &middot;
-                                                        {{ $saved->address_line }}, {{ $saved->city }}</option>
-                                                @endforeach
+                                                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $this->saved_addresses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $saved): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($saved->id); ?>"><?php echo e($saved->label); ?> &middot;
+                                                        <?php echo e($saved->address_line); ?>, <?php echo e($saved->city); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                                             </select>
                                             <button type="button" wire:click='applyAddress'
                                                 class="linoge-promocode-btn">APPLY</button>
                                         </div>
                                     </div>
-                                @endif
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                 <p class="mb-3 text-xs text-neutral-500">
-                                    <a href="{{ route('account.addresses') }}"
+                                    <a href="<?php echo e(route('account.addresses')); ?>"
                                         class="underline text-neutral-900 font-semibold">Kelola alamat</a>
                                 </p>
-                            @endauth
+                            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
                             <div class="linoge-field-grid">
                                 <div>
                                     <label class="linoge-label">Street address</label>
                                     <input wire:model='data.address_line' type="text"
-                                        class="linoge-input @error('data.address_line') border-red-600 @enderror"
+                                        class="linoge-input <?php $__errorArgs = ['data.address_line'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-600 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                         placeholder="Address">
-                                    @error('data.address_line')
-                                        <p class="linoge-error">{{ $message }}</p>
-                                    @enderror
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.address_line'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="linoge-error"><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
 
                                 <div>
                                     <label class="linoge-label">City / Region / Location search</label>
-                                    @php
+                                    <?php
                                         $regionList = [];
                                         try {
                                             if ($this->regions) {
@@ -493,7 +463,7 @@
                                         } catch (\Throwable $e) {
                                             $selectedRegion = null;
                                         }
-                                    @endphp
+                                    ?>
                                     <div x-data="{ open: false }" class="relative w-full">
                                         <input type="text" wire:model.live.debounce.500ms='region_selector.keyword'
                                             x-on:focus="open = true" x-on:click.outside="open = false"
@@ -502,37 +472,45 @@
                                             class="absolute right-4 top-3.5 animate-spin inline-block size-4 border-2 border-current border-t-transparent text-neutral-900 rounded-full"
                                             role="status" aria-label="loading"></div>
 
-                                        @if (count($regionList) > 0)
+                                        <!--[if BLOCK]><![endif]--><?php if(count($regionList) > 0): ?>
                                             <ul class="linoge-dropdown" x-show="open" x-cloak>
-                                                @foreach ($regionList as $region)
-                                                    @php
+                                                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $regionList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $region): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php
                                                         $rCode = data_get($region, 'code');
                                                         $rLabel = data_get($region, 'label');
-                                                    @endphp
-                                                    <li wire:key="region-{{ $rCode }}">
-                                                        <label for="region-{{ $rCode }}"
+                                                    ?>
+                                                    <li wire:key="region-<?php echo e($rCode); ?>">
+                                                        <label for="region-<?php echo e($rCode); ?>"
                                                             class="w-full inline-block cursor-pointer">
-                                                            <input type="radio" value="{{ $rCode }}"
+                                                            <input type="radio" value="<?php echo e($rCode); ?>"
                                                                 wire:model.live='region_selector.region_selected'
-                                                                class="sr-only" id="region-{{ $rCode }}">
-                                                            {{ $rLabel }}
+                                                                class="sr-only" id="region-<?php echo e($rCode); ?>">
+                                                            <?php echo e($rLabel); ?>
+
                                                         </label>
                                                     </li>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                                             </ul>
-                                        @endif
+                                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
-                                        @if ($selectedRegion)
+                                        <!--[if BLOCK]><![endif]--><?php if($selectedRegion): ?>
                                             <div
                                                 class="mt-2 p-2.5 bg-neutral-200/60 border border-neutral-300 text-xs text-neutral-800 font-medium">
                                                 Selected location:
-                                                <strong>{{ data_get($selectedRegion, 'label') }}</strong>
+                                                <strong><?php echo e(data_get($selectedRegion, 'label')); ?></strong>
                                             </div>
-                                        @endif
+                                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                     </div>
-                                    @error('data.destination_region_code')
-                                        <p class="linoge-error">{{ $message }}</p>
-                                    @enderror
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.destination_region_code'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="linoge-error"><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
                             </div>
                         </div>
@@ -541,71 +519,85 @@
                     <!-- SECTION 2: DELIVERY -->
                     <section class="linoge-section">
                         <h2 class="linoge-section-title">Delivery</h2>
-                        @error('data.shipping_hash')
-                            <p class="linoge-error mb-2">{{ $message }}</p>
-                        @enderror
+                        <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.shipping_hash'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <p class="linoge-error mb-2"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                         <div class="w-full relative flex justify-center my-1">
                             <div wire:loading wire:target='region_selector.region_selected'
                                 class="animate-spin inline-block size-4 border-2 border-current border-t-transparent text-neutral-900 rounded-full"
                                 role="status" aria-label="loading"></div>
                         </div>
                         <div wire:loading.remove wire:target='region_selector.region_selected' class="space-y-2">
-                            @forelse ($this->shipping_methods as $group_name => $shipping_method_groups)
+                            <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $this->shipping_methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group_name => $shipping_method_groups): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mt-3 mb-1">
-                                    {{ $group_name }}</p>
-                                @foreach ($shipping_method_groups as $i => $shipping_method)
-                                    <label for="shipping_method_{{ $shipping_method->hash }}" class="linoge-choice">
+                                    <?php echo e($group_name); ?></p>
+                                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $shipping_method_groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $shipping_method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <label for="shipping_method_<?php echo e($shipping_method->hash); ?>" class="linoge-choice">
                                         <span class="flex items-center gap-3">
-                                            <input wire:key='{{ $shipping_method->hash }}'
+                                            <input wire:key='<?php echo e($shipping_method->hash); ?>'
                                                 wire:model.live='data.shipping_hash' type="radio"
-                                                value="{{ $shipping_method->hash }}"
-                                                id="shipping_method_{{ $shipping_method->hash }}">
-                                            @if ($shipping_method->logo_url)
-                                                <img src="{{ $shipping_method->logo_url }}"
-                                                    class="h-4 object-contain" alt="{{ $shipping_method->label }}" />
-                                            @endif
-                                            <span class="linoge-choice-title">{{ $shipping_method->label }}</span>
+                                                value="<?php echo e($shipping_method->hash); ?>"
+                                                id="shipping_method_<?php echo e($shipping_method->hash); ?>">
+                                            <!--[if BLOCK]><![endif]--><?php if($shipping_method->logo_url): ?>
+                                                <img src="<?php echo e($shipping_method->logo_url); ?>"
+                                                    class="h-4 object-contain" alt="<?php echo e($shipping_method->label); ?>" />
+                                            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                                            <span class="linoge-choice-title"><?php echo e($shipping_method->label); ?></span>
                                         </span>
                                         <span
-                                            class="linoge-choice-price">{{ $shipping_method->cost_formatted }}</span>
+                                            class="linoge-choice-price"><?php echo e($shipping_method->cost_formatted); ?></span>
                                     </label>
-                                @endforeach
-                            @empty
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                 <div
                                     class="p-3 bg-neutral-200/60 border border-neutral-300 text-xs text-neutral-600 font-medium">
                                     Please enter your Shipping Address above first.
                                 </div>
-                            @endforelse
+                            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                         </div>
 
                         <div wire:loading wire:target='region_selector.region_selected' class="space-y-2" aria-hidden="true">
-                            @for ($i = 0; $i < 3; $i++)
+                            <!--[if BLOCK]><![endif]--><?php for($i = 0; $i < 3; $i++): ?>
                                 <div class="animate-pulse flex items-center justify-between gap-4 w-full p-3 bg-[#f4f4f2] border border-[#d4d4d0]">
                                     <div class="h-4 w-44 rounded-full bg-neutral-200/80"></div>
                                     <div class="h-4 w-20 rounded-full bg-neutral-200/80"></div>
                                 </div>
-                            @endfor
+                            <?php endfor; ?><!--[if ENDBLOCK]><![endif]-->
                         </div>
                     </section>
 
                     <!-- SECTION 3: PAYMENT -->
                     <section class="linoge-section">
                         <h2 class="linoge-section-title">Payment</h2>
-                        @error('data.payment_method_hash')
-                            <p class="linoge-error mb-2">{{ $message }}</p>
-                        @enderror
+                        <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['data.payment_method_hash'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <p class="linoge-error mb-2"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                         <div class="space-y-2">
-                            @foreach ($this->payment_methods->toCollection() as $key => $payment_method)
-                                <label for="payment_method_{{ $payment_method->hash }}" class="linoge-choice">
+                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $this->payment_methods->toCollection(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $payment_method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <label for="payment_method_<?php echo e($payment_method->hash); ?>" class="linoge-choice">
                                     <span class="flex items-center gap-3">
-                                        <input type="radio" wire:key='payment_method-{{ $payment_method->hash }}'
+                                        <input type="radio" wire:key='payment_method-<?php echo e($payment_method->hash); ?>'
                                             wire:model='payment_method_selector.payment_method_selected'
-                                            value="{{ $payment_method->hash }}"
-                                            id="payment_method_{{ $payment_method->hash }}">
-                                        <span class="linoge-choice-title">{{ $payment_method->label }}</span>
+                                            value="<?php echo e($payment_method->hash); ?>"
+                                            id="payment_method_<?php echo e($payment_method->hash); ?>">
+                                        <span class="linoge-choice-title"><?php echo e($payment_method->label); ?></span>
                                     </span>
                                 </label>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                         </div>
                     </section>
                 </div>
@@ -615,71 +607,116 @@
                     <div class="linoge-summary-header">
                         <h2 class="linoge-summary-title">Shopping Bag</h2>
                         <span
-                            class="linoge-summary-count">({{ $cart->items->toCollection()->sum('quantity') }})</span>
+                            class="linoge-summary-count">(<?php echo e($cart->items->toCollection()->sum('quantity')); ?>)</span>
                     </div>
 
                     <!-- Item list -->
                     <div class="divide-y divide-neutral-300">
-                        @foreach ($cart->items as $item)
-                            <x-single-product-list :cart_item="$item" />
-                        @endforeach
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $cart->items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if (isset($component)) { $__componentOriginal43c24292102d4519d5016657455adb19 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal43c24292102d4519d5016657455adb19 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-product-list','data' => ['cartItem' => $item]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('single-product-list'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['cart_item' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($item)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal43c24292102d4519d5016657455adb19)): ?>
+<?php $attributes = $__attributesOriginal43c24292102d4519d5016657455adb19; ?>
+<?php unset($__attributesOriginal43c24292102d4519d5016657455adb19); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal43c24292102d4519d5016657455adb19)): ?>
+<?php $component = $__componentOriginal43c24292102d4519d5016657455adb19; ?>
+<?php unset($__componentOriginal43c24292102d4519d5016657455adb19); ?>
+<?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                     </div>
 
                     <!-- Promocode input -->
-                    @if (empty(data_get($this->summary, 'coupon_code')))
+                    <!--[if BLOCK]><![endif]--><?php if(empty(data_get($this->summary, 'coupon_code'))): ?>
                         <div class="linoge-promocode-row">
                             <input type="text" wire:model='coupon_input' wire:keydown.enter.prevent='applyCoupon'
                                 placeholder="KODE PROMO / VOUCHER" class="linoge-promocode-input uppercase">
                             <button type="button" wire:click='applyCoupon' wire:loading.attr='disabled'
                                 class="linoge-promocode-btn">APPLY</button>
                         </div>
-                        @error('coupon_input')
-                            <p class="linoge-error mb-2">{{ $message }}</p>
-                        @enderror
-                    @else
+                        <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['coupon_input'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <p class="linoge-error mb-2"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                    <?php else: ?>
                         <div class="my-4 p-3 bg-neutral-900 text-white flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 <span class="text-xs font-bold uppercase tracking-wider text-amber-400">KUPON
                                     AKTIF:</span>
                                 <span
-                                    class="text-xs font-mono font-bold">{{ data_get($this->summary, 'coupon_code') }}</span>
+                                    class="text-xs font-mono font-bold"><?php echo e(data_get($this->summary, 'coupon_code')); ?></span>
                             </div>
                             <button type="button" wire:click='removeCoupon'
                                 class="text-xs text-red-400 hover:text-red-300 font-bold underline">HAPUS</button>
                         </div>
-                    @endif
+                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
                     <!-- Breakdown -->
                     <div wire:loading.remove wire:target='data.shipping_hash, applyCoupon, removeCoupon' class="linoge-breakdown">
                         <div class="linoge-row">
                             <span>Sub total</span>
-                            <strong>{{ data_get($this->summary, 'sub_total_formatted') }}</strong>
+                            <strong><?php echo e(data_get($this->summary, 'sub_total_formatted')); ?></strong>
                         </div>
                         <div class="linoge-row">
                             <span>Shipping</span>
-                            <strong>{{ data_get($this->summary, 'shipping_total_formatted', 'Free') }}</strong>
+                            <strong><?php echo e(data_get($this->summary, 'shipping_total_formatted', 'Free')); ?></strong>
                         </div>
-                        @if (data_get($this->summary, 'discount_total', 0) > 0)
+                        <!--[if BLOCK]><![endif]--><?php if(data_get($this->summary, 'discount_total', 0) > 0): ?>
                             <div class="linoge-row text-emerald-700">
                                 <span>Diskon Kupon</span>
                                 <strong class="text-emerald-700">-
-                                    {{ data_get($this->summary, 'discount_total_formatted') }}</strong>
+                                    <?php echo e(data_get($this->summary, 'discount_total_formatted')); ?></strong>
                             </div>
-                        @else
+                        <?php else: ?>
                             <div class="linoge-row">
                                 <span>Diskon</span>
                                 <strong>Rp 0</strong>
                             </div>
-                        @endif
+                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                         <div class="linoge-row total">
                             <span>Total:</span>
-                            <strong>{{ data_get($this->summary, 'grand_total_formatted') }}</strong>
+                            <strong><?php echo e(data_get($this->summary, 'grand_total_formatted')); ?></strong>
                         </div>
                     </div>
 
                     <div wire:loading wire:target='data.shipping_hash, applyCoupon, removeCoupon'
                         class="linoge-breakdown" aria-hidden="true">
-                        <x-skeleton.checkout-summary :rows="4" />
+                        <?php if (isset($component)) { $__componentOriginal5efad19ddc2c780f63372f0b9587556f = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5efad19ddc2c780f63372f0b9587556f = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.skeleton.checkout-summary','data' => ['rows' => 4]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('skeleton.checkout-summary'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['rows' => 4]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5efad19ddc2c780f63372f0b9587556f)): ?>
+<?php $attributes = $__attributesOriginal5efad19ddc2c780f63372f0b9587556f; ?>
+<?php unset($__attributesOriginal5efad19ddc2c780f63372f0b9587556f); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5efad19ddc2c780f63372f0b9587556f)): ?>
+<?php $component = $__componentOriginal5efad19ddc2c780f63372f0b9587556f; ?>
+<?php unset($__componentOriginal5efad19ddc2c780f63372f0b9587556f); ?>
+<?php endif; ?>
                     </div>
 
                     <!-- Primary Action Button -->
@@ -695,3 +732,4 @@
         </div>
     </div>
 </div>
+<?php /**PATH C:\laraherd\webstore\resources\views/livewire/checkout.blade.php ENDPATH**/ ?>

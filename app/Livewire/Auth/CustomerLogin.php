@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Services\SalesOrderService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -16,7 +17,7 @@ class CustomerLogin extends Component
     public function mount(): void
     {
         if (Auth::check()) {
-            redirect()->route('account.orders');
+            redirect()->route('account.dashboard');
         }
     }
 
@@ -42,8 +43,17 @@ class CustomerLogin extends Component
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             session()->regenerate();
-            toast('Berhasil Sign In!', 'success');
-            $this->redirect(route('account.orders'), navigate: false);
+
+            $linked = app(SalesOrderService::class)->linkGuestOrders(Auth::user());
+
+            toast(
+                $linked > 0
+                    ? "Berhasil Sign In! {$linked} pesanan checkout-tamu tersimpan ke akun Anda."
+                    : 'Berhasil Sign In!',
+                'success'
+            );
+
+            $this->redirect(route('account.dashboard'), navigate: false);
 
             return;
         }

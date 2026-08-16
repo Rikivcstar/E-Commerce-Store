@@ -96,6 +96,27 @@
                     </div>
                 </div>
 
+                @if ($can_claim_order)
+                    <div class="mt-5 rounded-2xl bg-[#20221b] text-white p-5 no-print">
+                        <h2 class="font-display text-base font-black">Simpan pesanan ini ke akun Anda</h2>
+                        <p class="mt-1 text-xs text-white/70 leading-relaxed">
+                            Buat akun dengan email <strong class="text-white">{{ $order->customer->email }}</strong>
+                            atau masuk ke akun yang sudah ada. Pesanan checkout-tamu Anda akan otomatis tersimpan di
+                            My Orders agar bisa dilacak kapan saja.
+                        </p>
+                        <div class="mt-4 flex flex-col sm:flex-row gap-2.5">
+                            <a href="{{ route('register') }}"
+                                class="inline-flex items-center justify-center rounded-xl bg-white text-[#20221b] px-5 py-2.5 text-xs font-black transition hover:bg-[#f2f3ed]">
+                                Buat Akun &amp; Simpan
+                            </a>
+                            <a href="{{ route('login') }}"
+                                class="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-xs font-black text-white uppercase tracking-wider transition hover:bg-white/10">
+                                Masuk
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="mt-5">
                     <div class="flex items-center justify-between mb-2.5">
                         <h2 class="text-[10px] font-black uppercase tracking-[0.14em] text-[#8c9082]">Order Tracking
@@ -249,23 +270,60 @@
                 </div>
 
                 @if ($order->status == \App\States\SalesOrder\Pending::class)
-                    <div
-                        class="mt-5 pt-4 border-t border-[#f0f0eb] flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-                        <div class="text-xs text-[#8c9082]">
-                            <p class="font-bold text-[#20221b]">Menunggu Pembayaran</p>
-                            <p class="text-[11px]">Silakan selesaikan pembayaran sebelum batas waktu berakhir.</p>
-                        </div>
-                        @if ($is_redirect)
-                            <a href="{{ $redirect_url }}"
-                                class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#20221b] px-6 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-black transition">
-                                Bayar Sekarang &rarr;
-                            </a>
-                        @else
-                            <span
-                                class="text-xs font-bold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-xl border border-amber-200">
-                                Silakan Hubungi CS WhatsApp: {{ config('services.contact.whatsapp') }}
-                            </span>
+                    <div class="mt-5 pt-4 border-t border-[#f0f0eb] no-print">
+                        <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-3">Petunjuk
+                            Pembayaran</h2>
+
+                        @php
+                            $paymentPayload = $order->payment->payload ?? [];
+                        @endphp
+
+                        @if ($order->payment->driver === 'offline' && ! empty($paymentPayload['account_number']))
+                            <div class="rounded-xl bg-[#f7f7f2] p-4 border border-[#e8e9e1] mb-4">
+                                <p class="text-xs text-[#555a42] mb-3">
+                                    Lakukan transfer sebesar
+                                    <strong class="text-[#20221b]">{{ $order->total_formatted }}</strong> ke rekening
+                                    berikut, lalu hubungi kami untuk verifikasi:
+                                </p>
+                                <div class="bg-white border border-[#e2e8f0] rounded-xl divide-y divide-[#f0f0eb]">
+                                    <div class="flex items-center justify-between px-4 py-3">
+                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">Bank</span>
+                                        <span
+                                            class="text-xs font-black text-[#20221b]">{{ strtoupper($order->payment->label) }}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between px-4 py-3">
+                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">No. Rekening</span>
+                                        <span
+                                            class="text-xs font-black text-[#20221b] font-mono">{{ $paymentPayload['account_number'] }}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between px-4 py-3">
+                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">a.n.</span>
+                                        <span
+                                            class="text-xs font-black text-[#20221b]">{{ $paymentPayload['account_holder_name'] ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-xl bg-[#f7f7f2] border border-[#e8e9e1] p-4">
+                            <div class="text-xs text-[#8c9082]">
+                                <p class="font-bold text-[#20221b]">Menunggu Pembayaran</p>
+                                <p class="text-[11px]">Selesaikan sebelum batas waktu:
+                                    {{ $order->due_date_at_formatted }}.</p>
+                            </div>
+                            @if ($is_redirect)
+                                <a href="{{ $redirect_url }}"
+                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#20221b] px-6 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-black transition">
+                                    Bayar Sekarang &rarr;
+                                </a>
+                            @else
+                                <span
+                                    class="text-xs font-bold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-xl border border-amber-200">
+                                    Silakan Hubungi CS WhatsApp: {{ config('services.contact.whatsapp') }}
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 @endif
 

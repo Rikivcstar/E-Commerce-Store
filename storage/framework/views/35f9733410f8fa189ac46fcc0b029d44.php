@@ -443,7 +443,32 @@
                     <h1 class="product-title"><?php echo e($product->name); ?></h1>
                     <span class="product-price"><?php echo e($product->price_formatted); ?></span>
 
-<div class="product-divider"></div>
+                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                        <!--[if BLOCK]><![endif]--><?php if($product->stock <= 5 && $product->stock > 0): ?>
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-700 border border-rose-200 animate-pulse">
+                                <span class="size-1.5 rounded-full bg-rose-600"></span>
+                                Stok Terbatas: Sisa <?php echo e($product->stock); ?> unit!
+                            </span>
+                        <?php elseif($product->stock > 5): ?>
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
+                                <span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                Stok Tersedia (<?php echo e($product->stock); ?> unit)
+                            </span>
+                        <?php else: ?>
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-600 border border-zinc-200">
+                                Stok Habis
+                            </span>
+                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
+                        <span class="inline-flex items-center gap-1.5 rounded-full bg-[#f2f3ed] px-3 py-1 text-xs font-semibold text-[#555a42]">
+                            <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>
+                            </svg>
+                            Estimasi 1-3 hari kerja
+                        </span>
+                    </div>
+
+                    <div class="product-divider"></div>
                     <div style="display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
                         <div style="flex:1 1 12rem; min-width: 0;">
                             <?php

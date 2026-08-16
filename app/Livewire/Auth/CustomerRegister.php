@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use App\Services\SalesOrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -20,7 +21,7 @@ class CustomerRegister extends Component
     public function mount(): void
     {
         if (Auth::check()) {
-            redirect()->route('account.orders');
+            redirect()->route('account.dashboard');
         }
     }
 
@@ -64,9 +65,16 @@ class CustomerRegister extends Component
         Auth::login($user, remember: true);
         session()->regenerate();
 
-        toast('Pendaftaran akun berhasil! Selamat bergabung.', 'success');
+        $linked = app(SalesOrderService::class)->linkGuestOrders($user);
 
-        $this->redirect(route('account.orders'), navigate: false);
+        toast(
+            $linked > 0
+                ? "Pendaftaran berhasil! {$linked} pesanan checkout-tamu tersimpan ke akun Anda."
+                : 'Pendaftaran akun berhasil! Selamat bergabung.',
+            'success'
+        );
+
+        $this->redirect(route('account.dashboard'), navigate: false);
     }
 
     public function render()

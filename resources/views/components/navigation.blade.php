@@ -36,6 +36,8 @@
             </a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
                 href="{{ $firstPage ? route('page', $firstPage->slug) : url('/') }}">About</a>
+            <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
+                href="{{ route('track-order') }}">Lacak Pesanan</a>
         </div>
 
         <div class="flex items-center gap-2">
@@ -61,6 +63,18 @@
                             <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Signed in as</p>
                             <p class="text-xs font-black text-gray-900 truncate">{{ auth()->user()->name }}</p>
                         </div>
+                        <a href="{{ route('account.dashboard') }}"
+                            class="flex items-center gap-2.5 rounded-full px-3 py-3 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:opacity-60 transition">
+                            <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="7" height="9" x="3" y="3" rx="1" />
+                                <rect width="7" height="5" x="14" y="3" rx="1" />
+                                <rect width="7" height="9" x="14" y="12" rx="1" />
+                                <rect width="7" height="5" x="3" y="16" rx="1" />
+                            </svg>
+                            Dashboard
+                        </a>
                         <a href="{{ route('account.orders') }}"
                             class="flex items-center gap-2.5 rounded-full px-3 py-3 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:opacity-60 transition">
                             <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -165,6 +179,8 @@
         </a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
             href="{{ $firstPage ? route('page', $firstPage->slug) : url('/') }}">About</a>
+        <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+            href="{{ route('track-order') }}">Lacak Pesanan</a>
         @auth
             @php
                 $userInitials = strtoupper(substr(trim(auth()->user()->name ?? 'User'), 0, 1));
@@ -180,6 +196,8 @@
                         <p class="text-[10px] text-emerald-600 font-bold">● Active Customer</p>
                     </div>
                 </div>
+                <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+                    href="{{ route('account.dashboard') }}">Dashboard</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
                     href="{{ route('account.orders') }}">My Orders</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
