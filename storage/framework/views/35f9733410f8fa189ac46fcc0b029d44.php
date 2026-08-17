@@ -590,6 +590,28 @@ if (isset($__slots)) unset($__slots);
                     </div>
                 </section>
             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
+            <!--[if BLOCK]><![endif]--><?php if(isset($recently_viewed) && $recently_viewed->count()): ?>
+                <section class="recommend-section" aria-label="Recently viewed products">
+                    <h2 class="recommend-title">Recently viewed</h2>
+                    <div class="recommend-grid">
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $recently_viewed; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <a class="recommend-card" href="<?php echo e(route('product', $item->slug)); ?>">
+                                <div class="recommend-media">
+                                    <img src="<?php echo e($item->cover_url); ?>" alt="<?php echo e($item->name); ?>">
+                                </div>
+                                <div class="recommend-info">
+                                    <h3 class="recommend-name"><?php echo e($item->name); ?></h3>
+                                    <div class="recommend-row">
+                                        <p class="recommend-price"><?php echo e($item->price_formatted); ?></p>
+                                        <span class="recommend-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                    </div>
+                </section>
+            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         </div>
     </div>
 </div>

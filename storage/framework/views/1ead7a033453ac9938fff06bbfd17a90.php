@@ -94,6 +94,18 @@ if (isset($__slots)) unset($__slots);
                             <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Signed in as</p>
                             <p class="text-xs font-black text-gray-900 truncate"><?php echo e(auth()->user()->name); ?></p>
                         </div>
+                        <a href="<?php echo e(route('account.dashboard')); ?>"
+                            class="flex items-center gap-2.5 rounded-full px-3 py-3 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:opacity-60 transition">
+                            <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="7" height="9" x="3" y="3" rx="1" />
+                                <rect width="7" height="5" x="14" y="3" rx="1" />
+                                <rect width="7" height="9" x="14" y="12" rx="1" />
+                                <rect width="7" height="5" x="3" y="16" rx="1" />
+                            </svg>
+                            Dashboard
+                        </a>
                         <a href="<?php echo e(route('account.orders')); ?>"
                             class="flex items-center gap-2.5 rounded-full px-3 py-3 text-xs font-bold text-gray-700 hover:bg-[#f2f3ed] hover:opacity-60 transition">
                             <svg class="size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -261,6 +273,8 @@ if (isset($__slots)) unset($__slots);
                         <p class="text-[10px] text-emerald-600 font-bold">● Active Customer</p>
                     </div>
                 </div>
+                <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
+                    href="<?php echo e(route('account.dashboard')); ?>">Dashboard</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
                     href="<?php echo e(route('account.orders')); ?>">My Orders</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"

@@ -15,6 +15,67 @@
             margin-bottom: 2.5rem;
         }
 
+        .linoge-steps {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .linoge-step {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .linoge-step-dot {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem;
+            height: 1.6rem;
+            border-radius: 999px;
+            border: 1px solid #d4d4d0;
+            background: #f4f4f2;
+            color: #999999;
+            font-size: 0.72rem;
+            font-weight: 800;
+            transition: all 0.2s ease;
+        }
+
+        .linoge-step.active .linoge-step-dot {
+            background: #111111;
+            border-color: #111111;
+            color: #ffffff;
+        }
+
+        .linoge-step.done .linoge-step-dot {
+            background: #d8d8d4;
+            border-color: #111111;
+            color: #111111;
+        }
+
+        .linoge-step-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #999999;
+            transition: color 0.2s ease;
+        }
+
+        .linoge-step.active .linoge-step-label,
+        .linoge-step.done .linoge-step-label {
+            color: #111111;
+        }
+
+        .linoge-step-line {
+            flex: 1 1 auto;
+            min-width: 1.5rem;
+            height: 1px;
+            background: #d4d4d0;
+        }
+
         .linoge-title {
             font-family: 'Syne', 'Finlandica', sans-serif;
             font-weight: 900;
@@ -296,6 +357,32 @@
             <!-- PAGE HEADER -->
             <div class="linoge-header">
                 <h1 class="linoge-title">CHECKOUT</h1>
+                <?php($currentStep = $this->current_step)
+                <div class="linoge-steps">
+                    @foreach ([1 => 'Information', 2 => 'Delivery', 3 => 'Payment'] as $stepNumber => $stepLabel)
+                        @php
+                            $stepState = $currentStep > $stepNumber ? 'done' : ($currentStep === $stepNumber ? 'active' : '');
+                        ?>
+                        <div class="linoge-step <?php echo e($stepState); ?>">
+                            <span class="linoge-step-dot">
+                                <!--[if BLOCK]><![endif]--><?php if($currentStep > $stepNumber): ?>
+                                    <svg class="size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg>
+                                <?php else: ?>
+                                    <?php echo e($stepNumber); ?>
+
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                            </span>
+                            <span class="linoge-step-label"><?php echo e($stepLabel); ?></span>
+                        </div>
+                        <!--[if BLOCK]><![endif]--><?php if(! $loop->last): ?>
+                            <span class="linoge-step-line"></span>
+                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                </div>
             </div>
 
             <div class="linoge-grid">
