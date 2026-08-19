@@ -357,10 +357,12 @@
             <!-- PAGE HEADER -->
             <div class="linoge-header">
                 <h1 class="linoge-title">CHECKOUT</h1>
-                <?php($currentStep = $this->current_step)
+                <?php
+                    $currentStep = $this->current_step;
+                ?>
                 <div class="linoge-steps">
-                    @foreach ([1 => 'Information', 2 => 'Delivery', 3 => 'Payment'] as $stepNumber => $stepLabel)
-                        @php
+                    <!--[if BLOCK]><![endif]--><?php $__currentLoopData = [1 => 'Information', 2 => 'Delivery', 3 => 'Payment']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stepNumber => $stepLabel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
                             $stepState = $currentStep > $stepNumber ? 'done' : ($currentStep === $stepNumber ? 'active' : '');
                         ?>
                         <div class="linoge-step <?php echo e($stepState); ?>">

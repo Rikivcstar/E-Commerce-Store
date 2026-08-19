@@ -357,7 +357,9 @@
             <!-- PAGE HEADER -->
             <div class="linoge-header">
                 <h1 class="linoge-title">CHECKOUT</h1>
-                @php($currentStep = $this->current_step)
+                @php
+                    $currentStep = $this->current_step;
+                @endphp
                 <div class="linoge-steps">
                     @foreach ([1 => 'Information', 2 => 'Delivery', 3 => 'Payment'] as $stepNumber => $stepLabel)
                         @php

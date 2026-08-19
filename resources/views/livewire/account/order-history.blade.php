@@ -284,22 +284,6 @@
                             <li class="oh-item">
                                 @if ($item->cover_url)
                                     <img src="{{ $item->cover_url }}" alt="{{ $item->name }}" class="oh-item-img">
-@else
-            <div class="oh-empty">
-                <div class="oh-empty-icon">🛍️</div>
-                <div class="oh-empty-title">No orders yet</div>
-                <p class="oh-empty-desc">Your order history will appear here after you make a purchase.</p>
-                <a href="{{ route('product-catalog') }}" class="oh-shop-btn">Start Shopping</a>
-            </div>
-        @endforelse
-
-        @if ($orders->hasPages())
-            <div class="mt-6">
-                {{ $orders->links() }}
-            </div>
-        @endif
-    </div>
-</div>
                                 @endif
                                 <span class="oh-item-name">{{ $item->name }}</span>
                                 <span class="oh-item-qty">× {{ $item->quantity }}</span>
@@ -334,5 +318,11 @@
                 <a href="{{ route('product-catalog') }}" class="oh-shop-btn">Start Shopping</a>
             </div>
         @endforelse
+
+        @if ($orders->hasPages())
+            <div class="mt-6">
+                {{ $orders->links() }}
+            </div>
+        @endif
     </div>
 </div>

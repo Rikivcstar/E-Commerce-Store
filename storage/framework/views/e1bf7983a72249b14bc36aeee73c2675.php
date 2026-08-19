@@ -237,12 +237,34 @@
         </div>
 
         
+        <div class="flex flex-wrap gap-2 mb-4">
+            <?php
+                $filters = ['all' => 'Semua', 'pending' => 'Menunggu', 'progress' => 'Proses', 'completed' => 'Selesai', 'cancel' => 'Batal'];
+            ?>
+            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $filters; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <button type="button" wire:click="filter('<?php echo e($key); ?>')"
+                    class="text-[0.68rem] font-black uppercase tracking-wider px-3 py-1.5 border transition cursor-pointer <?php echo e($statusFilter === $key ? 'bg-[#111111] text-white border-[#111111]' : 'bg-white text-[#555555] border-[#d4cec4] hover:bg-[#f0ede6]'); ?>">
+                    <?php echo e($label); ?>
+
+                </button>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+
+            <!--[if BLOCK]><![endif]--><?php if($orders->count() > 0): ?>
+                <span class="ml-auto self-center text-[0.7rem] font-bold text-[#888]">
+                    <?php echo e($orders->total()); ?> order
+                </span>
+            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+        </div>
+
+        
         <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <?php
                 $statusClass = match(true) {
                     str_contains(strtolower($order->status_label ?? ''), 'paid')      => 'paid',
                     str_contains(strtolower($order->status_label ?? ''), 'ship')      => 'shipped',
+                    str_contains(strtolower($order->status_label ?? ''), 'proses')    => 'shipped',
                     str_contains(strtolower($order->status_label ?? ''), 'done')      => 'done',
+                    str_contains(strtolower($order->status_label ?? ''), 'batal')     => 'cancelled',
                     str_contains(strtolower($order->status_label ?? ''), 'cancel')    => 'cancelled',
                     default => 'pending',
                 };
@@ -263,10 +285,6 @@
                             <li class="oh-item">
                                 <!--[if BLOCK]><![endif]--><?php if($item->cover_url): ?>
                                     <img src="<?php echo e($item->cover_url); ?>" alt="<?php echo e($item->name); ?>" class="oh-item-img">
-                                <?php else: ?>
-                                    <div class="oh-item-img" style="display:flex;align-items:center;justify-content:center;">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                                    </div>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                 <span class="oh-item-name"><?php echo e($item->name); ?></span>
                                 <span class="oh-item-qty">× <?php echo e($item->quantity); ?></span>
@@ -281,9 +299,16 @@
                         <div class="oh-total-label">Total paid</div>
                         <div class="oh-total-amount"><?php echo e($order->total_formatted); ?></div>
                     </div>
-                    <a href="<?php echo e(route('order-confirmed', $order->trx_id)); ?>" class="oh-view-btn">
-                        View Order →
-                    </a>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button type="button" wire:click="buyAgain('<?php echo e($order->trx_id); ?>')"
+                            wire:loading.attr="disabled" class="oh-view-btn">
+                            <span wire:loading.remove wire:target="buyAgain('<?php echo e($order->trx_id); ?>')">Beli Lagi</span>
+                            <span wire:loading wire:target="buyAgain('<?php echo e($order->trx_id); ?>')">Menambahkan...</span>
+                        </button>
+                        <a href="<?php echo e(route('order-confirmed', $order->trx_id)); ?>" class="oh-view-btn">
+                            View Order →
+                        </a>
+                    </div>
                 </div>
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -294,6 +319,12 @@
                 <a href="<?php echo e(route('product-catalog')); ?>" class="oh-shop-btn">Start Shopping</a>
             </div>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
+        <!--[if BLOCK]><![endif]--><?php if($orders->hasPages()): ?>
+            <div class="mt-6">
+                <?php echo e($orders->links()); ?>
+
+            </div>
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
     </div>
-</div>
-<?php /**PATH C:\laraherd\webstore\resources\views/livewire/account/order-history.blade.php ENDPATH**/ ?>
+</div><?php /**PATH C:\laraherd\webstore\resources\views/livewire/account/order-history.blade.php ENDPATH**/ ?>
