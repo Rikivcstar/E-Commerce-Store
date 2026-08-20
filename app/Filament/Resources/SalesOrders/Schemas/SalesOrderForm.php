@@ -4,6 +4,7 @@ namespace App\Filament\Resources\SalesOrders\Schemas;
 
 use App\Models\SalesOrder;
 use App\Services\RegionQueryService;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -110,6 +111,16 @@ class SalesOrderForm
                             ->label('Grand Total')
                             ->formatStateUsing(fn ($state) => Number::currency($state, 'IDR'))
                             ->inlineLabel(),
+                    ]),
+
+                Section::make('Bukti Pembayaran')
+                    ->description('Foto bukti transfer yang diunggah pelanggan')
+                    ->collapsed()
+                    ->schema([
+                        ImageEntry::make('proof_of_payment')
+                            ->label('Bukti Transfer')
+                            ->state(fn (SalesOrder $record) => $record->getFirstMediaUrl('proof_of_payment'))
+                            ->hidden(fn (SalesOrder $record) => ! $record->hasMedia('proof_of_payment')),
                     ]),
             ]);
     }

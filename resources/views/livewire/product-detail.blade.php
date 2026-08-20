@@ -475,6 +475,35 @@
                         </div>
                         <livewire:wishlist-toggle :product="$product" wire:key="wish-{{ $product->sku }}" />
                     </div>
+
+                    @if ($product->stock < 1)
+                        <div class="mt-4 rounded-xl border border-[#e2e8f0] bg-[#fafaf7] p-4">
+                            @if ($requested)
+                                <p class="text-sm font-semibold text-emerald-700">
+                                    ✓ Anda akan segera dihubungi saat stok tersedia kembali.
+                                </p>
+                            @else
+                                <h3 class="text-xs font-bold text-[#20221b]">Kabari Saya Saat Stok Tersedia</h3>
+                                <p class="mt-1 text-[11px] text-[#8c9082]">
+                                    Masukkan email, kami akan memberitahu Anda begitu produk ini kembali tersedia.
+                                </p>
+                                <form wire:submit="subscribeStockWaitlist" class="mt-3 flex gap-2">
+                                    @guest
+                                        <input type="email" wire:model="notify_email" placeholder="Email Anda"
+                                            required
+                                            class="min-w-0 flex-1 rounded-lg border border-[#e2e8f0] bg-white px-3 py-2 text-xs focus:ring-2 focus:ring-[#555a42]/30">
+                                    @endguest
+                                    <button type="submit" wire:loading.attr="disabled"
+                                        class="rounded-lg bg-[#20221b] px-4 py-2 text-[11px] font-bold text-white hover:bg-black disabled:opacity-60 transition">
+                                        Notify Me
+                                    </button>
+                                </form>
+                                @error('notify_email')
+                                    <p class="mt-2 text-[11px] font-semibold text-rose-600">{{ $message }}</p>
+                                @enderror
+                            @endif
+                        </div>
+                    @endif
                     <div class="product-divider"></div>
 
                     <div class="product-benefits">

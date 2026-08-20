@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
 use App\Services\RecommendationService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
@@ -37,6 +38,11 @@ class HomePage extends Component
             Product::query()->latest()->limit(4)->get()
         );
         $popular_products = ProductData::collect($recommendation_service->popular(4, days: 30));
+        $personalized_products = ProductData::collect(
+            Auth::check()
+                ? $recommendation_service->personalized(Auth::user(), 4)
+                : collect()
+        );
 
         $categories = Cache::remember('home_categories', now()->addHour(), function () {
             return Category::query()
@@ -57,6 +63,14 @@ class HomePage extends Component
                 ->get();
         });
 
-        return view('livewire.home-page', compact('banners', 'feature_products', 'latest_products', 'popular_products', 'categories', 'static_pages'));
+        return view('livewire.home-page', compact(
+            'banners',
+            'feature_products',
+            'latest_products',
+            'popular_products',
+            'personalized_products',
+            'categories',
+            'static_pages'
+        ));
     }
 }

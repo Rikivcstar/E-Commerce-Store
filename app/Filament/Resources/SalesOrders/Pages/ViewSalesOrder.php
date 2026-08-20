@@ -11,6 +11,7 @@ use App\States\SalesOrder\Progress;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewSalesOrder extends ViewRecord
@@ -20,6 +21,24 @@ class ViewSalesOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('Konfirmasi Pembayaran')
+                ->icon('heroicon-o-check-circle')
+                ->color('success')
+                ->visible(fn () => get_class($this->record->status) === Pending::class
+                    && $this->record->payment_driver === 'offline')
+                ->requiresConfirmation()
+                ->modalHeading('Konfirmasi Pembayaran')
+                ->modalDescription('Tandai pesanan ini sebagai sudah dibayar dan pindahkan statusnya menjadi sedang diproses?')
+                ->action(function () {
+                    $this->record->status->transitionTo(Progress::class);
+
+                    Notification::make()
+                        ->success()
+                        ->title('Pembayaran dikonfirmasi')
+                        ->body("Pesanan #{$this->record->trx_id} telah dipindahkan ke status sedang diproses.")
+                        ->send();
+                }),
+
             Action::make('Proses')
                 ->icon('heroicon-o-arrow-path-rounded-square')
                 ->modalWidth('sm')

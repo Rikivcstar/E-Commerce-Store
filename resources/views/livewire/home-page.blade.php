@@ -566,6 +566,30 @@
         </div>
     </section>
 
+    @auth
+        @if (! empty($personalized_products))
+            <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
+                <div class="mx-auto max-w-7xl">
+                    <div class="mb-8 flex items-end justify-between border-b pb-4"
+                        style="border-color:var(--nx-line)">
+                        <div>
+                            <p class="nx-label" style="color:var(--nx-muted)">Personalized for you</p>
+                            <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)">Untuk
+                                Anda</h2>
+                        </div>
+                        <a href="{{ route('product-catalog') }}" class="nx-link nx-focus"
+                            style="color:var(--nx-ink)">View All</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
+                        @foreach ($personalized_products as $product)
+                            <x-single-product-card :product="$product" />
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+    @endauth
+
     {{-- ── COLLECTIONS GRID ─────────────────────────────────── --}}
     <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:#EAE7DD">
         <div class="mx-auto max-w-7xl">

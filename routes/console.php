@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\CheckDueSalesOrderCommand;
+use App\Console\Commands\WishlistPriceDropCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -10,3 +11,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command(CheckDueSalesOrderCommand::class)->everyMinute();
+Schedule::command(WishlistPriceDropCommand::class)->daily();

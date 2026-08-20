@@ -9,7 +9,10 @@ use App\Services\PaymentMethodQueryService;
 use App\Services\RegionQueryService;
 use App\Services\SessionCartService;
 use App\Services\ShippingMethodService;
+use App\Services\UserCartService;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
@@ -23,7 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
-        $this->app->bind(CartServiceInterface::class, SessionCartService::class);
+        $this->app->bind(CartServiceInterface::class, function (Application $app) {
+            // User yang sudah login memakai cart database, guest memakai session.
+            return Auth::check()
+                ? $app->make(UserCartService::class)
+                : $app->make(SessionCartService::class);
+        });
         $this->app->bind(RegionQueryService::class, RegionQueryService::class);
         $this->app->bind(ShippingMethodService::class, ShippingMethodService::class);
         $this->app->bind(PaymentMethodQueryService::class, PaymentMethodQueryService::class);

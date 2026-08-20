@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Services\SalesOrderService;
+use App\Services\UserCartService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -46,9 +47,21 @@ class CustomerLogin extends Component
 
             $linked = app(SalesOrderService::class)->linkGuestOrders(Auth::user());
 
+            $mergedCart = app(UserCartService::class)->mergeFromSession(Auth::id());
+
+            $messages = [];
+
+            if ($linked > 0) {
+                $messages[] = "{$linked} pesanan checkout-tamu tersimpan ke akun Anda";
+            }
+
+            if ($mergedCart > 0) {
+                $messages[] = "{$mergedCart} item keranjang turut digabungkan";
+            }
+
             toast(
-                $linked > 0
-                    ? "Berhasil Sign In! {$linked} pesanan checkout-tamu tersimpan ke akun Anda."
+                count($messages) > 0
+                    ? 'Berhasil Sign In! '.implode(', dan ', $messages).'.'
                     : 'Berhasil Sign In!',
                 'success'
             );

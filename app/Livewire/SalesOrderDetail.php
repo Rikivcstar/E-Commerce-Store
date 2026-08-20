@@ -3,14 +3,28 @@
 namespace App\Livewire;
 
 use App\Data\SalesOrderData;
+use App\Events\SalesOrderProofUploadedEvent;
 use App\Models\SalesOrder;
 use App\Services\PaymentMethodQueryService;
+use App\States\SalesOrder\Pending;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class SalesOrderDetail extends Component
 {
+    use WithFileUploads;
+
     public SalesOrder $sales_order;
+
+    public $proof;
+
+    protected function rules(): array
+    {
+        return [
+            'proof' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+        ];
+    }
 
     public function mount(SalesOrder $sales_order): void
     {
@@ -21,6 +35,42 @@ class SalesOrderDetail extends Component
                 abort(403, 'Anda tidak memiliki otorisasi untuk melihat pesanan ini.');
             }
         }
+    }
+
+    public function uploadProof(): void
+    {
+        abort_unless(
+            $this->sales_order->status instanceof Pending,
+            403,
+            'Bukti transfer hanya dapat diunggah saat pesanan masih menunggu pembayaran.'
+        );
+
+        abort_unless(
+            $this->sales_order->payment_driver === 'offline',
+            403,
+            'Pembayaran online tidak memerlukan unggah bukti transfer.'
+        );
+
+        $this->validate();
+
+        $this->sales_order->clearMediaCollection('proof_of_payment');
+
+        $this->sales_order
+            ->addMedia($this->proof->getRealPath())
+            ->toMediaCollection('proof_of_payment');
+
+        $this->proof = null;
+
+        toast('Bukti transfer berhasil diunggah. Kami akan segera memverifikasi pembayaran Anda.', 'success');
+
+        event(new SalesOrderProofUploadedEvent(
+            SalesOrderData::fromModel($this->sales_order)
+        ));
+    }
+
+    public function getProofUrlProperty(): ?string
+    {
+        return $this->sales_order->getFirstMediaUrl('proof_of_payment');
     }
 
     public function render()

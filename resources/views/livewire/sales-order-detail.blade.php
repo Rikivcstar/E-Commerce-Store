@@ -181,6 +181,35 @@
                     </div>
                 </div>
 
+                <div class="mt-5">
+                    <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-2.5">Riwayat
+                        Status</h2>
+                    <div class="rounded-xl bg-[#f7f7f2] p-4 border border-[#e8e9e1]">
+                        <ol class="space-y-0">
+                            @foreach ($timeline as $tl)
+                                <li class="relative flex gap-3 pb-5 last:pb-0">
+                                    @if (! $loop->last)
+                                        <span class="absolute left-[9px] top-5 bottom-0 w-px bg-[#d8dac9]"></span>
+                                    @endif
+                                    <span
+                                        class="relative mt-1 flex size-2.5 shrink-0 rounded-full border-2 border-[#555a42] bg-[#f7f7f2]"></span>
+                                    <div class="min-w-0 pt-0.5">
+                                        <p class="text-xs font-bold text-[#20221b]">{{ $tl['label'] }}</p>
+                                        <p class="text-[10px] font-medium text-[#8c9082]">
+                                            {{ ($tl['timestamp'] ?? null)?->translatedFormat('d F Y, H:i') }}
+                                        </p>
+                                        @if (! empty($tl['description']))
+                                            <p class="mt-0.5 text-[11px] text-[#555a42] leading-relaxed">
+                                                {{ $tl['description'] }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ol>
+                    </div>
+                </div>
+
                 <div
                     class="mt-3.5 grid grid-cols-2 md:grid-cols-4 gap-2.5 p-3 rounded-xl bg-[#f7f7f2] border border-[#e8e9e1]">
                     <div class="min-w-0">
@@ -302,6 +331,38 @@
                                             class="text-xs font-black text-[#20221b]">{{ $paymentPayload['account_holder_name'] ?? '-' }}</span>
                                     </div>
                                 </div>
+                            </div>
+                        @endif
+
+                        @if ($order->payment->driver === 'offline')
+                            <div class="rounded-xl bg-white border border-dashed border-[#d8dac9] p-4 mb-4">
+                                <h3 class="text-xs font-black text-[#20221b] mb-1">Upload Bukti Transfer</h3>
+                                <p class="text-[11px] text-[#8c9082] mb-3">
+                                    Sudah transfer? Unggah bukti pembayaran (JPG/PNG/WebP, maks. 5MB) agar pesanan
+                                    segera diverifikasi dan diproses.
+                                </p>
+
+                                @if ($proofUrl)
+                                    <div class="mb-3">
+                                        <img src="{{ $proofUrl }}" alt="Bukti transfer"
+                                            class="max-h-40 rounded-lg border border-[#e2e8f0] bg-white object-contain">
+                                    </div>
+                                @endif
+
+                                <form wire:submit="uploadProof"
+                                    class="flex flex-col sm:flex-row gap-2.5 items-start">
+                                    <input type="file" wire:model="proof"
+                                        accept="image/jpeg,image/png,image/webp"
+                                        class="block w-full text-[11px] text-[#555a42] file:mr-3 file:rounded-lg file:border-0 file:bg-[#f2f3ed] file:px-3 file:py-1.5 file:text-[11px] file:font-bold file:text-[#555a42] hover:file:bg-[#e6e8de] transition cursor-pointer">
+                                    @error('proof')
+                                        <p class="text-[11px] font-semibold text-rose-600">{{ $message }}</p>
+                                    @enderror
+                                    <button type="submit" wire:loading.attr="disabled"
+                                        class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#20221b] px-5 py-2 text-[11px] font-bold text-white hover:bg-black disabled:opacity-60 transition">
+                                        <span wire:loading.remove wire:target="proof">Upload Bukti</span>
+                                        <span wire:loading wire:target="proof">Mengunggah...</span>
+                                    </button>
+                                </form>
                             </div>
                         @endif
 

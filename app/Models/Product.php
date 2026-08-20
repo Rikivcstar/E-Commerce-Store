@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ProductRestockedEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,6 +18,19 @@ class Product extends Model implements HasMedia
 {
     //
     use HasTags, InteractsWithMedia, LogsActivity;
+
+    protected static function booted(): void
+    {
+        // Ketika stok berubah dari kosong menjadi tersedia,
+        // beri tahu pengguna yang mendaftar "notify me".
+        static::updating(function (Product $product) {
+            $oldStock = (int) $product->getOriginal('stock');
+
+            if ($oldStock < 1 && $product->stock >= 1) {
+                event(new ProductRestockedEvent($product));
+            }
+        });
+    }
 
     public function categories(): BelongsToMany
     {

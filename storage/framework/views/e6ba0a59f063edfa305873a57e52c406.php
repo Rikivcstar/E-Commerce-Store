@@ -587,6 +587,49 @@
         </div>
     </section>
 
+    <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->check()): ?>
+        <!--[if BLOCK]><![endif]--><?php if(! empty($personalized_products)): ?>
+            <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
+                <div class="mx-auto max-w-7xl">
+                    <div class="mb-8 flex items-end justify-between border-b pb-4"
+                        style="border-color:var(--nx-line)">
+                        <div>
+                            <p class="nx-label" style="color:var(--nx-muted)">Personalized for you</p>
+                            <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)">Untuk
+                                Anda</h2>
+                        </div>
+                        <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus"
+                            style="color:var(--nx-ink)">View All</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $personalized_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if (isset($component)) { $__componentOriginale405491d357fabfcd42600c89d1c98f5 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale405491d357fabfcd42600c89d1c98f5 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-product-card','data' => ['product' => $product]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('single-product-card'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['product' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($product)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale405491d357fabfcd42600c89d1c98f5)): ?>
+<?php $attributes = $__attributesOriginale405491d357fabfcd42600c89d1c98f5; ?>
+<?php unset($__attributesOriginale405491d357fabfcd42600c89d1c98f5); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale405491d357fabfcd42600c89d1c98f5)): ?>
+<?php $component = $__componentOriginale405491d357fabfcd42600c89d1c98f5; ?>
+<?php unset($__componentOriginale405491d357fabfcd42600c89d1c98f5); ?>
+<?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
     
     <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:#EAE7DD">
         <div class="mx-auto max-w-7xl">

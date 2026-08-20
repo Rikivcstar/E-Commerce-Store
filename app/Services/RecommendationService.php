@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\SalesOrderItem;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -59,5 +60,51 @@ class RecommendationService
             ->latest()
             ->limit($limit)
             ->get();
+    }
+
+    /**
+     * Rekomendasi personal berbasis riwayat belanja user.
+     * Mencari produk yang sering dibeli bersamaan dengan produk yang pernah
+     * dibeli user (item-based collaborative filtering), lalu mengecualikan
+     * produk yang sudah pernah dibeli user.
+     *
+     * @return Collection<int, Product>
+     */
+    public function personalized(?User $user, int $limit = 4): Collection
+    {
+        if (! $user) {
+            return collect();
+        }
+
+        $purchasedSkus = SalesOrderItem::query()
+            ->whereHas('salesOrder', fn (Builder $query) => $query->where('user_id', $user->id))
+            ->distinct()
+            ->pluck('sku')
+            ->all();
+
+        if ($purchasedSkus === []) {
+            return collect();
+        }
+
+        $topSkus = SalesOrderItem::query()
+            ->whereHas('salesOrder', fn (Builder $query) => $query->where('user_id', $user->id))
+            ->selectRaw('sku, SUM(quantity) as total_qty')
+            ->groupBy('sku')
+            ->orderByDesc('total_qty')
+            ->limit(3)
+            ->pluck('sku')
+            ->all();
+
+        $candidates = collect();
+
+        foreach ($topSkus as $sku) {
+            $candidates = $candidates->merge($this->frequentlyBoughtTogether($sku, 6));
+        }
+
+        return $candidates
+            ->reject(fn (Product $product) => in_array($product->sku, $purchasedSkus, true))
+            ->unique('id')
+            ->take($limit)
+            ->values();
     }
 }

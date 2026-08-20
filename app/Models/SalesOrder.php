@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStates\HasStates;
 
-class SalesOrder extends Model
+class SalesOrder extends Model implements HasMedia
 {
-    use HasStates, LogsActivity;
+    use HasStates, InteractsWithMedia, LogsActivity;
 
     protected $with = ['items'];
 
@@ -24,6 +26,13 @@ class SalesOrder extends Model
         'status' => SalesOrderState::class,
         'payment_payload' => 'json',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('proof_of_payment')
+            ->singleFile()
+            ->useDisk('public');
+    }
 
     public function items(): HasMany
     {
