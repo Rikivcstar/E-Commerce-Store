@@ -6,6 +6,8 @@ use App\Data\SalesOrderData;
 use App\Events\SalesOrderProofUploadedEvent;
 use App\Models\SalesOrder;
 use App\Services\PaymentMethodQueryService;
+use App\Services\ShipmentTrackingService;
+use App\States\SalesOrder\Cancel;
 use App\States\SalesOrder\Pending;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -30,11 +32,37 @@ class SalesOrderDetail extends Component
     {
         $this->sales_order = $sales_order;
 
-        if ($this->sales_order->user_id !== null) {
-            if (! Auth::check() || Auth::id() !== $this->sales_order->user_id) {
-                abort(403, 'Anda tidak memiliki otorisasi untuk melihat pesanan ini.');
-            }
+        $this->authorizeAccess();
+    }
+
+    /**
+     * Pesanan punya pemilik hanya jika user_id terisi (akun / sudah ditautkan).
+     * Order tamu tetap bisa diakses lewat tautan untuk konfirmasi & pembatalan.
+     */
+    protected function authorizeAccess(): void
+    {
+        if ($this->sales_order->user_id === null) {
+            return;
         }
+
+        if (! Auth::check() || Auth::id() !== $this->sales_order->user_id) {
+            abort(403, 'Anda tidak memiliki otorisasi untuk melihat pesanan ini.');
+        }
+    }
+
+    public function cancelOrder(): void
+    {
+        $this->authorizeAccess();
+
+        abort_unless(
+            $this->sales_order->status instanceof Pending,
+            403,
+            'Pesanan hanya dapat dibatalkan saat masih menunggu pembayaran.'
+        );
+
+        $this->sales_order->status->transitionTo(Cancel::class);
+
+        toast('Pesanan berhasil dibatalkan. Stok produk telah dikembalikan.', 'success');
     }
 
     public function uploadProof(): void
@@ -84,6 +112,8 @@ class SalesOrderDetail extends Component
             'is_redirect' => $service->shouldShowButton($sales_order_data),
             'redirect_url' => $service->getRedirectUrl($sales_order_data),
             'can_claim_order' => $this->sales_order->user_id === null && ! Auth::check(),
+            'tracking_url' => app(ShipmentTrackingService::class)
+                ->getUrl($sales_order_data->shipping->courier, $sales_order_data->shipping->receipt_number),
         ]);
     }
 }

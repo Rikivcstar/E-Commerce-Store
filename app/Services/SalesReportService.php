@@ -97,7 +97,7 @@ class SalesReportService
     }
 
     /**
-     * Produk terlaris (Top N)
+     * Query produk terlaris (Top N) — bisa dipakai langsung oleh widget/table Filament.
      */
     public function topProducts(int $limit = 5)
     {
@@ -111,8 +111,7 @@ class SalesReportService
                     ->selectRaw('COALESCE(SUM(sales_order_items.quantity), 0)');
             }, 'total_sold')
             ->orderByDesc('total_sold')
-            ->limit($limit)
-            ->get();
+            ->limit($limit);
     }
 
     /**

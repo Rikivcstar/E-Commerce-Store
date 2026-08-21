@@ -9,6 +9,7 @@ use App\Data\CartData;
 use App\Data\RegionData;
 use App\Data\ShippingData;
 use App\Data\ShippingServiceData;
+use App\Drivers\Shipping\APIKurirShippingDriver;
 use App\Drivers\Shipping\KomerceShippingDriver;
 use App\Drivers\Shipping\OfflineShippingDriver;
 use Illuminate\Support\Facades\Cache;
@@ -23,6 +24,7 @@ class ShippingMethodService
         $this->drivers = [
             new OfflineShippingDriver,
             new KomerceShippingDriver,
+            new APIKurirShippingDriver,
         ];
     }
 

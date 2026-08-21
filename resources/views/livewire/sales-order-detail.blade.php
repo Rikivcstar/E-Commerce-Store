@@ -231,6 +231,12 @@
                             @if (!empty($order->shipping->receipt_number))
                                 <span class="block text-[8px] text-[#555a42] font-black">Resi:
                                     {{ $order->shipping->receipt_number }}</span>
+                                @if ($tracking_url)
+                                    <a href="{{ $tracking_url }}" target="_blank" rel="noopener"
+                                        class="mt-1 inline-flex items-center gap-1 text-[9px] font-black text-[#555a42] hover:text-black transition">
+                                        Lacak Pengiriman &rarr;
+                                    </a>
+                                @endif
                             @endif
                         </span>
                     </div>
@@ -384,6 +390,20 @@
                                     Silakan Hubungi CS WhatsApp: {{ config('services.contact.whatsapp') }}
                                 </span>
                             @endif
+                        </div>
+
+                        <div class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-white border border-rose-100 p-4">
+                            <div class="text-xs text-[#8c9082]">
+                                <p class="font-bold text-rose-700">Pembatalan</p>
+                                <p class="text-[11px]">Belum membayar? Batalkan pesanan dan stok akan otomatis
+                                    dikembalikan.</p>
+                            </div>
+                            <button type="button" wire:click="cancelOrder"
+                                wire:confirm="Yakin ingin membatalkan pesanan ini?"
+                                wire:loading.attr="disabled"
+                                class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-5 py-2.5 text-xs font-bold text-rose-700 hover:bg-rose-100 transition disabled:opacity-60">
+                                Batalkan Pesanan
+                            </button>
                         </div>
                     </div>
                 @endif

@@ -41,6 +41,7 @@ class BackPanelProvider extends PanelProvider
                 \App\Filament\Widgets\LowStockTableWidget::class,
                 \App\Filament\Widgets\OrderStatusChartWidget::class,
                 \App\Filament\Widgets\LatestOrdersWidget::class,
+                \App\Filament\Widgets\TopProductsWidget::class,
             ])
             ->databaseNotifications()
             ->middleware([

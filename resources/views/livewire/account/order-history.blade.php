@@ -299,6 +299,14 @@
                         <div class="oh-total-amount">{{ $order->total_formatted }}</div>
                     </div>
                     <div class="flex items-center gap-2 flex-wrap">
+                        @if ($statusClass === 'pending')
+                            <button type="button" wire:click="cancelOrder('{{ $order->trx_id }}')"
+                                wire:confirm="Yakin ingin membatalkan pesanan {{ $order->trx_id }}? Stok akan dikembalikan."
+                                wire:loading.attr="disabled"
+                                class="oh-view-btn !text-[#dc2626] !border-[#dc2626] hover:!bg-[#dc2626]">
+                                Batal
+                            </button>
+                        @endif
                         <button type="button" wire:click="buyAgain('{{ $order->trx_id }}')"
                             wire:loading.attr="disabled" class="oh-view-btn">
                             <span wire:loading.remove wire:target="buyAgain('{{ $order->trx_id }}')">Beli Lagi</span>

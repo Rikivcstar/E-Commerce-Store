@@ -53,6 +53,21 @@ class OrderHistory extends Component
         return $query->paginate(5)->through(fn ($order) => SalesOrderData::fromModel($order));
     }
 
+    public function cancelOrder(string $trxId): void
+    {
+        $order = Auth::user()->salesOrders()->where('trx_id', $trxId)->firstOrFail();
+
+        abort_unless(
+            $order->status instanceof Pending,
+            403,
+            'Pesanan hanya dapat dibatalkan saat masih menunggu pembayaran.'
+        );
+
+        $order->status->transitionTo(Cancel::class);
+
+        toast('Pesanan berhasil dibatalkan. Stok produk telah dikembalikan.', 'success');
+    }
+
     public function buyAgain(string $trxId)
     {
         $order = Auth::user()->salesOrders()->where('trx_id', $trxId)->firstOrFail();
