@@ -718,12 +718,10 @@
                 </div>
             </section>
         @endif
-
-        {{-- ── INFORMATION & GUIDES — NewsCards-inspired ────────── --}}
         @if (isset($static_pages) && $static_pages->count() > 0)
             <section
                 class="w-full py-20 px-4 sm:px-8 lg:px-16"
-                style="background:var(--nx-paper)"
+                style="background: #141512"
                 x-data="{
                     loaded: false,
                     activeCard: null,
@@ -742,117 +740,251 @@
             >
                 <div class="mx-auto max-w-7xl">
 
-                    {{-- ── Section Header (NewsCards heading style) ── --}}
+                    {{-- ── Section Header ── --}}
                     <div
-                        class="mb-12 transition-all duration-700 ease-out"
+                        class="mb-12 text-center transition-all duration-700 ease-out"
                         :class="loaded ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 -translate-y-4 blur-sm'"
                     >
-                        <p class="text-xs font-bold uppercase tracking-[0.18em] mb-3" style="color:var(--nx-muted)">Information &amp; Guides</p>
-                        <h2 class="font-display text-4xl sm:text-5xl font-bold leading-[1.05]" style="color:var(--nx-ink)">Pusat Informasi</h2>
-                        <p class="mt-3 text-sm max-w-md leading-relaxed" style="color:var(--nx-muted)">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#a1a594] mb-3">Information &amp; Guides</p>
+                        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white">Pusat Informasi</h2>
+                        <p class="mt-3 text-sm max-w-xl mx-auto leading-relaxed text-[#8c9082]">
                             Panduan, kebijakan, dan informasi penting seputar layanan kami untuk pengalaman belanja terbaik.
                         </p>
-
-                        {{-- Animated status bars --}}
-                        <div class="mt-6 space-y-1.5">
-                            <div class="h-px rounded-full bg-[--nx-ink] opacity-80 transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
-                                :style="loaded ? 'width:100%' : 'width:0%'" style="transition-delay:0.3s"></div>
-                            <div class="h-px rounded-full bg-[--nx-ink] opacity-50 transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
-                                :style="loaded ? 'width:66%' : 'width:0%'" style="transition-delay:0.42s"></div>
-                            <div class="h-px rounded-full bg-[--nx-ink] opacity-25 transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
-                                :style="loaded ? 'width:33%' : 'width:0%'" style="transition-delay:0.54s"></div>
-                        </div>
                     </div>
 
-                    {{-- ── Cards Grid ── --}}
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8">
-                        @foreach ($static_pages as $page)
-                            @php
-                                $pageImg   = $page->image_url;
-                                $accentMap = ['#3B82F6','#8B5CF6','#10B981','#F59E0B','#EF4444','#06B6D4'];
-                                $accent    = $accentMap[$loop->index % count($accentMap)];
-                                $delay     = 0.55 + ($loop->index * 0.12);
-                                $cardId    = 'page-' . $page->id;
-                                $excerpt   = $page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name;
-                            @endphp
+                    @php
+                        $pagesArray = $static_pages->values();
+                        $p1 = $pagesArray->get(0);
+                        $p2 = $pagesArray->get(1);
+                        $p3 = $pagesArray->get(2);
+                        $p4 = $pagesArray->get(3);
+                        $p5 = $pagesArray->get(4);
+                        $accentMap = ['#3B82F6','#8B5CF6','#10B981','#F59E0B','#EF4444','#06B6D4'];
+                    @endphp
 
+                    {{-- ── BENTO GRID LAYOUT ── --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+                        
+                        {{-- CARD 1: TALL LEFT CARD (Row Span 2) --}}
+                        @if ($p1)
+                            @php
+                                $cardId = 'page-' . $p1->id;
+                                $accent = $accentMap[0];
+                            @endphp
                             <article
-                                class="group relative flex flex-col overflow-hidden rounded-xl border cursor-pointer"
-                                style="background:#fff; border-color:rgba(0,0,0,0.08);"
-                                :class="loaded ? 'opacity-100 translate-y-0 scale-100 blur-none' : 'opacity-0 translate-y-8 scale-90 blur-md'"
-                                :style="'transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease; transition-delay: {{ $delay }}s'"
+                                class="group relative md:row-span-2 flex flex-col justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-7 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer"
                                 x-on:click="activeCard = '{{ $cardId }}'"
-                                x-on:mouseenter="$el.style.transform = 'translateY(-5px) scale(1.01)'; $el.style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)'"
-                                x-on:mouseleave="$el.style.transform = ''; $el.style.boxShadow = ''"
                             >
-                                {{-- Image with overlay --}}
-                                <div class="relative overflow-hidden shrink-0" style="height:14rem;">
-                                    @if ($pageImg)
-                                        <img
-                                            src="{{ $pageImg }}"
-                                            alt="{{ $page->name }}"
-                                            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                        >
+                                <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-black/30">
+                                    @if ($p1->image_url)
+                                        <img src="{{ $p1->image_url }}" alt="{{ $p1->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
                                     @else
-                                        <div
-                                            class="h-full w-full flex items-center justify-center"
-                                            style="background: linear-gradient(135deg, {{ $accent }}18, {{ $accent }}38)"
-                                        >
-                                            <i data-lucide="file-text" class="size-12 opacity-60" style="color:{{ $accent }}"></i>
+                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#3B82F6]/20 to-[#3B82F6]/5">
+                                            <i data-lucide="file-text" class="size-16 text-[#3B82F6]"></i>
                                         </div>
                                     @endif
-
-                                    {{-- Gradient fade --}}
-                                    <div class="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
-
-                                    {{-- Bookmark button --}}
-                                    <button
-                                        type="button"
-                                        class="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full backdrop-blur-sm border border-white/20 transition-all duration-200 hover:scale-110 active:scale-95 z-10"
-                                        :class="isBookmarked('{{ $cardId }}') ? 'bg-yellow-400 text-yellow-900 border-yellow-300' : 'bg-black/35 text-white/80 hover:text-white'"
-                                        x-on:click="toggleBookmark('{{ $cardId }}', $event)"
-                                        title="Simpan"
-                                    >
-                                        <i data-lucide="bookmark" class="size-3.5 transition-all"
-                                           :style="isBookmarked('{{ $cardId }}') ? 'fill:currentColor' : ''"></i>
+                                    
+                                    {{-- Bookmark Button --}}
+                                    <button type="button" class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
+                                        :class="isBookmarked('{{ $cardId }}') ? 'bg-yellow-400 text-yellow-950' : ''"
+                                        x-on:click="toggleBookmark('{{ $cardId }}', $event)">
+                                        <i data-lucide="bookmark" class="size-4"></i>
                                     </button>
+                                </div>
 
-                                    {{-- Meta overlay --}}
-                                    <div class="absolute bottom-3 left-3 text-white z-10">
-                                        <p class="text-[10px] font-semibold uppercase tracking-widest opacity-85">Panduan &amp; Informasi</p>
-                                        <p class="text-[10px] opacity-60 mt-0.5">Riva &amp; Co.</p>
+                                <div class="mt-6 flex flex-col flex-1 justify-between space-y-4">
+                                    <div>
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-[#3B82F6]/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#60A5FA]">
+                                            <span class="size-1.5 rounded-full bg-[#3B82F6]"></span>
+                                            Panduan Utama
+                                        </span>
+                                        <h3 class="font-display text-2xl font-bold leading-snug text-white mt-3 group-hover:text-[#93C5FD] transition-colors">
+                                            {{ $p1->name }}
+                                        </h3>
+                                        <p class="mt-2.5 text-xs text-[#a1a594] leading-relaxed line-clamp-3">
+                                            {{ $p1->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $p1->name }}
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#60A5FA] uppercase tracking-wider group-hover:gap-3 transition-all">
+                                        <span>Baca Selengkapnya</span>
+                                        <i data-lucide="arrow-right" class="size-4"></i>
+                                    </div>
+                                </div>
+                            </article>
+                        @endif
+
+                        {{-- CARD 2: WIDE TOP RIGHT CARD (Col Span 2) --}}
+                        @if ($p2)
+                            @php
+                                $cardId = 'page-' . $p2->id;
+                                $accent = $accentMap[1];
+                            @endphp
+                            <article
+                                class="group relative md:col-span-2 flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-7 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer gap-6"
+                                x-on:click="activeCard = '{{ $cardId }}'"
+                            >
+                                <div class="flex-1 space-y-3">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#8B5CF6]/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#A78BFA]">
+                                        <span class="size-1.5 rounded-full bg-[#8B5CF6]"></span>
+                                        Informasi Transaksi
+                                    </span>
+                                    <h3 class="font-display text-2xl font-bold leading-tight text-white group-hover:text-[#C4B5FD] transition-colors">
+                                        {{ $p2->name }}
+                                    </h3>
+                                    <p class="text-xs text-[#a1a594] leading-relaxed line-clamp-2">
+                                        {{ $p2->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $p2->name }}
+                                    </p>
+                                    <div class="pt-1 flex items-center gap-2 text-xs font-bold text-[#A78BFA] uppercase tracking-wider group-hover:gap-3 transition-all">
+                                        <span>Lihat Detail</span>
+                                        <i data-lucide="arrow-right" class="size-4"></i>
                                     </div>
                                 </div>
 
-                                {{-- Card body --}}
-                                <div class="flex flex-col flex-1 p-5">
-                                    <span
-                                        class="inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider mb-3"
-                                        style="background:{{ $accent }}18; color:{{ $accent }}"
-                                    >
-                                        <span class="size-1.5 rounded-full shrink-0 inline-block" style="background:{{ $accent }}"></span>
-                                        Info
-                                    </span>
+                                <div class="relative w-full sm:w-1/2 aspect-[4/3] shrink-0 overflow-hidden rounded-2xl bg-black/30">
+                                    @if ($p2->image_url)
+                                        <img src="{{ $p2->image_url }}" alt="{{ $p2->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
+                                    @else
+                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#8B5CF6]/20 to-[#8B5CF6]/5">
+                                            <i data-lucide="credit-card" class="size-16 text-[#8B5CF6]"></i>
+                                        </div>
+                                    @endif
 
-                                    <h3
-                                        class="font-display font-semibold text-[1.05rem] leading-snug line-clamp-3 transition-opacity duration-200 group-hover:opacity-70"
-                                        style="color:var(--nx-ink)"
-                                    >{{ $page->name }}</h3>
-
-                                    <p class="mt-2 text-xs leading-relaxed line-clamp-2 flex-1" style="color:var(--nx-muted)">
-                                        {{ $excerpt }}
-                                    </p>
-
-                                    <span
-                                        class="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider"
-                                        style="color:{{ $accent }}"
-                                    >
-                                        Baca selengkapnya
-                                        <i data-lucide="arrow-right" class="size-3 transition-transform duration-200 group-hover:translate-x-1"></i>
-                                    </span>
+                                    <button type="button" class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
+                                        :class="isBookmarked('{{ $cardId }}') ? 'bg-yellow-400 text-yellow-950' : ''"
+                                        x-on:click="toggleBookmark('{{ $cardId }}', $event)">
+                                        <i data-lucide="bookmark" class="size-4"></i>
+                                    </button>
                                 </div>
                             </article>
-                        @endforeach
+                        @endif
+
+                        {{-- CARD 3: MIDDLE RIGHT A (Col Span 1) --}}
+                        @if ($p3)
+                            @php
+                                $cardId = 'page-' . $p3->id;
+                                $accent = $accentMap[2];
+                            @endphp
+                            <article
+                                class="group relative flex flex-col justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-6 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer"
+                                x-on:click="activeCard = '{{ $cardId }}'"
+                            >
+                                <div class="relative w-full h-36 overflow-hidden rounded-2xl bg-black/30">
+                                    @if ($p3->image_url)
+                                        <img src="{{ $p3->image_url }}" alt="{{ $p3->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
+                                    @else
+                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#10B981]/20 to-[#10B981]/5">
+                                            <i data-lucide="truck" class="size-12 text-[#10B981]"></i>
+                                        </div>
+                                    @endif
+
+                                    <button type="button" class="absolute top-2.5 right-2.5 flex size-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
+                                        :class="isBookmarked('{{ $cardId }}') ? 'bg-yellow-400 text-yellow-950' : ''"
+                                        x-on:click="toggleBookmark('{{ $cardId }}', $event)">
+                                        <i data-lucide="bookmark" class="size-3.5"></i>
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 space-y-2">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#10B981]/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#34D399]">
+                                        <span class="size-1.5 rounded-full bg-[#10B981]"></span>
+                                        Logistik
+                                    </span>
+                                    <h3 class="font-display text-lg font-bold leading-snug text-white group-hover:text-[#6EE7B7] transition-colors line-clamp-2">
+                                        {{ $p3->name }}
+                                    </h3>
+                                    <p class="text-xs text-[#a1a594] line-clamp-2">
+                                        {{ $p3->excerpt ?? 'Klik untuk membaca selengkapnya' }}
+                                    </p>
+                                </div>
+                            </article>
+                        @endif
+
+                        {{-- CARD 4: MIDDLE RIGHT B (Col Span 1) --}}
+                        @if ($p4)
+                            @php
+                                $cardId = 'page-' . $p4->id;
+                                $accent = $accentMap[3];
+                            @endphp
+                            <article
+                                class="group relative flex flex-col justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-6 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer"
+                                x-on:click="activeCard = '{{ $cardId }}'"
+                            >
+                                <div class="relative w-full h-36 overflow-hidden rounded-2xl bg-black/30">
+                                    @if ($p4->image_url)
+                                        <img src="{{ $p4->image_url }}" alt="{{ $p4->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
+                                    @else
+                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#F59E0B]/20 to-[#F59E0B]/5">
+                                            <i data-lucide="shield-check" class="size-12 text-[#F59E0B]"></i>
+                                        </div>
+                                    @endif
+
+                                    <button type="button" class="absolute top-2.5 right-2.5 flex size-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
+                                        :class="isBookmarked('{{ $cardId }}') ? 'bg-yellow-400 text-yellow-950' : ''"
+                                        x-on:click="toggleBookmark('{{ $cardId }}', $event)">
+                                        <i data-lucide="bookmark" class="size-3.5"></i>
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 space-y-2">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#F59E0B]/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#FBBF24]">
+                                        <span class="size-1.5 rounded-full bg-[#F59E0B]"></span>
+                                        Garansi
+                                    </span>
+                                    <h3 class="font-display text-lg font-bold leading-snug text-white group-hover:text-[#FDE68A] transition-colors line-clamp-2">
+                                        {{ $p4->name }}
+                                    </h3>
+                                    <p class="text-xs text-[#a1a594] line-clamp-2">
+                                        {{ $p4->excerpt ?? 'Klik untuk membaca selengkapnya' }}
+                                    </p>
+                                </div>
+                            </article>
+                        @endif
+
+                        {{-- CARD 5: BOTTOM WIDE CARD (Col Span 3) --}}
+                        @if ($p5)
+                            @php
+                                $cardId = 'page-' . $p5->id;
+                                $accent = $accentMap[4];
+                            @endphp
+                            <article
+                                class="group relative md:col-span-3 flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-7 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer gap-6"
+                                x-on:click="activeCard = '{{ $cardId }}'"
+                            >
+                                <div class="flex-1 space-y-3">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#EF4444]/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#F87171]">
+                                        <span class="size-1.5 rounded-full bg-[#EF4444]"></span>
+                                        Panduan Perawatan
+                                    </span>
+                                    <h3 class="font-display text-2xl font-bold leading-tight text-white group-hover:text-[#FCA5A5] transition-colors">
+                                        {{ $p5->name }}
+                                    </h3>
+                                    <p class="text-xs text-[#a1a594] leading-relaxed line-clamp-2 max-w-2xl">
+                                        {{ $p5->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $p5->name }}
+                                    </p>
+                                    <div class="pt-1 flex items-center gap-2 text-xs font-bold text-[#F87171] uppercase tracking-wider group-hover:gap-3 transition-all">
+                                        <span>Lihat Panduan</span>
+                                        <i data-lucide="arrow-right" class="size-4"></i>
+                                    </div>
+                                </div>
+
+                                <div class="relative w-full sm:w-1/3 aspect-[16/9] shrink-0 overflow-hidden rounded-2xl bg-black/30">
+                                    @if ($p5->image_url)
+                                        <img src="{{ $p5->image_url }}" alt="{{ $p5->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
+                                    @else
+                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#EF4444]/20 to-[#EF4444]/5">
+                                            <i data-lucide="shirt" class="size-14 text-[#EF4444]"></i>
+                                        </div>
+                                    @endif
+
+                                    <button type="button" class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
+                                        :class="isBookmarked('{{ $cardId }}') ? 'bg-yellow-400 text-yellow-950' : ''"
+                                        x-on:click="toggleBookmark('{{ $cardId }}', $event)">
+                                        <i data-lucide="bookmark" class="size-4"></i>
+                                    </button>
+                                </div>
+                            </article>
+                        @endif
+
                     </div>
                 </div>
 

@@ -26,7 +26,9 @@ class ProductData extends Data
         public float $price,
         public int $weight,
         public string $cover_url,
-        public Optional|array $gallery = new Optional
+        public Optional|array $gallery = new Optional,
+        public string $collection = 'Curated Goods',
+        public int $sold_count = 0
     ) {
         $this->price_formatted = Number::currency($price);
     }
@@ -43,9 +45,12 @@ class ProductData extends Data
             $gallery = [$coverUrl];
         }
 
+        $collection = $product->collection_name ?? 'Curated Goods';
+        $soldCount = $product->sold_count ?? 0;
+
         return new self(
             $product->name,
-            $product->tags()->where('type', 'collection')->pluck('name')->implode(', '),
+            $product->short_desc ?? '',
             $product->sku,
             $product->slug,
             $product->description,
@@ -53,7 +58,9 @@ class ProductData extends Data
             floatval($product->price),
             $product->weight,
             $coverUrl,
-            gallery: $gallery
+            gallery: $gallery,
+            collection: $collection,
+            sold_count: $soldCount
         );
     }
 }
