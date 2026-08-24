@@ -24,13 +24,18 @@ class AddToCard extends Component
 
     public function mount(ProductData|Product $product, CartServiceInterface $cart, string $label = 'add to cart')
     {
+        // Harga efektif = harga flash sale bila periode sedang berjalan.
+        $effectivePrice = $product instanceof Product
+            ? $product->effective_price
+            : $product->effective_price;
+
         if ($product instanceof Product) {
             $product = ProductData::from($product);
         }
 
         $this->sku = $product->sku;
         $this->stock = $product->stock;
-        $this->price = $product->price;
+        $this->price = $effectivePrice;
         $this->weight = $product->weight;
         $this->label = $label;
         $this->quantity = $cart->getItemBySku($product->sku)->quantity ?? 1;

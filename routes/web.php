@@ -26,6 +26,7 @@ Route::get('/checkout', Checkout::class)->middleware('throttle:15,1')->name('che
 Route::get('/order-confirmed/{sales_order:trx_id}', SalesOrderDetail::class)->name('order-confirmed');
 Route::get('/page/{page:slug?}', PageStatic::class)->name('page');
 Route::get('/track-order', TrackOrder::class)->name('track-order');
+Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 Route::webhooks('moota/callback')->middleware('throttle:60,1');
 
 Route::middleware(['guest', 'throttle:10,1'])->group(function () {
@@ -41,6 +42,7 @@ Route::get('/auth/google/token-login/{token}', [GoogleController::class, 'tokenL
 Route::middleware('auth')->group(function () {
     Route::get('/account', Dashboard::class)->name('account.dashboard');
     Route::get('/account/orders', OrderHistory::class)->name('account.orders');
+    Route::get('/account/orders/{order:trx_id}/invoice', \App\Http\Controllers\Account\InvoiceController::class)->name('account.orders.invoice');
     Route::get('/account/wishlist', Wishlist::class)->name('account.wishlist');
     Route::get('/account/addresses', AddressBook::class)->name('account.addresses');
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');

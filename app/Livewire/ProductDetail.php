@@ -79,13 +79,54 @@ class ProductDetail extends Component
 
         $productData = ProductData::fromModel($this->product, true);
 
+        $metaDescription = str(\Illuminate\Support\Str::of(
+            strip_tags($this->product->short_desc ?: (string) $this->product->description)
+        )->squish())->limit(160)->toString();
+
+        $reviewCount = $this->product->reviews()->approved()->count();
+        $avgRating = $reviewCount > 0
+            ? round((float) $this->product->reviews()->approved()->avg('rating'), 1)
+            : null;
+
+        $jsonLd = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $this->product->name,
+            'sku' => $this->product->sku,
+            'image' => [$productData->cover_url],
+            'description' => \Illuminate\Support\Str::limit(
+                strip_tags($this->product->short_desc ?: (string) $this->product->description),
+                300
+            ),
+            'offers' => [
+                '@type' => 'Offer',
+                'url' => route('product', $this->product->slug),
+                'priceCurrency' => 'IDR',
+                'price' => number_format($productData->effective_price, 2, '.', ''),
+                'availability' => $this->product->stock > 0
+                    ? 'https://schema.org/InStock'
+                    : 'https://schema.org/OutOfStock',
+                'itemCondition' => 'https://schema.org/NewCondition',
+            ],
+        ];
+
+        if ($reviewCount > 0 && $avgRating !== null) {
+            $jsonLd['aggregateRating'] = [
+                '@type' => 'AggregateRating',
+                'ratingValue' => $avgRating,
+                'reviewCount' => $reviewCount,
+            ];
+        }
+
         return view('livewire.product-detail', [
             'productData' => $productData,
             'product' => $this->product,
             'recommendations' => $recommendations,
             'recently_viewed' => $recently_viewed,
             'breadcrumbs' => $breadcrumbs,
-        ]);
+            'metaDescription' => $metaDescription,
+            'jsonLd' => $jsonLd,
+        ])->layout('components.layouts.app', ['title' => $this->product->name]);
     }
 
     private function categoryTrail(?Category $category): array

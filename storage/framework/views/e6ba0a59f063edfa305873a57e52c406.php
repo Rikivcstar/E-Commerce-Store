@@ -780,8 +780,8 @@
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         <!--[if BLOCK]><![endif]--><?php if(isset($static_pages) && $static_pages->count() > 0): ?>
             <section
-                class="w-full py-20 px-4 sm:px-8 lg:px-16"
-                style="background: #141512"
+                class="relative w-full py-20 px-4 sm:px-8 lg:px-16"
+                style="background: var(--nx-paper);"
                 x-data="{
                     loaded: false,
                     activeCard: null,
@@ -805,265 +805,107 @@
                         class="mb-12 text-center transition-all duration-700 ease-out"
                         :class="loaded ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 -translate-y-4 blur-sm'"
                     >
-                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#a1a594] mb-3">Information &amp; Guides</p>
-                        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white">Pusat Informasi</h2>
-                        <p class="mt-3 text-sm max-w-xl mx-auto leading-relaxed text-[#8c9082]">
-                            Panduan, kebijakan, dan informasi penting seputar layanan kami untuk pengalaman belanja terbaik.
+                        <span class="inline-flex items-center gap-2 rounded-full bg-[#f2f3ed] px-4 py-1.5 ring-1 ring-black/5 mb-3">
+                            <span class="size-2 rounded-full bg-[#555a42] animate-pulse"></span>
+                            <span class="text-[11px] font-black uppercase tracking-[0.18em] text-[#555a42]">Pusat Bantuan &amp; Panduan</span>
+                        </span>
+                        <h2 class="nx-display text-4xl sm:text-5xl font-black text-[#20221b]">Pusat Informasi</h2>
+                        <p class="mt-2 text-sm sm:text-base max-w-xl mx-auto leading-relaxed text-[#777c62]">
+                            Panduan lengkap, kebijakan garansi, pengiriman, dan informasi resmi Riva &amp; Co. untuk kenyamanan belanja Anda.
                         </p>
                     </div>
 
                     <?php
-                        $pagesArray = $static_pages->values();
-                        $p1 = $pagesArray->get(0);
-                        $p2 = $pagesArray->get(1);
-                        $p3 = $pagesArray->get(2);
-                        $p4 = $pagesArray->get(3);
-                        $p5 = $pagesArray->get(4);
-                        $accentMap = ['#3B82F6','#8B5CF6','#10B981','#F59E0B','#EF4444','#06B6D4'];
+                        $bentoClasses = [
+                            0 => 'lg:col-span-2 min-h-[340px]',
+                            1 => 'lg:col-span-1 min-h-[340px]',
+                            2 => 'lg:col-span-1 min-h-[250px]',
+                            3 => 'lg:col-span-1 min-h-[250px]',
+                            4 => 'lg:col-span-1 min-h-[250px]',
+                            5 => 'lg:col-span-3 min-h-[200px]',
+                        ];
+                        
+                        $badgeLabels = ['Panduan Utama', 'Garansi & Retur', 'Pembayaran', 'Pengiriman', 'Ketentuan', 'Informasi'];
+                        $icons = ['ruler', 'shield-check', 'credit-card', 'truck', 'file-text', 'book-open'];
                     ?>
 
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-                        
-                        
-                        <!--[if BLOCK]><![endif]--><?php if($p1): ?>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $static_pages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
-                                $cardId = 'page-' . $p1->id;
-                                $accent = $accentMap[0];
+                                $cardId = 'page-' . $page->id;
+                                $badge = $badgeLabels[$index % count($badgeLabels)];
+                                $iconName = $icons[$index % count($icons)];
+                                $gridClass = $bentoClasses[$index] ?? 'lg:col-span-1 min-h-[250px]';
+                                $pageImg = $page->image_url;
+                                $isHero = ($index === 0);
                             ?>
+
                             <article
-                                class="group relative md:row-span-2 flex flex-col justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-7 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer"
+                                class="group relative flex flex-col justify-between overflow-hidden rounded-[2rem] transition-all duration-300 shadow-sm hover:shadow-xl cursor-pointer border <?php echo e($isHero ? 'bg-[#1c1b14] text-white border-transparent' : 'bg-white text-[#20221b] border-[#e2e8f0] hover:border-[#555a42]/30'); ?> p-6 sm:p-7 <?php echo e($gridClass); ?>"
                                 x-on:click="activeCard = '<?php echo e($cardId); ?>'"
                             >
-                                <div class="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-black/30">
-                                    <!--[if BLOCK]><![endif]--><?php if($p1->image_url): ?>
-                                        <img src="<?php echo e($p1->image_url); ?>" alt="<?php echo e($p1->name); ?>" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                    <?php else: ?>
-                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#3B82F6]/20 to-[#3B82F6]/5">
-                                            <i data-lucide="file-text" class="size-16 text-[#3B82F6]"></i>
-                                        </div>
-                                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-                                    
-                                    
-                                    <button type="button" class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
-                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? 'bg-yellow-400 text-yellow-950' : ''"
-                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)">
+                                
+                                <!--[if BLOCK]><![endif]--><?php if($isHero && $pageImg): ?>
+                                    <div class="absolute inset-0 z-0">
+                                        <img src="<?php echo e($pageImg); ?>" alt="<?php echo e($page->name); ?>" class="h-full w-full object-cover opacity-35 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:opacity-45">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-[#1c1b14] via-[#1c1b14]/75 to-transparent"></div>
+                                    </div>
+                                <?php elseif(!$isHero && $pageImg): ?>
+                                    <div class="absolute right-0 top-0 w-1/2 h-full opacity-10 pointer-events-none overflow-hidden">
+                                        <img src="<?php echo e($pageImg); ?>" alt="" class="h-full w-full object-cover grayscale">
+                                    </div>
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
+                                
+                                <div class="relative z-10 flex items-center justify-between gap-2 mb-6">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider <?php echo e($isHero ? 'bg-white/15 text-white backdrop-blur-md' : 'bg-[#f2f3ed] text-[#555a42]'); ?>">
+                                        <span class="size-1.5 rounded-full <?php echo e($isHero ? 'bg-white' : 'bg-[#555a42]'); ?>"></span>
+                                        <?php echo e($badge); ?>
+
+                                    </span>
+
+                                    <button type="button" class="flex size-9 items-center justify-center rounded-full transition hover:scale-110 <?php echo e($isHero ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-[#f2f3ed] text-[#555a42] hover:bg-[#e6e8de]'); ?>"
+                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? '!bg-amber-400 !text-amber-950' : ''"
+                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)"
+                                        aria-label="Bookmark page">
                                         <i data-lucide="bookmark" class="size-4"></i>
                                     </button>
                                 </div>
 
-                                <div class="mt-6 flex flex-col flex-1 justify-between space-y-4">
-                                    <div>
-                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-[#3B82F6]/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#60A5FA]">
-                                            <span class="size-1.5 rounded-full bg-[#3B82F6]"></span>
-                                            Panduan Utama
-                                        </span>
-                                        <h3 class="font-display text-2xl font-bold leading-snug text-white mt-3 group-hover:text-[#93C5FD] transition-colors">
-                                            <?php echo e($p1->name); ?>
-
-                                        </h3>
-                                        <p class="mt-2.5 text-xs text-[#a1a594] leading-relaxed line-clamp-3">
-                                            <?php echo e($p1->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $p1->name); ?>
-
-                                        </p>
+                                
+                                <div class="relative z-10 flex flex-col justify-end flex-1 space-y-3">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="flex size-8 shrink-0 items-center justify-center rounded-xl <?php echo e($isHero ? 'bg-white/15 text-white' : 'bg-[#f2f3ed] text-[#555a42]'); ?>">
+                                            <i data-lucide="<?php echo e($iconName); ?>" class="size-4"></i>
+                                        </div>
+                                        <span class="text-[11px] font-bold uppercase tracking-wider <?php echo e($isHero ? 'text-white/70' : 'text-[#8c9082]'); ?>">Riva &amp; Co. Guide</span>
                                     </div>
-                                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#60A5FA] uppercase tracking-wider group-hover:gap-3 transition-all">
+
+                                    <h3 class="font-display text-xl sm:text-2xl font-bold leading-snug transition-colors <?php echo e($isHero ? 'text-white group-hover:text-amber-200' : 'text-[#20221b] group-hover:text-[#555a42]'); ?>">
+                                        <?php echo e($page->name); ?>
+
+                                    </h3>
+
+                                    <p class="text-xs leading-relaxed line-clamp-2 <?php echo e($isHero ? 'text-white/80' : 'text-[#777c62]'); ?>">
+                                        <?php echo e($page->excerpt ?? 'Klik untuk membaca informasi selengkapnya mengenai ' . $page->name); ?>
+
+                                    </p>
+
+                                    <div class="pt-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-all group-hover:gap-3 <?php echo e($isHero ? 'text-white' : 'text-[#555a42]'); ?>">
                                         <span>Baca Selengkapnya</span>
                                         <i data-lucide="arrow-right" class="size-4"></i>
                                     </div>
                                 </div>
                             </article>
-                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                        
-                        <!--[if BLOCK]><![endif]--><?php if($p2): ?>
-                            <?php
-                                $cardId = 'page-' . $p2->id;
-                                $accent = $accentMap[1];
-                            ?>
-                            <article
-                                class="group relative md:col-span-2 flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-7 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer gap-6"
-                                x-on:click="activeCard = '<?php echo e($cardId); ?>'"
-                            >
-                                <div class="flex-1 space-y-3">
-                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#8B5CF6]/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#A78BFA]">
-                                        <span class="size-1.5 rounded-full bg-[#8B5CF6]"></span>
-                                        Informasi Transaksi
-                                    </span>
-                                    <h3 class="font-display text-2xl font-bold leading-tight text-white group-hover:text-[#C4B5FD] transition-colors">
-                                        <?php echo e($p2->name); ?>
-
-                                    </h3>
-                                    <p class="text-xs text-[#a1a594] leading-relaxed line-clamp-2">
-                                        <?php echo e($p2->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $p2->name); ?>
-
-                                    </p>
-                                    <div class="pt-1 flex items-center gap-2 text-xs font-bold text-[#A78BFA] uppercase tracking-wider group-hover:gap-3 transition-all">
-                                        <span>Lihat Detail</span>
-                                        <i data-lucide="arrow-right" class="size-4"></i>
-                                    </div>
-                                </div>
-
-                                <div class="relative w-full sm:w-1/2 aspect-[4/3] shrink-0 overflow-hidden rounded-2xl bg-black/30">
-                                    <!--[if BLOCK]><![endif]--><?php if($p2->image_url): ?>
-                                        <img src="<?php echo e($p2->image_url); ?>" alt="<?php echo e($p2->name); ?>" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                    <?php else: ?>
-                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#8B5CF6]/20 to-[#8B5CF6]/5">
-                                            <i data-lucide="credit-card" class="size-16 text-[#8B5CF6]"></i>
-                                        </div>
-                                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                                    <button type="button" class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
-                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? 'bg-yellow-400 text-yellow-950' : ''"
-                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)">
-                                        <i data-lucide="bookmark" class="size-4"></i>
-                                    </button>
-                                </div>
-                            </article>
-                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                        
-                        <!--[if BLOCK]><![endif]--><?php if($p3): ?>
-                            <?php
-                                $cardId = 'page-' . $p3->id;
-                                $accent = $accentMap[2];
-                            ?>
-                            <article
-                                class="group relative flex flex-col justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-6 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer"
-                                x-on:click="activeCard = '<?php echo e($cardId); ?>'"
-                            >
-                                <div class="relative w-full h-36 overflow-hidden rounded-2xl bg-black/30">
-                                    <!--[if BLOCK]><![endif]--><?php if($p3->image_url): ?>
-                                        <img src="<?php echo e($p3->image_url); ?>" alt="<?php echo e($p3->name); ?>" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                    <?php else: ?>
-                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#10B981]/20 to-[#10B981]/5">
-                                            <i data-lucide="truck" class="size-12 text-[#10B981]"></i>
-                                        </div>
-                                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                                    <button type="button" class="absolute top-2.5 right-2.5 flex size-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
-                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? 'bg-yellow-400 text-yellow-950' : ''"
-                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)">
-                                        <i data-lucide="bookmark" class="size-3.5"></i>
-                                    </button>
-                                </div>
-
-                                <div class="mt-4 space-y-2">
-                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#10B981]/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#34D399]">
-                                        <span class="size-1.5 rounded-full bg-[#10B981]"></span>
-                                        Logistik
-                                    </span>
-                                    <h3 class="font-display text-lg font-bold leading-snug text-white group-hover:text-[#6EE7B7] transition-colors line-clamp-2">
-                                        <?php echo e($p3->name); ?>
-
-                                    </h3>
-                                    <p class="text-xs text-[#a1a594] line-clamp-2">
-                                        <?php echo e($p3->excerpt ?? 'Klik untuk membaca selengkapnya'); ?>
-
-                                    </p>
-                                </div>
-                            </article>
-                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                        
-                        <!--[if BLOCK]><![endif]--><?php if($p4): ?>
-                            <?php
-                                $cardId = 'page-' . $p4->id;
-                                $accent = $accentMap[3];
-                            ?>
-                            <article
-                                class="group relative flex flex-col justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-6 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer"
-                                x-on:click="activeCard = '<?php echo e($cardId); ?>'"
-                            >
-                                <div class="relative w-full h-36 overflow-hidden rounded-2xl bg-black/30">
-                                    <!--[if BLOCK]><![endif]--><?php if($p4->image_url): ?>
-                                        <img src="<?php echo e($p4->image_url); ?>" alt="<?php echo e($p4->name); ?>" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                    <?php else: ?>
-                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#F59E0B]/20 to-[#F59E0B]/5">
-                                            <i data-lucide="shield-check" class="size-12 text-[#F59E0B]"></i>
-                                        </div>
-                                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                                    <button type="button" class="absolute top-2.5 right-2.5 flex size-8 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
-                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? 'bg-yellow-400 text-yellow-950' : ''"
-                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)">
-                                        <i data-lucide="bookmark" class="size-3.5"></i>
-                                    </button>
-                                </div>
-
-                                <div class="mt-4 space-y-2">
-                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#F59E0B]/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#FBBF24]">
-                                        <span class="size-1.5 rounded-full bg-[#F59E0B]"></span>
-                                        Garansi
-                                    </span>
-                                    <h3 class="font-display text-lg font-bold leading-snug text-white group-hover:text-[#FDE68A] transition-colors line-clamp-2">
-                                        <?php echo e($p4->name); ?>
-
-                                    </h3>
-                                    <p class="text-xs text-[#a1a594] line-clamp-2">
-                                        <?php echo e($p4->excerpt ?? 'Klik untuk membaca selengkapnya'); ?>
-
-                                    </p>
-                                </div>
-                            </article>
-                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                        
-                        <!--[if BLOCK]><![endif]--><?php if($p5): ?>
-                            <?php
-                                $cardId = 'page-' . $p5->id;
-                                $accent = $accentMap[4];
-                            ?>
-                            <article
-                                class="group relative md:col-span-3 flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2.2rem] bg-[#1e201b] border border-white/10 p-7 text-white transition-all duration-500 hover:border-white/20 hover:bg-[#252822] shadow-2xl cursor-pointer gap-6"
-                                x-on:click="activeCard = '<?php echo e($cardId); ?>'"
-                            >
-                                <div class="flex-1 space-y-3">
-                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#EF4444]/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#F87171]">
-                                        <span class="size-1.5 rounded-full bg-[#EF4444]"></span>
-                                        Panduan Perawatan
-                                    </span>
-                                    <h3 class="font-display text-2xl font-bold leading-tight text-white group-hover:text-[#FCA5A5] transition-colors">
-                                        <?php echo e($p5->name); ?>
-
-                                    </h3>
-                                    <p class="text-xs text-[#a1a594] leading-relaxed line-clamp-2 max-w-2xl">
-                                        <?php echo e($p5->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $p5->name); ?>
-
-                                    </p>
-                                    <div class="pt-1 flex items-center gap-2 text-xs font-bold text-[#F87171] uppercase tracking-wider group-hover:gap-3 transition-all">
-                                        <span>Lihat Panduan</span>
-                                        <i data-lucide="arrow-right" class="size-4"></i>
-                                    </div>
-                                </div>
-
-                                <div class="relative w-full sm:w-1/3 aspect-[16/9] shrink-0 overflow-hidden rounded-2xl bg-black/30">
-                                    <!--[if BLOCK]><![endif]--><?php if($p5->image_url): ?>
-                                        <img src="<?php echo e($p5->image_url); ?>" alt="<?php echo e($p5->name); ?>" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                    <?php else: ?>
-                                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-[#EF4444]/20 to-[#EF4444]/5">
-                                            <i data-lucide="shirt" class="size-14 text-[#EF4444]"></i>
-                                        </div>
-                                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
-                                    <button type="button" class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md border border-white/20 transition hover:scale-110"
-                                        :class="isBookmarked('<?php echo e($cardId); ?>') ? 'bg-yellow-400 text-yellow-950' : ''"
-                                        x-on:click="toggleBookmark('<?php echo e($cardId); ?>', $event)">
-                                        <i data-lucide="bookmark" class="size-4"></i>
-                                    </button>
-                                </div>
-                            </article>
-                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
                     </div>
                 </div>
 
                 
-                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $static_pages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $static_pages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $page): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php
                         $pageImg = $page->image_url;
-                        $accentMap = ['#3B82F6','#8B5CF6','#10B981','#F59E0B','#EF4444','#06B6D4'];
-                        $accent  = $accentMap[$loop->index % count($accentMap)];
                         $cardId  = 'page-' . $page->id;
                         $excerpt = $page->excerpt ?? 'Klik untuk membaca selengkapnya mengenai ' . $page->name;
                     ?>
@@ -1082,7 +924,7 @@
                     >
                         
                         <div
-                            class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            class="absolute inset-0 bg-black/50 backdrop-blur-sm"
                             x-on:click="activeCard = null"
                         ></div>
 
@@ -1095,57 +937,53 @@
                             x-transition:leave="transition ease-in duration-200"
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-95"
-                            class="relative z-10 w-full max-w-2xl max-h-[88vh] overflow-hidden rounded-2xl shadow-2xl flex flex-col"
-                            style="background:#fff; display:none"
+                            class="relative z-10 w-full max-w-2xl max-h-[88vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col bg-white text-[#20221b] border border-black/5"
+                            style="display:none"
                         >
                             
                             <button
                                 type="button"
-                                class="absolute top-4 right-4 z-20 flex size-8 items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/55 transition-all duration-200 hover:scale-110 active:scale-95"
+                                class="absolute top-4 right-4 z-20 flex size-9 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/70 transition-all duration-200 hover:scale-110 active:scale-95"
                                 x-on:click="activeCard = null"
+                                aria-label="Close modal"
                             >
                                 <i data-lucide="x" class="size-4"></i>
                             </button>
 
                             
-                            <div class="relative h-56 sm:h-64 shrink-0 overflow-hidden" style="background:#EAE7DD">
+                            <div class="relative h-56 sm:h-64 shrink-0 overflow-hidden bg-[#f2f3ed]">
                                 <!--[if BLOCK]><![endif]--><?php if($pageImg): ?>
                                     <img src="<?php echo e($pageImg); ?>" alt="<?php echo e($page->name); ?>" class="h-full w-full object-cover">
                                 <?php else: ?>
-                                    <div class="h-full w-full flex items-center justify-center"
-                                         style="background:linear-gradient(135deg, <?php echo e($accent); ?>18, <?php echo e($accent); ?>38)">
-                                        <i data-lucide="file-text" class="size-16 opacity-50" style="color:<?php echo e($accent); ?>"></i>
+                                    <div class="h-full w-full flex items-center justify-center bg-[#f2f3ed]">
+                                        <i data-lucide="file-text" class="size-16 text-[#8c9082]"></i>
                                     </div>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
-                                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                <div class="absolute bottom-4 left-5 text-white">
-                                    <p class="text-[11px] font-bold uppercase tracking-widest opacity-85">Panduan &amp; Informasi</p>
-                                    <p class="text-[11px] opacity-55 mt-0.5">Riva &amp; Co.</p>
+                                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-4 left-6 text-white">
+                                    <p class="text-[11px] font-black uppercase tracking-widest text-[#EBE5D8]">Pusat Informasi</p>
+                                    <p class="text-xs font-medium opacity-80 mt-0.5">Riva &amp; Co. Official Guide</p>
                                 </div>
                             </div>
 
                             
                             <div class="overflow-y-auto p-6 sm:p-8 flex flex-col gap-4">
-                                <span
-                                    class="inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
-                                    style="background:<?php echo e($accent); ?>18; color:<?php echo e($accent); ?>"
-                                >
-                                    <span class="size-1.5 rounded-full inline-block" style="background:<?php echo e($accent); ?>"></span>
-                                    Info
+                                <span class="inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider bg-[#f2f3ed] text-[#555a42]">
+                                    <span class="size-1.5 rounded-full inline-block bg-[#555a42]"></span>
+                                    Panduan Resmi
                                 </span>
 
-                                <h2 class="font-display text-2xl font-bold leading-snug -mt-1" style="color:var(--nx-ink)">
+                                <h2 class="font-display text-2xl sm:text-3xl font-bold leading-snug text-[#20221b]">
                                     <?php echo e($page->name); ?>
 
                                 </h2>
-                                <p class="text-sm leading-relaxed" style="color:var(--nx-muted)">
+                                <p class="text-sm leading-relaxed text-[#686c60]">
                                     <?php echo e($excerpt); ?>
 
                                 </p>
                                 <a
                                     href="<?php echo e(route('page', $page->slug)); ?>"
-                                    class="mt-1 inline-flex w-fit items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-95"
-                                    style="background:<?php echo e($accent); ?>"
+                                    class="mt-2 inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white bg-[#555a42] transition-all duration-200 hover:bg-[#3f4331] hover:scale-[1.02] active:scale-95"
                                 >
                                     Baca Artikel Lengkap
                                     <i data-lucide="arrow-right" class="size-4"></i>

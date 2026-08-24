@@ -32,6 +32,12 @@ class Product extends Model implements HasMedia
         });
     }
 
+    protected $casts = [
+        'sale_price' => 'float',
+        'sale_starts_at' => 'datetime',
+        'sale_ends_at' => 'datetime',
+    ];
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
@@ -40,6 +46,11 @@ class Product extends Model implements HasMedia
     public function reviews(): HasMany
     {
         return $this->hasMany(ProductReview::class);
+    }
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(ProductQuestion::class);
     }
 
     public function wishlistedBy(): BelongsToMany
@@ -74,6 +85,35 @@ class Product extends Model implements HasMedia
     public function scopeLowStock($query, int $threshold = 5)
     {
         return $query->where('stock', '<=', $threshold);
+    }
+
+    /**
+     * Flash sale aktif ketika harga sale terisi dan berada di dalam periode.
+     */
+    public function getIsOnSaleAttribute(): bool
+    {
+        if ($this->sale_price === null || (float) $this->sale_price <= 0) {
+            return false;
+        }
+
+        $started = $this->sale_starts_at === null || $this->sale_starts_at->lessThanOrEqualTo(now());
+        $notEnded = $this->sale_ends_at === null || $this->sale_ends_at->greaterThanOrEqualTo(now());
+
+        return $started && $notEnded;
+    }
+
+    public function getEffectivePriceAttribute(): float
+    {
+        return $this->is_on_sale ? (float) $this->sale_price : (float) $this->price;
+    }
+
+    public function getDiscountPercentAttribute(): int
+    {
+        if (! $this->is_on_sale || (float) $this->price <= 0) {
+            return 0;
+        }
+
+        return (int) round((1 - ((float) $this->sale_price / (float) $this->price)) * 100);
     }
 
     public function getCoverUrlAttribute(): string

@@ -62,7 +62,7 @@
                     }
                 }">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-black uppercase text-[#20221b]">Categories</span>
+                        <span class="text-xs font-black uppercase tracking-wider text-[#20221b]">Categories</span>
                         <template x-if="$wire.selectCategory && $wire.selectCategory.length > 0">
                             <button type="button" wire:click="$set('selectCategory', [])" class="text-[11px] font-bold text-rose-600 hover:underline cursor-pointer">
                                 Hapus
@@ -74,7 +74,7 @@
                         <div class="mb-2 text-xs font-semibold text-red-600">{{ $message }}</div>
                     @enderror
 
-                    <div class="relative">
+                    <div class="relative z-20">
                         <button type="button" @click="open = !open"
                             class="flex h-11 w-full items-center justify-between rounded-2xl border-0 bg-[#f2f3ed] px-4 text-sm font-bold text-[#20221b] transition hover:bg-[#e6e8de] focus:ring-2 focus:ring-[#777c62]/30 cursor-pointer">
                             <span class="truncate" x-text="label" :class="{ 'text-[#8c9082]': !$wire.selectCategory || $wire.selectCategory.length === 0 }"></span>
@@ -84,7 +84,7 @@
                         </button>
 
                         <div x-show="open" @click.outside="open = false" x-transition.origin.top.duration.150ms
-                            class="absolute left-0 right-0 top-full z-40 mt-1.5 max-h-72 overflow-hidden rounded-2xl border border-[#e2e8f0] bg-white p-3 shadow-xl ring-1 ring-black/5" style="display: none;">
+                            class="absolute left-0 right-0 top-full z-50 mt-1.5 w-full rounded-2xl border border-[#e2e8f0] bg-white p-3 shadow-xl ring-1 ring-black/5" style="display: none;">
                             
                             {{-- Search Box inside Dropdown --}}
                             <div class="relative mb-2.5">
@@ -96,7 +96,7 @@
                             </div>
 
                             {{-- Categories List --}}
-                            <div class="max-h-52 overflow-y-auto space-y-1 pr-1">
+                            <div class="max-h-60 overflow-y-auto space-y-1 pr-1 border-t border-neutral-100 pt-2">
                                 <button type="button" wire:click="$set('selectCategory', [])" @click="open = false"
                                     class="flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition text-[#555a42] hover:bg-[#f7f7f2] cursor-pointer">
                                     <span>Semua Kategori</span>
@@ -134,26 +134,10 @@
                     </div>
                 </div>
 
-                {{-- ── COLLECTIONS SEARCHABLE SELECT ── --}}
-                <div class="mt-5" x-data="{
-                    open: false,
-                    searchCol: '',
-                    collections: @js($collections),
-                    get label() {
-                        if (! $wire.selectCollection || $wire.selectCollection.length === 0) {
-                            return 'Semua Koleksi';
-                        }
-                        let count = $wire.selectCollection.length;
-                        if (count === 1) {
-                            let colId = parseInt($wire.selectCollection[0]);
-                            let found = this.collections.find(c => c.id === colId);
-                            return found ? found.name : '1 Koleksi Dipilih';
-                        }
-                        return count + ' Koleksi Dipilih';
-                    }
-                }">
+                {{-- ── COLLECTIONS LIST ── --}}
+                <div class="mt-6">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-black uppercase text-[#20221b]">Collections</span>
+                        <span class="text-xs font-black uppercase tracking-wider text-[#20221b]">Collections</span>
                         <template x-if="$wire.selectCollection && $wire.selectCollection.length > 0">
                             <button type="button" wire:click="$set('selectCollection', [])" class="text-[11px] font-bold text-rose-600 hover:underline cursor-pointer">
                                 Hapus
@@ -165,50 +149,17 @@
                         <div class="mb-2 text-xs font-semibold text-red-600">{{ $message }}</div>
                     @enderror
 
-                    <div class="relative">
-                        <button type="button" @click="open = !open"
-                            class="flex h-11 w-full items-center justify-between rounded-2xl border-0 bg-[#f2f3ed] px-4 text-sm font-bold text-[#20221b] transition hover:bg-[#e6e8de] focus:ring-2 focus:ring-[#777c62]/30 cursor-pointer">
-                            <span class="truncate" x-text="label" :class="{ 'text-[#8c9082]': !$wire.selectCollection || $wire.selectCollection.length === 0 }"></span>
-                            <svg class="size-4 shrink-0 text-[#8c9082] transition-transform duration-200" :class="{ 'rotate-180': open }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m6 9 6 6 6-6"/>
-                            </svg>
-                        </button>
-
-                        <div x-show="open" @click.outside="open = false" x-transition.origin.top.duration.150ms
-                            class="absolute left-0 right-0 top-full z-30 mt-1.5 max-h-72 overflow-hidden rounded-2xl border border-[#e2e8f0] bg-white p-3 shadow-xl ring-1 ring-black/5" style="display: none;">
-                            
-                            {{-- Search Box inside Dropdown --}}
-                            <div class="relative mb-2.5">
-                                <svg class="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-[#8c9082]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/>
-                                </svg>
-                                <input type="text" x-model="searchCol" placeholder="Cari koleksi..."
-                                    class="h-9 w-full rounded-xl border-0 bg-[#f2f3ed] pl-8 pr-3 text-xs text-[#20221b] placeholder:text-[#8c9082] focus:ring-2 focus:ring-[#777c62]/30">
-                            </div>
-
-                            {{-- Collections List --}}
-                            <div class="max-h-52 overflow-y-auto space-y-1 pr-1">
-                                <button type="button" wire:click="$set('selectCollection', [])" @click="open = false"
-                                    class="flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition text-[#555a42] hover:bg-[#f7f7f2] cursor-pointer">
-                                    <span>Semua Koleksi</span>
-                                    @if(empty($selectCollection))
-                                        <svg class="size-3.5 text-[#555a42]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                    @endif
-                                </button>
-
-                                @foreach ($collections as $item)
-                                    <label x-show="'{{ strtolower(addslashes($item->name)) }}'.includes(searchCol.toLowerCase())"
-                                        class="flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition text-[#555a42] hover:bg-[#f7f7f2] cursor-pointer">
-                                        <div class="flex items-center gap-2 min-w-0">
-                                            <input type="checkbox" wire:model.live="selectCollection" value="{{ $item->id }}"
-                                                class="size-4 rounded-md border-[#c9ccbd] text-[#555a42] focus:ring-[#555a42] checked:bg-[#555a42]">
-                                            <span class="truncate">{{ $item->name }}</span>
-                                        </div>
-                                        <span class="text-[11px] font-bold text-[#8c9082] shrink-0">({{ $item->product_count }})</span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
+                    <div class="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+                        @foreach ($collections as $item)
+                            <label class="flex items-center justify-between rounded-2xl bg-[#f7f7f2] px-3.5 py-2.5 text-xs font-bold text-[#555a42] transition hover:bg-[#e6e8de] cursor-pointer">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <input wire:model.live="selectCollection" value="{{ $item->id }}" type="checkbox"
+                                        class="size-4 rounded-md border-[#c9ccbd] bg-white text-[#555a42] focus:ring-[#555a42] checked:bg-[#555a42]">
+                                    <span class="truncate">{{ $item->name }}</span>
+                                </div>
+                                <span class="text-[11px] font-bold text-[#8c9082] shrink-0">({{ $item->product_count }})</span>
+                            </label>
+                        @endforeach
                     </div>
                 </div>
 

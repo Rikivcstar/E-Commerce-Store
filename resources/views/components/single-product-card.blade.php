@@ -16,6 +16,16 @@
             </span>
         @endif
 
+        @php
+            $onSale = isset($product->is_on_sale) && $product->is_on_sale;
+        @endphp
+        @if ($onSale)
+            <span
+                class="absolute bottom-2 left-2 z-10 rounded-md bg-[#dc2626] px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-white shadow-xs">
+                ⚡ Sale -{{ $product->discount_percent }}%
+            </span>
+        @endif
+
         <div class="absolute right-2.5 top-2.5 z-10">
             <livewire:wishlist-toggle :product="$product" :variant="'icon'" wire:key="card-wish-{{ $product->sku }}" />
         </div>
@@ -40,7 +50,14 @@
         </div>
 
         <div class="pt-0.5 space-y-1">
-            <p class="text-sm sm:text-base font-black text-zinc-900">{{ $product->price_formatted }}</p>
+            @if (isset($product->is_on_sale) && $product->is_on_sale)
+                <p class="text-sm sm:text-base font-black text-[#dc2626]">
+                    {{ $product->effective_price_formatted }}
+                    <span class="ml-1 text-xs font-semibold text-zinc-400 line-through">{{ $product->price_formatted }}</span>
+                </p>
+            @else
+                <p class="text-sm sm:text-base font-black text-zinc-900">{{ $product->price_formatted }}</p>
+            @endif
 
             <div class="flex items-center gap-1.5 text-xs text-zinc-500 font-medium">
                 <span class="inline-flex items-center gap-1 font-bold text-zinc-800">

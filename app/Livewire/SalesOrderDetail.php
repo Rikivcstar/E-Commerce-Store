@@ -112,6 +112,7 @@ class SalesOrderDetail extends Component
             'is_redirect' => $service->shouldShowButton($sales_order_data),
             'redirect_url' => $service->getRedirectUrl($sales_order_data),
             'can_claim_order' => $this->sales_order->user_id === null && ! Auth::check(),
+            'can_download_invoice' => Auth::check() && (int) $this->sales_order->user_id === (int) Auth::id(),
             'tracking_url' => app(ShipmentTrackingService::class)
                 ->getUrl($sales_order_data->shipping->courier, $sales_order_data->shipping->receipt_number),
         ]);

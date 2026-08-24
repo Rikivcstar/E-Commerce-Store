@@ -315,6 +315,9 @@
                         <a href="{{ route('order-confirmed', $order->trx_id) }}" class="oh-view-btn">
                             View Order →
                         </a>
+                        <a href="{{ route('account.orders.invoice', $order->trx_id) }}" class="oh-view-btn">
+                            Invoice
+                        </a>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,14 @@
 <div>
+    @push('head')
+        @include('partials.meta-tags', [
+            'metaTitle' => $product->name,
+            'metaDescription' => $metaDescription,
+            'metaImage' => $productData->cover_url,
+            'metaUrl' => route('product', $product->slug),
+            'jsonLd' => $jsonLd,
+        ])
+    @endpush
+
     <style>
         .product-page {
             background: #f7f7f2;
@@ -441,7 +451,43 @@
                     @endif
                     <p class="product-sku">{{ $product->sku }}</p>
                     <h1 class="product-title">{{ $product->name }}</h1>
-                    <span class="product-price">{{ $product->price_formatted }}</span>
+
+                    @php
+                        $onSale = $product->is_on_sale;
+                        $saleEndsIso = $onSale && $product->sale_ends_at ? $product->sale_ends_at->toISOString() : null;
+                    @endphp
+                    <div class="mt-1 flex flex-wrap items-baseline gap-2">
+                        <span class="product-price {{ $onSale ? '!text-[#dc2626]' : '' }}">
+                            {{ \Illuminate\Support\Number::currency($productData->effective_price) }}
+                        </span>
+                        @if ($onSale)
+                            <span class="text-lg font-semibold text-zinc-400 line-through">
+                                {{ $productData->original_price_formatted }}
+                            </span>
+                            <span
+                                class="rounded-full bg-[#dc2626] px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white shadow-xs">
+                                ⚡ Flash Sale -{{ $productData->discount_percent }}%
+                            </span>
+                        @endif
+                    </div>
+
+                    @if ($saleEndsIso)
+                        <div x-data="{
+                                d: 0, h: 0, m: 0, s: 0,
+                                tick() {
+                                    const diff = Math.max(0, new Date('{{ $saleEndsIso }}') - new Date());
+                                    this.d = Math.floor(diff / 86400000);
+                                    this.h = Math.floor(diff / 3600000) % 24;
+                                    this.m = Math.floor(diff / 60000) % 60;
+                                    this.s = Math.floor(diff / 1000) % 60;
+                                }
+                            }"
+                            x-init="tick(); setInterval(() => tick(), 1000)"
+                            class="mt-2 inline-flex flex-wrap items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700">
+                            ⚡ Berakhir dalam
+                            <span class="tabular-nums" x-text="d + 'h ' + h + 'j ' + m + 'm ' + s + 'd'">0h 0j 0m 0d</span>
+                        </div>
+                    @endif
 
                     <div class="mt-3 flex flex-wrap items-center gap-2">
                         @if ($product->stock <= 5 && $product->stock > 0)
@@ -551,6 +597,8 @@
                 <h2 class="review-section-title">Rating &amp; Reviews</h2>
                 <livewire:product-reviews :product="$product" />
             </section>
+
+            <livewire:product-questions :product="$product" wire:key="qa-{{ $product->sku }}" />
 
             @if ($recommendations->count())
                 <section class="recommend-section" aria-label="Recommended products">

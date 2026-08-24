@@ -139,7 +139,7 @@ class UserCartService implements CartServiceInterface
         return new CartItemData(
             sku: $row->sku,
             quantity: $row->quantity,
-            price: (float) $product->price,
+            price: $product->effective_price,
             weight: $product->weight,
         );
     }

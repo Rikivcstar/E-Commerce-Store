@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class ProductForm
@@ -50,6 +52,24 @@ class ProductForm
                     ->label('Weight')
                     ->numeric()
                     ->suffix('gram'),
+
+                Section::make('Flash Sale')
+                    ->description('Harga khusus periode terbatas. Kosongkan harga sale untuk menonaktifkan.')
+                    ->collapsed()
+                    ->schema([
+                                        TextInput::make('sale_price')
+                            ->label('Harga Sale')
+                            ->numeric()
+                            ->prefix('Rp.')
+                            ->minValue(0)
+                            ->lt('price'),
+                        DateTimePicker::make('sale_starts_at')
+                            ->label('Mulai'),
+                        DateTimePicker::make('sale_ends_at')
+                            ->label('Berakhir')
+                            ->after('sale_starts_at'),
+                    ]),
+
                 MarkdownEditor::make('description'),
                 //
 

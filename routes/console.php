@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\CheckDueSalesOrderCommand;
+use App\Console\Commands\RemindAbandonedCartCommand;
 use App\Console\Commands\WishlistPriceDropCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -12,3 +13,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command(CheckDueSalesOrderCommand::class)->everyMinute();
 Schedule::command(WishlistPriceDropCommand::class)->daily();
+Schedule::command(RemindAbandonedCartCommand::class)->dailyAt('09:00');
