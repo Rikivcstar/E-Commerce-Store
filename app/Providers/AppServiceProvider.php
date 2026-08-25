@@ -43,7 +43,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Force HTTPS URL scheme on Vercel
+        if (request()->server('HTTP_X_FORWARDED_PROTO') === 'https' || isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']) || env('VERCEL')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         Model::unguard();
         Number::useCurrency('IDR');
 
