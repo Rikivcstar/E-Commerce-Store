@@ -17,17 +17,35 @@ foreach ($storageDirs as $dir) {
     }
 }
 
-// Redirect storage path & compiled view path ke /tmp
-putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
-$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+// 1. Bersihkan seluruh environment variable yang bernilai string kosong ("") dari Vercel
+foreach (array_merge($_ENV, $_SERVER) as $key => $value) {
+    if ($value === '' || $value === 'null') {
+        putenv($key);
+        unset($_ENV[$key], $_SERVER[$key]);
+    }
+}
 
-putenv('VERCEL=true');
-$_ENV['VERCEL'] = 'true';
-$_SERVER['VERCEL'] = 'true';
+// 2. Set fallback default aman jika tidak diisi di Vercel
+$defaults = [
+    'VERCEL' => 'true',
+    'APP_ENV' => 'production',
+    'APP_DEBUG' => 'true',
+    'SESSION_DRIVER' => 'cookie',
+    'CACHE_STORE' => 'array',
+    'QUEUE_CONNECTION' => 'sync',
+    'FILESYSTEM_DISK' => 'local',
+    'BROADCAST_CONNECTION' => 'null',
+    'LOG_CHANNEL' => 'stderr',
+    'MAIL_MAILER' => 'array',
+];
 
-putenv('BROADCAST_CONNECTION=null');
-$_ENV['BROADCAST_CONNECTION'] = 'null';
-$_SERVER['BROADCAST_CONNECTION'] = 'null';
+foreach ($defaults as $k => $v) {
+    if (empty($_ENV[$k])) {
+        putenv("{$k}={$v}");
+        $_ENV[$k] = $v;
+        $_SERVER[$k] = $v;
+    }
+}
 
 // Forward Vercel request ke Laravel entrypoint
 require __DIR__.'/../public/index.php';
