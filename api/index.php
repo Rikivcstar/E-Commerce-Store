@@ -21,8 +21,9 @@ foreach ($storageDirs as $dir) {
 putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
-putenv('LOG_CHANNEL=stderr');
-$_ENV['LOG_CHANNEL'] = 'stderr';
+putenv('VERCEL=true');
+$_ENV['VERCEL'] = 'true';
+$_SERVER['VERCEL'] = 'true';
 
 // Forward Vercel request ke Laravel entrypoint
 require __DIR__.'/../public/index.php';
