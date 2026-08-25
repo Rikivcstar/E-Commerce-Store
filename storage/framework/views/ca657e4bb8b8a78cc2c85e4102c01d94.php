@@ -636,7 +636,7 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                                 id="shipping_method_<?php echo e($shipping_method->hash); ?>">
                                             <!--[if BLOCK]><![endif]--><?php if($shipping_method->logo_url): ?>
                                                 <img src="<?php echo e($shipping_method->logo_url); ?>"
-                                                    class="h-4 object-contain" alt="<?php echo e($shipping_method->label); ?>" />
+                                                    class="h-6 max-w-[100px] object-contain" alt="<?php echo e($shipping_method->label); ?>" />
                                             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                             <span class="linoge-choice-title"><?php echo e($shipping_method->label); ?></span>
                                         </span>
@@ -683,6 +683,10 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                             wire:model='payment_method_selector.payment_method_selected'
                                             value="<?php echo e($payment_method->hash); ?>"
                                             id="payment_method_<?php echo e($payment_method->hash); ?>">
+                                        <!--[if BLOCK]><![endif]--><?php if($payment_method->logo_url): ?>
+                                            <img src="<?php echo e($payment_method->logo_url); ?>"
+                                                class="h-6 max-w-[120px] object-contain" alt="<?php echo e($payment_method->label); ?>" />
+                                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                         <span class="linoge-choice-title"><?php echo e($payment_method->label); ?></span>
                                     </span>
                                 </label>

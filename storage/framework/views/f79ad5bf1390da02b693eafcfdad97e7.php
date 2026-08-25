@@ -41,7 +41,15 @@ unset($__defined_vars, $__key, $__value); ?>
         </div>
     </div>
     <div class="text-right flex-shrink-0 pt-0.5">
-        <p class="text-xs font-bold text-neutral-900 tracking-tight"><?php echo e($cart_item->product()->price_formatted); ?></p>
+        <!--[if BLOCK]><![endif]--><?php if($cart_item->product()->is_on_sale): ?>
+            <p class="text-xs font-black text-[#dc2626] tracking-tight">
+                <?php echo e(\Illuminate\Support\Number::currency($cart_item->price)); ?>
+
+                <span class="block text-[10px] font-medium text-neutral-400 line-through"><?php echo e($cart_item->product()->price_formatted); ?></span>
+            </p>
+        <?php else: ?>
+            <p class="text-xs font-bold text-neutral-900 tracking-tight"><?php echo e($cart_item->product()->price_formatted); ?></p>
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
     </div>
 </div>
 <?php /**PATH C:\laraherd\webstore\resources\views/components/single-product-list.blade.php ENDPATH**/ ?>

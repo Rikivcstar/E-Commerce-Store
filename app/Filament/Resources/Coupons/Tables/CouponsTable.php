@@ -47,7 +47,8 @@ class CouponsTable
                     ->placeholder('Selamanya'),
 
                 ToggleColumn::make('is_active')
-                    ->label('Aktif'),
+                    ->label('Aktif')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:Coupon')),
             ])
             ->filters([
                 TernaryFilter::make('is_active')

@@ -29,7 +29,8 @@ class CategoriesTable
                 TextColumn::make('order_column')
                     ->label('Sort'),
                 ToggleColumn::make('is_active')
-                    ->label('Active'),
+                    ->label('Active')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:Category')),
             ])
             ->filters([
                 TernaryFilter::make('is_active')

@@ -28,7 +28,8 @@ class BannersTable
                     ->label('Subjudul')
                     ->limit(40),
                 ToggleColumn::make('is_active')
-                    ->label('Aktif'),
+                    ->label('Aktif')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:Banner')),
                 TextColumn::make('order_column')
                     ->label('Urutan Slide')
                     ->sortable(),

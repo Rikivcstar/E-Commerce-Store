@@ -30,6 +30,7 @@ class OfflinePaymentDriver implements PaymentDriverInterface
                     'account_number' => '31313131',
                     'account_holder_name' => 'ryansyah',
                 ],
+                'logo_url' => url('images/bank/bca-bank-central-asia.svg'),
             ]),
         ], DataCollection::class);
     }

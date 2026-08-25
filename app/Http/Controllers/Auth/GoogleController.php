@@ -72,6 +72,11 @@ class GoogleController extends Controller
 
         $user = User::findOrFail($userId);
 
+        // Email dari Google sudah terverifikasi, tandai agar tidak terblokir middleware "verified".
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+
         session()->regenerate();
         Auth::login($user, remember: true);
 

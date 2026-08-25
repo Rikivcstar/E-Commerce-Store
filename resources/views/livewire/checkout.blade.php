@@ -564,7 +564,7 @@
                                                 id="shipping_method_{{ $shipping_method->hash }}">
                                             @if ($shipping_method->logo_url)
                                                 <img src="{{ $shipping_method->logo_url }}"
-                                                    class="h-4 object-contain" alt="{{ $shipping_method->label }}" />
+                                                    class="h-6 max-w-[100px] object-contain" alt="{{ $shipping_method->label }}" />
                                             @endif
                                             <span class="linoge-choice-title">{{ $shipping_method->label }}</span>
                                         </span>
@@ -604,6 +604,10 @@
                                             wire:model='payment_method_selector.payment_method_selected'
                                             value="{{ $payment_method->hash }}"
                                             id="payment_method_{{ $payment_method->hash }}">
+                                        @if ($payment_method->logo_url)
+                                            <img src="{{ $payment_method->logo_url }}"
+                                                class="h-6 max-w-[120px] object-contain" alt="{{ $payment_method->label }}" />
+                                        @endif
                                         <span class="linoge-choice-title">{{ $payment_method->label }}</span>
                                     </span>
                                 </label>

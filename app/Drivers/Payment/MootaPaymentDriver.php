@@ -30,7 +30,27 @@ class MootaPaymentDriver implements PaymentDriverInterface
             $accounts = [$accounts];
         }
 
-        return PaymentData::collect($accounts ?? [], DataCollection::class);
+        $bankLogos = [
+            'bca' => url('images/bank/bca-bank-central-asia.svg'),
+            'bca-bank-transfer' => url('images/bank/bca-bank-central-asia.svg'),
+            'mandiri' => url('images/bank/bank-mandiri.svg'),
+            'bank-mandiri' => url('images/bank/bank-mandiri.svg'),
+            'bni' => url('images/bank/bank-negara-indonesia.svg'),
+            'bank-bni' => url('images/bank/bank-negara-indonesia.svg'),
+        ];
+
+        $mapped = collect($accounts ?? [])->map(function ($account) use ($bankLogos) {
+            if (is_array($account)) {
+                $method = (string) data_get($account, 'method', '');
+                if (empty($account['logo_url']) && isset($bankLogos[$method])) {
+                    $account['logo_url'] = $bankLogos[$method];
+                }
+            }
+
+            return $account;
+        })->toArray();
+
+        return PaymentData::collect($mapped, DataCollection::class);
     }
 
     public function process(SalesOrderData $sales_order)

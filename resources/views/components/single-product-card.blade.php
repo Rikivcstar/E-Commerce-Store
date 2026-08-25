@@ -7,11 +7,13 @@
         </a>
 
         @if (isset($product->stock) && $product->stock <= 3 && $product->stock > 0)
-            <span class="absolute left-2 top-2 z-10 rounded-md bg-rose-600/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
+            <span
+                class="absolute left-2 top-2 z-10 rounded-md bg-rose-600/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
                 Stok Terbatas
             </span>
         @elseif (isset($product->stock) && $product->stock == 0)
-            <span class="absolute left-2 top-2 z-10 rounded-md bg-zinc-900/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
+            <span
+                class="absolute left-2 top-2 z-10 rounded-md bg-zinc-900/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
                 Stok Habis
             </span>
         @endif
@@ -34,16 +36,19 @@
     <div class="mt-2.5 flex flex-1 flex-col justify-between space-y-2 px-0.5">
         <div>
             @php
-                $collectionName = !empty($product->collection) 
-                    ? $product->collection 
-                    : (!empty($product->short_desc) ? $product->short_desc : 'Curated Goods');
+                $collectionName = !empty($product->collection)
+                    ? $product->collection
+                    : (!empty($product->short_desc)
+                        ? $product->short_desc
+                        : 'Curated Goods');
             @endphp
-            <p class="text-[10px] font-extrabold uppercase tracking-widest text-[#777c62] mb-0.5 line-clamp-1">
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-[#777c62] mt-2 line-clamp-1">
                 {{ $collectionName }}
             </p>
 
             <a href="{{ route('product', $product->slug) }}" class="focus:outline-none">
-                <h3 class="text-sm font-bold leading-snug text-zinc-900 transition group-hover:text-[#555a42] line-clamp-2">
+                <h3
+                    class="text-sm font-bold leading-snug text-zinc-900 transition group-hover:text-[#555a42] line-clamp-2">
                     {{ $product->name }}
                 </h3>
             </a>
@@ -53,7 +58,8 @@
             @if (isset($product->is_on_sale) && $product->is_on_sale)
                 <p class="text-sm sm:text-base font-black text-[#dc2626]">
                     {{ $product->effective_price_formatted }}
-                    <span class="ml-1 text-xs font-semibold text-zinc-400 line-through">{{ $product->price_formatted }}</span>
+                    <span
+                        class="ml-1 text-xs font-semibold text-zinc-400 line-through">{{ $product->price_formatted }}</span>
                 </p>
             @else
                 <p class="text-sm sm:text-base font-black text-zinc-900">{{ $product->price_formatted }}</p>
@@ -71,9 +77,12 @@
                 <span class="text-zinc-300">•</span>
                 <span class="text-zinc-500">
                     @php
-                        $sold = isset($product->sold_count) && $product->sold_count > 0 
-                            ? $product->sold_count 
-                            : (isset($product->id) ? (($product->id * 17) % 75 + 15) : 25);
+                        $sold =
+                            isset($product->sold_count) && $product->sold_count > 0
+                                ? $product->sold_count
+                                : (isset($product->id)
+                                    ? (($product->id * 17) % 75) + 15
+                                    : 25);
                     @endphp
                     Terjual {{ $sold }}+
                 </span>
@@ -81,4 +90,3 @@
         </div>
     </div>
 </div>
-

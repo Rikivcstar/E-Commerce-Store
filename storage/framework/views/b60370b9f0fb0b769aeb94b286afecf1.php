@@ -7,12 +7,24 @@
         </a>
 
         <!--[if BLOCK]><![endif]--><?php if(isset($product->stock) && $product->stock <= 3 && $product->stock > 0): ?>
-            <span class="absolute left-2 top-2 z-10 rounded-md bg-rose-600/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
+            <span
+                class="absolute left-2 top-2 z-10 rounded-md bg-rose-600/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
                 Stok Terbatas
             </span>
         <?php elseif(isset($product->stock) && $product->stock == 0): ?>
-            <span class="absolute left-2 top-2 z-10 rounded-md bg-zinc-900/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
+            <span
+                class="absolute left-2 top-2 z-10 rounded-md bg-zinc-900/90 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs backdrop-blur-md uppercase tracking-wider">
                 Stok Habis
+            </span>
+        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+
+        <?php
+            $onSale = isset($product->is_on_sale) && $product->is_on_sale;
+        ?>
+        <!--[if BLOCK]><![endif]--><?php if($onSale): ?>
+            <span
+                class="absolute bottom-2 left-2 z-10 rounded-md bg-[#dc2626] px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-white shadow-xs">
+                ⚡ Sale -<?php echo e($product->discount_percent); ?>%
             </span>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
@@ -39,17 +51,20 @@ if (isset($__slots)) unset($__slots);
     <div class="mt-2.5 flex flex-1 flex-col justify-between space-y-2 px-0.5">
         <div>
             <?php
-                $collectionName = !empty($product->collection) 
-                    ? $product->collection 
-                    : (!empty($product->short_desc) ? $product->short_desc : 'Curated Goods');
+                $collectionName = !empty($product->collection)
+                    ? $product->collection
+                    : (!empty($product->short_desc)
+                        ? $product->short_desc
+                        : 'Curated Goods');
             ?>
-            <p class="text-[10px] font-extrabold uppercase tracking-widest text-[#777c62] mb-0.5 line-clamp-1">
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-[#777c62] mt-2 line-clamp-1">
                 <?php echo e($collectionName); ?>
 
             </p>
 
             <a href="<?php echo e(route('product', $product->slug)); ?>" class="focus:outline-none">
-                <h3 class="text-sm font-bold leading-snug text-zinc-900 transition group-hover:text-[#555a42] line-clamp-2">
+                <h3
+                    class="text-sm font-bold leading-snug text-zinc-900 transition group-hover:text-[#555a42] line-clamp-2">
                     <?php echo e($product->name); ?>
 
                 </h3>
@@ -57,7 +72,16 @@ if (isset($__slots)) unset($__slots);
         </div>
 
         <div class="pt-0.5 space-y-1">
-            <p class="text-sm sm:text-base font-black text-zinc-900"><?php echo e($product->price_formatted); ?></p>
+            <!--[if BLOCK]><![endif]--><?php if(isset($product->is_on_sale) && $product->is_on_sale): ?>
+                <p class="text-sm sm:text-base font-black text-[#dc2626]">
+                    <?php echo e($product->effective_price_formatted); ?>
+
+                    <span
+                        class="ml-1 text-xs font-semibold text-zinc-400 line-through"><?php echo e($product->price_formatted); ?></span>
+                </p>
+            <?php else: ?>
+                <p class="text-sm sm:text-base font-black text-zinc-900"><?php echo e($product->price_formatted); ?></p>
+            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
             <div class="flex items-center gap-1.5 text-xs text-zinc-500 font-medium">
                 <span class="inline-flex items-center gap-1 font-bold text-zinc-800">
@@ -71,9 +95,12 @@ if (isset($__slots)) unset($__slots);
                 <span class="text-zinc-300">•</span>
                 <span class="text-zinc-500">
                     <?php
-                        $sold = isset($product->sold_count) && $product->sold_count > 0 
-                            ? $product->sold_count 
-                            : (isset($product->id) ? (($product->id * 17) % 75 + 15) : 25);
+                        $sold =
+                            isset($product->sold_count) && $product->sold_count > 0
+                                ? $product->sold_count
+                                : (isset($product->id)
+                                    ? (($product->id * 17) % 75) + 15
+                                    : 25);
                     ?>
                     Terjual <?php echo e($sold); ?>+
                 </span>
@@ -81,5 +108,4 @@ if (isset($__slots)) unset($__slots);
         </div>
     </div>
 </div>
-
 <?php /**PATH C:\laraherd\webstore\resources\views/components/single-product-card.blade.php ENDPATH**/ ?>

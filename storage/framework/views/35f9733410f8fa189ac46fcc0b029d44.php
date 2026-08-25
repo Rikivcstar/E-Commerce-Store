@@ -1,4 +1,14 @@
 <div>
+    <?php $__env->startPush('head'); ?>
+        <?php echo $__env->make('partials.meta-tags', [
+            'metaTitle' => $product->name,
+            'metaDescription' => $metaDescription,
+            'metaImage' => $productData->cover_url,
+            'metaUrl' => route('product', $product->slug),
+            'jsonLd' => $jsonLd,
+        ], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php $__env->stopPush(); ?>
+
     <style>
         .product-page {
             background: #f7f7f2;
@@ -441,7 +451,45 @@
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                     <p class="product-sku"><?php echo e($product->sku); ?></p>
                     <h1 class="product-title"><?php echo e($product->name); ?></h1>
-                    <span class="product-price"><?php echo e($product->price_formatted); ?></span>
+
+                    <?php
+                        $onSale = $product->is_on_sale;
+                        $saleEndsIso = $onSale && $product->sale_ends_at ? $product->sale_ends_at->toISOString() : null;
+                    ?>
+                    <div class="mt-1 flex flex-wrap items-baseline gap-2">
+                        <span class="product-price <?php echo e($onSale ? '!text-[#dc2626]' : ''); ?>">
+                            <?php echo e(\Illuminate\Support\Number::currency($productData->effective_price)); ?>
+
+                        </span>
+                        <!--[if BLOCK]><![endif]--><?php if($onSale): ?>
+                            <span class="text-lg font-semibold text-zinc-400 line-through">
+                                <?php echo e($productData->original_price_formatted); ?>
+
+                            </span>
+                            <span
+                                class="rounded-full bg-[#dc2626] px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white shadow-xs">
+                                ⚡ Flash Sale -<?php echo e($productData->discount_percent); ?>%
+                            </span>
+                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                    </div>
+
+                    <!--[if BLOCK]><![endif]--><?php if($saleEndsIso): ?>
+                        <div x-data="{
+                                d: 0, h: 0, m: 0, s: 0,
+                                tick() {
+                                    const diff = Math.max(0, new Date('<?php echo e($saleEndsIso); ?>') - new Date());
+                                    this.d = Math.floor(diff / 86400000);
+                                    this.h = Math.floor(diff / 3600000) % 24;
+                                    this.m = Math.floor(diff / 60000) % 60;
+                                    this.s = Math.floor(diff / 1000) % 60;
+                                }
+                            }"
+                            x-init="tick(); setInterval(() => tick(), 1000)"
+                            class="mt-2 inline-flex flex-wrap items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700">
+                            ⚡ Berakhir dalam
+                            <span class="tabular-nums" x-text="d + 'h ' + h + 'j ' + m + 'm ' + s + 'd'">0h 0j 0m 0d</span>
+                        </div>
+                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
                     <div class="mt-3 flex flex-wrap items-center gap-2">
                         <!--[if BLOCK]><![endif]--><?php if($product->stock <= 5 && $product->stock > 0): ?>
@@ -604,6 +652,23 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
             </section>
+
+            <?php
+$__split = function ($name, $params = []) {
+    return [$name, $params];
+};
+[$__name, $__params] = $__split('product-questions', ['product' => $product]);
+
+$__html = app('livewire')->mount($__name, $__params, 'qa-'.e($product->sku).'', $__slots ?? [], get_defined_vars());
+
+echo $__html;
+
+unset($__html);
+unset($__name);
+unset($__params);
+unset($__split);
+if (isset($__slots)) unset($__slots);
+?>
 
             <!--[if BLOCK]><![endif]--><?php if($recommendations->count()): ?>
                 <section class="recommend-section" aria-label="Recommended products">

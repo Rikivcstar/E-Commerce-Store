@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\XenditWebhookJob;
 use App\Jobs\MootaPaymentJob;
 
 return [
@@ -61,6 +62,31 @@ return [
              * This should be set to a class that extends \Spatie\WebhookClient\Jobs\ProcessWebhookJob.
              */
             'process_webhook_job' => MootaPaymentJob::class,
+        ],
+
+        [
+            'name' => 'xendit',
+
+            /*
+             * Xendit mengirim callback token di header x-callback-token.
+             * Signing secret tidak dipakai di sini karena validasi dilakukan
+             * sepenuhnya di dalam XenditSignatureValidator menggunakan XENDIT_WEBHOOK_TOKEN.
+             */
+            'signing_secret' => '',
+
+            'signature_header_name' => 'x-callback-token',
+
+            'signature_validator' => \App\Validators\XenditSignatureValidator::class,
+
+            'webhook_profile' => \Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile::class,
+
+            'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
+
+            'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
+
+            'store_headers' => [],
+
+            'process_webhook_job' => XenditWebhookJob::class,
         ],
     ],
 

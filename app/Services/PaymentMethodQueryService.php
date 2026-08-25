@@ -10,6 +10,7 @@ use App\Data\SalesOrderData;
 use App\Data\SalesPaymentData;
 use App\Drivers\Payment\MootaPaymentDriver;
 use App\Drivers\Payment\OfflinePaymentDriver;
+use App\Drivers\Payment\XenditPaymentDriver;
 use Spatie\LaravelData\DataCollection;
 
 class PaymentMethodQueryService
@@ -21,6 +22,7 @@ class PaymentMethodQueryService
         $this->drivers = [
             new OfflinePaymentDriver,
             new MootaPaymentDriver,
+            new XenditPaymentDriver,
         ];
     }
 

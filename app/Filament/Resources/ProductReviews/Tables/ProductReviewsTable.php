@@ -30,7 +30,8 @@ class ProductReviewsTable
                     ->label('Ulasan')
                     ->limit(60),
                 ToggleColumn::make('is_approved')
-                    ->label('Disetujui'),
+                    ->label('Disetujui')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:ProductReview')),
                 TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime('d M Y H:i')

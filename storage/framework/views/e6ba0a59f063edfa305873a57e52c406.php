@@ -1,4 +1,17 @@
 <div>
+    <?php $__env->startPush('head'); ?>
+        <?php echo $__env->make('partials.meta-tags', [
+            'metaTitle' => 'Riva & Co. — Curated Goods',
+            'metaDescription' => 'Riva & Co. menghadirkan koleksi produk pilihan terbaik: berkualitas, terkurasi, dan siap dikirim ke seluruh Indonesia.',
+            'metaUrl' => route('home'),
+            'jsonLd' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'WebSite',
+                'name' => config('app.name'),
+                'url' => route('home'),
+            ],
+        ], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php $__env->stopPush(); ?>
 
     <style>
         :root {

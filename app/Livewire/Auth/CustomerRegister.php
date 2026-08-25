@@ -63,6 +63,8 @@ class CustomerRegister extends Component
             'password' => Hash::make($validated['password']),
         ]);
 
+        $user->sendEmailVerificationNotification();
+
         Auth::login($user, remember: true);
         session()->regenerate();
 
@@ -87,7 +89,7 @@ class CustomerRegister extends Component
             'success'
         );
 
-        $this->redirect(route('account.dashboard'), navigate: false);
+        $this->redirect(route('verification.notice'), navigate: false);
     }
 
     public function render()

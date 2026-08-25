@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Livewire\Account\AddressBook;
@@ -28,6 +29,7 @@ Route::get('/page/{page:slug?}', PageStatic::class)->name('page');
 Route::get('/track-order', TrackOrder::class)->name('track-order');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 Route::webhooks('moota/callback')->middleware('throttle:60,1');
+Route::webhooks('xendit/callback', 'xendit')->middleware('throttle:60,1');
 
 Route::middleware(['guest', 'throttle:10,1'])->group(function () {
     Route::get('/login', CustomerLogin::class)->name('login');
@@ -39,13 +41,23 @@ Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.go
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
 Route::get('/auth/google/token-login/{token}', [GoogleController::class, 'tokenLogin'])->name('auth.google.token-login');
 
+// Verifikasi email
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->middleware(['signed'])
+    ->name('verification.verify');
+
 Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
+    Route::post('/email/verify/resend', [EmailVerificationController::class, 'resend'])->name('verification.send');
+    Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/account', Dashboard::class)->name('account.dashboard');
     Route::get('/account/orders', OrderHistory::class)->name('account.orders');
     Route::get('/account/orders/{order:trx_id}/invoice', \App\Http\Controllers\Account\InvoiceController::class)->name('account.orders.invoice');
     Route::get('/account/wishlist', Wishlist::class)->name('account.wishlist');
     Route::get('/account/addresses', AddressBook::class)->name('account.addresses');
-    Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
 });
 
 Route::middleware(['auth'])->prefix('back')->name('admin.')->group(function () {

@@ -32,7 +32,8 @@ class ProductQuestionsTable
                     ->placeholder('Belum')
                     ->dateTime('d M Y'),
                 ToggleColumn::make('is_published')
-                    ->label('Dipublikasikan'),
+                    ->label('Dipublikasikan')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:ProductQuestion')),
                 TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime('d M Y H:i')

@@ -113,7 +113,7 @@
                     <div class="mt-5 rounded-2xl bg-[#20221b] text-white p-5 no-print">
                         <h2 class="font-display text-base font-black">Simpan pesanan ini ke akun Anda</h2>
                         <p class="mt-1 text-xs text-white/70 leading-relaxed">
-                            Buat akun dengan email <strong class="text-white">{{ $order->customer->email }}</strong>
+                            Buat akun dengan email
                             atau masuk ke akun yang sudah ada. Pesanan checkout-tamu Anda akan otomatis tersimpan di
                             My Orders agar bisa dilacak kapan saja.
                         </p>

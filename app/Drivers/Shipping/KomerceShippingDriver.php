@@ -28,15 +28,15 @@ class KomerceShippingDriver implements ShippingDriverInterface
         return ShippingServiceData::collect([
             [
                 'driver' => $this->driver,
-                'code' => 'jne-reg',
-                'courier' => 'jne',
-                'service' => 'REG',
+                'code' => 'ninja-reg',
+                'courier' => 'ninja',
+                'service' => 'STANDARD',
             ],
             [
                 'driver' => $this->driver,
-                'code' => 'jne-jtr',
-                'courier' => 'jne',
-                'service' => 'JTR',
+                'code' => 'anteraja-reg',
+                'courier' => 'anteraja',
+                'service' => 'REG',
             ],
             [
                 'driver' => $this->driver,
@@ -44,6 +44,31 @@ class KomerceShippingDriver implements ShippingDriverInterface
                 'courier' => 'sicepat',
                 'service' => 'REG',
             ],
+            [
+                'driver' => $this->driver,
+                'code' => 'pos-reg',
+                'courier' => 'pos',
+                'service' => 'Pos Reguler',
+            ],
+            [
+                'driver' => $this->driver,
+                'code' => 'wahana-reg',
+                'courier' => 'wahana',
+                'service' => 'Express',
+            ],
+            [
+                'driver' => $this->driver,
+                'code' => 'lion-reg',
+                'courier' => 'lion',
+                'service' => 'REGPACK',
+            ],
+            [
+                'driver' => $this->driver,
+                'code' => 'jne-reg',
+                'courier' => 'jne',
+                'service' => 'REG',
+            ],
+
             [
                 'driver' => $this->driver,
                 'code' => 'jnt-ez',
@@ -106,18 +131,14 @@ class KomerceShippingDriver implements ShippingDriverInterface
             $cost = (float) data_get($matched, 'cost', 0);
             $etd = (string) data_get($matched, 'etd', '1-3 Hari');
 
-            $logoMap = [
-                'jne' => 'https://www.jne.co.id/assets/img/jne-logo.png',
-                'sicepat' => 'https://www.sicepat.com/assets/images/sicepat-logo-color.svg',
-                'jnt' => 'https://www.jet.co.id/assets/img/logo_jt_express.png',
-                'anteraja' => 'https://anteraja.id/images/logo-anteraja.png',
-                'pos' => 'https://www.posindonesia.co.id/images/logo-pos.png',
-                'tiki' => 'https://tikionline.id/images/logo-tiki.png',
-                'ninja' => 'https://www.ninjaxpress.co/images/logo.png',
-                'lion' => 'https://www.lionparcel.com/assets/images/logo-lion-parcel.png',
-                'wahana' => 'https://www.wahana.com/img/logo-wahana.png',
-            ];
-            $logoUrl = url('images/couriers/'.$courierCode.'.svg');
+            $localLogo = null;
+            foreach (['png', 'jpg', 'jpeg', 'svg'] as $ext) {
+                if (file_exists(public_path("images/couriers/{$courierCode}.{$ext}"))) {
+                    $localLogo = url("images/couriers/{$courierCode}.{$ext}");
+                    break;
+                }
+            }
+            $logoUrl = $localLogo ?? url("images/couriers/{$courierCode}.svg");
 
             return new ShippingData(
                 $this->driver,

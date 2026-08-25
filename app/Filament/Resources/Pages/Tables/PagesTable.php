@@ -25,9 +25,11 @@ class PagesTable
                 TextColumn::make('slug')
                     ->searchable(),
                 ToggleColumn::make('is_active')
-                    ->label('Active'),
+                    ->label('Active')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:Page')),
                 ToggleColumn::make('is_featured')
-                    ->label('Featured on Home'),
+                    ->label('Featured on Home')
+                    ->disabled(fn () => ! auth()->user()?->can('Update:Page')),
                 TextColumn::make('created_at')
                     ->dateTime('d M Y')
                     ->sortable(),
