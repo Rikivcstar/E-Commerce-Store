@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 define('LARAVEL_START', microtime(true));
 
-// 1. Buat direktori storage sementara di /tmp
+// 1. Buat direktori storage sementara di /tmp untuk Vercel read-only filesystem
 $storageDirs = [
     '/tmp/storage/app/public',
     '/tmp/storage/framework/views',
@@ -19,7 +19,7 @@ foreach ($storageDirs as $dir) {
     }
 }
 
-// 2. Bersihkan environment variable bernilai string kosong dari Vercel
+// 2. Bersihkan environment variable bernilai string kosong ("") dari Vercel
 foreach (array_merge($_ENV, $_SERVER) as $key => $value) {
     if ($value === '' || $value === 'null') {
         putenv($key);
@@ -27,7 +27,7 @@ foreach (array_merge($_ENV, $_SERVER) as $key => $value) {
     }
 }
 
-// 3. Set fallback default aman
+// 3. Set fallback default yang aman untuk Vercel
 $defaults = [
     'VERCEL' => 'true',
     'APP_ENV' => 'production',
@@ -49,25 +49,15 @@ foreach ($defaults as $k => $v) {
     }
 }
 
-// 4. Inisialisasi Aplikasi Laravel
+// 4. Jalankan HTTP Kernel Laravel secara cepat tanpa overhead
 require __DIR__.'/../vendor/autoload.php';
 $app = require __DIR__.'/../bootstrap/app.php';
 
 $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
-$kernel->bootstrap();
+$response = $kernel->handle(
+    $request = \Illuminate\Http\Request::capture()
+);
 
-// 5. Otomatis jalankan migrasi & seeder jika database MySQL Aiven masih kosong
-try {
-    if (! \Illuminate\Support\Facades\Schema::hasTable('categories')) {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
-    }
-} catch (\Throwable $e) {
-    \Illuminate\Support\Facades\Log::error('Auto-migration error: '.$e->getMessage());
-}
-
-// 6. Tangani HTTP Request
-$request = \Illuminate\Http\Request::capture();
-$response = $kernel->handle($request);
 $response->send();
+
 $kernel->terminate($request, $response);
