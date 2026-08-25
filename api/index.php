@@ -25,5 +25,9 @@ putenv('VERCEL=true');
 $_ENV['VERCEL'] = 'true';
 $_SERVER['VERCEL'] = 'true';
 
+putenv('BROADCAST_CONNECTION=null');
+$_ENV['BROADCAST_CONNECTION'] = 'null';
+$_SERVER['BROADCAST_CONNECTION'] = 'null';
+
 // Forward Vercel request ke Laravel entrypoint
 require __DIR__.'/../public/index.php';
