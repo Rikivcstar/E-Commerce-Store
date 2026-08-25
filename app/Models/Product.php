@@ -146,7 +146,34 @@ class Product extends Model implements HasMedia
             'aromatherapy-essential-oil-diffuser-500ml' => 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
         ];
 
-        return $imageMap[$this->slug] ?? 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80';
+        if (isset($imageMap[$this->slug])) {
+            return $imageMap[$this->slug];
+        }
+
+        $fallbackImages = [
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+            'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80',
+            'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&q=80',
+            'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80',
+            'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&q=80',
+            'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&q=80',
+            'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80',
+            'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80',
+            'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=800&q=80',
+            'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80',
+            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80',
+            'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=800&q=80',
+            'https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=800&q=80',
+            'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80',
+            'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&q=80',
+            'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80',
+            'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
+            'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80',
+            'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80',
+        ];
+
+        return $fallbackImages[$this->id % count($fallbackImages)];
     }
 
     public function getGalleryUrlsAttribute(): array
