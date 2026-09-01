@@ -2,7 +2,7 @@
     @if ($variant === 'icon')
         <button wire:click.stop.prevent="toggle" type="button"
             class="relative flex size-9 items-center justify-center rounded-full shadow-md backdrop-blur-md transition-all duration-200 hover:scale-110 {{ $isInWishlist ? 'bg-white text-rose-600' : 'bg-white/95 text-zinc-700 hover:text-rose-600' }}"
-            title="{{ $isInWishlist ? 'Hapus dari Wishlist' : 'Tambah ke Wishlist' }}"
+            title="{{ $isInWishlist ? __('Hapus dari Wishlist') : __('Tambah ke Wishlist') }}"
             aria-label="Wishlist">
             <svg class="size-4.5 transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                 fill="{{ $isInWishlist ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="2"
@@ -23,7 +23,7 @@
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
             </svg>
             <span>
-                {{ $isInWishlist ? 'Disimpan' : 'Simpan' }}
+                {{ $isInWishlist ? __('Disimpan') : __('Simpan') }}
             </span>
             <div wire:loading wire:target="toggle" class="inline-block size-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" role="status"><span class="sr-only">Loading...</span></div>
         </button>

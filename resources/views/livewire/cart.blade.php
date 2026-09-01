@@ -198,9 +198,9 @@
         <div class="linoge-cart-shell">
             <!-- BREADCRUMBS -->
             <nav class="flex items-center gap-2 text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('home') }}" class="hover:text-neutral-900 transition">Home</a>
+                <a href="{{ route('home') }}" class="hover:text-neutral-900 transition">{{ __('Home') }}</a>
                 <span>/</span>
-                <span class="text-neutral-900">Shopping Bag</span>
+                <span class="text-neutral-900">{{ __('Shopping Bag') }}</span>
             </nav>
 
             <!-- HEADER -->
@@ -248,10 +248,10 @@
                         </article>
                     @empty
                         <div class="linoge-empty-bag">
-                            <h2 class="linoge-empty-title">YOUR BAG IS EMPTY</h2>
-                            <p class="mt-3 text-sm text-neutral-600 max-w-md mx-auto">Explore our curated collections and add your favorite items to your shopping bag.</p>
+                            <h2 class="linoge-empty-title">{{ __('YOUR BAG IS EMPTY') }}</h2>
+                            <p class="mt-3 text-sm text-neutral-600 max-w-md mx-auto">{{ __('Explore our curated collections and add your favorite items to your shopping bag.') }}</p>
                             <div class="mt-8 max-w-xs mx-auto">
-                                <a href="{{ route('product-catalog') }}" class="linoge-cart-btn-checkout">EXPLORE CATALOG</a>
+                                <a href="{{ route('product-catalog') }}" class="linoge-cart-btn-checkout">{{ __('EXPLORE CATALOG') }}</a>
                             </div>
                         </div>
                     @endforelse
@@ -263,25 +263,25 @@
                         <h2 class="linoge-cart-summary-title">ORDER SUMMARY</h2>
                         <div class="space-y-1">
                             <div class="linoge-cart-summary-row">
-                                <span>Subtotal</span>
+                                <span>{{ __('Subtotal') }}</span>
                                 <strong>{{ $subTotal }}</strong>
                             </div>
                             <div class="linoge-cart-summary-row">
-                                <span>Shipping</span>
-                                <strong>Calculated at checkout</strong>
+                                <span>{{ __('Shipping') }}</span>
+                                <strong>{{ __('Calculated at checkout') }}</strong>
                             </div>
                             <div class="linoge-cart-summary-row linoge-cart-summary-total">
-                                <span>Estimated Total</span>
+                                <span>{{ __('Estimated Total') }}</span>
                                 <strong>{{ $total }}</strong>
                             </div>
                         </div>
 
                         <button type="button" wire:click="checkout" wire:loading.attr="disabled" class="linoge-cart-btn-checkout">
-                            <span>PROCEED TO CHECKOUT</span>
+                            <span>{{ __('PROCEED TO CHECKOUT') }}</span>
                             <div wire:loading class="animate-spin inline-block size-4 border-2 border-current border-t-transparent text-white rounded-full ml-1" role="status" aria-label="loading"></div>
                         </button>
 
-                        <a class="linoge-cart-btn-continue" href="{{ route('product-catalog') }}">CONTINUE SHOPPING</a>
+                        <a class="linoge-cart-btn-continue" href="{{ route('product-catalog') }}">{{ __('CONTINUE SHOPPING') }}</a>
                     </aside>
                 @endif
             </div>

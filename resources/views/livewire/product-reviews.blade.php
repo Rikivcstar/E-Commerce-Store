@@ -184,18 +184,17 @@
                         <span class="pxr-date">{{ $review->created_at->translatedFormat('d F Y') }} &middot; Pembeli terverifikasi</span>
                     </article>
                 @empty
-                    <p class="pxr-empty">Belum ada ulasan untuk produk ini. Jadilah yang pertama!</p>
+                    <p class="pxr-empty">{{ __('Belum ada ulasan untuk produk ini. Jadilah yang pertama!') }}</p>
                 @endforelse
             </div>
         </div>
 
         @if (Auth::check())
             @if ($hasReviewed)
-                <p class="pxr-note">Terima kasih, ulasan Anda sudah kami terima dan sedang ditinjau admin.</p>
+                <p class="pxr-note">{{ __('Terima kasih, ulasan Anda sudah kami terima dan sedang ditinjau admin.') }}</p>
             @elseif ($canReview)
                 <form wire:submit="submit" class="pxr-form">
-                    <label>Rating
-                        <select wire:model="form.rating" class="pxr-input">
+                    <label>{{ __('Rating') }}<select wire:model="form.rating" class="pxr-input">
                             <option value="5">5 - Sangat Baik</option>
                             <option value="4">4 - Baik</option>
                             <option value="3">3 - Cukup</option>
@@ -203,24 +202,21 @@
                             <option value="1">1 - Buruk</option>
                         </select>
                     </label>
-                    <label>Judul (opsional)
-                        <input wire:model="form.title" type="text" class="pxr-input" placeholder="Ringkasan singkat...">
+                    <label>{{ __('Judul (opsional)') }}<input wire:model="form.title" type="text" class="pxr-input" placeholder="Ringkasan singkat...">
                     </label>
-                    <label>Ulasan
-                        <textarea wire:model="form.body" class="pxr-input" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
+                    <label>{{ __('Ulasan') }}<textarea wire:model="form.body" class="pxr-input" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
                     </label>
                     @error('form.body')
                         <span class="pxr-error">{{ $message }}</span>
                     @enderror
-                    <button type="submit" class="pxr-submit">Kirim Ulasan</button>
+                    <button type="submit" class="pxr-submit">{{ __('Kirim Ulasan') }}</button>
                 </form>
             @else
-                <p class="pxr-note">Anda harus masuk dan sudah pernah membeli produk ini agar dapat menulis ulasan.</p>
+                <p class="pxr-note">{{ __('Anda harus masuk dan sudah pernah membeli produk ini agar dapat menulis ulasan.') }}</p>
             @endif
         @else
             <p class="pxr-note">
-                <a href="{{ route('login') }}" class="underline font-black">Masuk</a> untuk menulis ulasan.
-            </p>
+                <a href="{{ route('login') }}" class="underline font-black">{{ __('Masuk') }}</a>{{ __('untuk menulis ulasan.') }}</p>
         @endif
     </div>
 </div>

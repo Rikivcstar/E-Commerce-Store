@@ -91,9 +91,7 @@
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                                     <polyline points="7 10 12 15 17 10" />
                                     <line x1="12" x2="12" y1="15" y2="3" />
-                                </svg>
-                                Invoice
-                            </a>
+                                </svg>{{ __('Invoice') }}</a>
                         @endif
                         <button onclick="window.print()" type="button"
                             class="inline-flex items-center gap-1.5 rounded-xl bg-[#f2f3ed] mb-5 px-3 py-2 text-xs font-bold text-[#555a42] hover:bg-[#e6e8de] transition">
@@ -103,15 +101,13 @@
                                 <polyline points="6 9 6 2 18 2 18 9" />
                                 <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
                                 <rect width="12" height="8" x="6" y="14" />
-                            </svg>
-                            Cetak
-                        </button>
+                            </svg>{{ __('Cetak') }}</button>
                     </div>
                 </div>
 
                 @if ($can_claim_order)
                     <div class="mt-5 rounded-2xl bg-[#20221b] text-white p-5 no-print">
-                        <h2 class="font-display text-base font-black">Simpan pesanan ini ke akun Anda</h2>
+                        <h2 class="font-display text-base font-black">{{ __('Simpan pesanan ini ke akun Anda') }}</h2>
                         <p class="mt-1 text-xs text-white/70 leading-relaxed">
                             Buat akun dengan email
                             atau masuk ke akun yang sudah ada. Pesanan checkout-tamu Anda akan otomatis tersimpan di
@@ -123,17 +119,14 @@
                                 Buat Akun &amp; Simpan
                             </a>
                             <a href="{{ route('login') }}"
-                                class="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-xs font-black text-white uppercase tracking-wider transition hover:bg-white/10">
-                                Masuk
-                            </a>
+                                class="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-xs font-black text-white uppercase tracking-wider transition hover:bg-white/10">{{ __('Masuk') }}</a>
                         </div>
                     </div>
                 @endif
 
                 <div class="mt-5">
                     <div class="flex items-center justify-between mb-2.5">
-                        <h2 class="text-[10px] font-black uppercase tracking-[0.14em] text-[#8c9082]">Order Tracking
-                        </h2>
+                        <h2 class="text-[10px] font-black uppercase tracking-[0.14em] text-[#8c9082]">{{ __('Order Tracking') }}</h2>
                         @if (!empty($order->shipping->estimated_delivery))
                             <span class="text-[9px] font-bold text-[#555a42] bg-[#f2f3ed] px-2 py-0.5 rounded-full">
                                 Estimasi: {{ $order->shipping->estimated_delivery }}
@@ -195,8 +188,7 @@
                 </div>
 
                 <div class="mt-5">
-                    <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-2.5">Riwayat
-                        Status</h2>
+                    <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-2.5">{{ __('Riwayat Status') }}</h2>
                     <div class="rounded-xl bg-[#f7f7f2] p-4 border border-[#e8e9e1]">
                         <ol class="space-y-0">
                             @foreach ($timeline as $tl)
@@ -226,19 +218,19 @@
                 <div
                     class="mt-3.5 grid grid-cols-2 md:grid-cols-4 gap-2.5 p-3 rounded-xl bg-[#f7f7f2] border border-[#e8e9e1]">
                     <div class="min-w-0">
-                        <span class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">Tanggal</span>
+                        <span class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">{{ __('Tanggal') }}</span>
                         <span
                             class="mt-0.5 block font-bold text-[#20221b] text-[10px] sm:text-[11px] truncate">{{ $order->created_at_formatted }}</span>
                     </div>
                     <div class="min-w-0">
                         <span
-                            class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">Pembayaran</span>
+                            class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">{{ __('Pembayaran') }}</span>
                         <span class="mt-0.5 block font-bold text-[#20221b] text-[10px] sm:text-[11px] truncate"
                             title="{{ $order->payment->label }}">{{ $order->payment->label }}</span>
                     </div>
                     <div class="min-w-0">
                         <span
-                            class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">Ekspedisi</span>
+                            class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">{{ __('Ekspedisi') }}</span>
                         <span class="mt-0.5 block font-bold text-[#20221b] text-[10px] sm:text-[11px] truncate">
                             {{ strtoupper($order->shipping->courier ?? 'Reguler') }}
                             @if (!empty($order->shipping->receipt_number))
@@ -254,7 +246,7 @@
                         </span>
                     </div>
                     <div class="min-w-0">
-                        <span class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">Alamat</span>
+                        <span class="block font-bold text-[#8c9082] uppercase tracking-wider text-[9px]">{{ __('Alamat') }}</span>
                         <span class="mt-0.5 block font-bold text-[#20221b] text-[10px] sm:text-[11px] truncate"
                             title="{{ $order->address_line }}">
                             {{ $order->customer->full_name }} —
@@ -265,7 +257,7 @@
 
                 <div class="mt-5">
                     <div class="flex items-center justify-between mb-2.5">
-                        <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082]">Order Info</h2>
+                        <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082]">{{ __('Order Info') }}</h2>
                         <span class="text-xs font-bold text-[#8c9082]">
                             {{ $order->items->count() }} Produk
                         </span>
@@ -299,19 +291,18 @@
                 </div>
 
                 <div class="mt-5">
-                    <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-2.5">Order Summary
-                    </h2>
+                    <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-2.5">{{ __('Order Summary') }}</h2>
                     <div class="rounded-xl bg-[#f7f7f2] p-4 border border-[#e8e9e1] space-y-2 text-xs">
                         <div class="flex items-center justify-between text-[#555a42] font-medium">
-                            <span>Subtotal Produk</span>
+                            <span>{{ __('Subtotal Produk') }}</span>
                             <span class="font-bold text-[#20221b]">{{ $order->sub_total_formatted }}</span>
                         </div>
                         <div class="flex items-center justify-between text-[#555a42] font-medium">
-                            <span>Ongkos Kirim (Shipping)</span>
+                            <span>{{ __('Ongkos Kirim (Shipping)') }}</span>
                             <span class="font-bold text-[#20221b]">{{ $order->shipping_total_formatted }}</span>
                         </div>
                         <div class="border-t border-[#e6e8de] pt-2 flex items-center justify-between">
-                            <span class="text-xs font-black uppercase text-[#20221b]">Total Pembayaran</span>
+                            <span class="text-xs font-black uppercase text-[#20221b]">{{ __('Total Pembayaran') }}</span>
                             <span class="text-base font-black text-[#20221b]">{{ $order->total_formatted }}</span>
                         </div>
                     </div>
@@ -319,8 +310,7 @@
 
                 @if ($order->status == \App\States\SalesOrder\Pending::class)
                     <div class="mt-5 pt-4 border-t border-[#f0f0eb] no-print">
-                        <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-3">Petunjuk
-                            Pembayaran</h2>
+                        <h2 class="text-[11px] font-black uppercase tracking-[0.14em] text-[#8c9082] mb-3">{{ __('Petunjuk Pembayaran') }}</h2>
 
                         @php
                             $paymentPayload = $order->payment->payload ?? [];
@@ -328,24 +318,20 @@
 
                         @if ($order->payment->driver === 'offline' && ! empty($paymentPayload['account_number']))
                             <div class="rounded-xl bg-[#f7f7f2] p-4 border border-[#e8e9e1] mb-4">
-                                <p class="text-xs text-[#555a42] mb-3">
-                                    Lakukan transfer sebesar
-                                    <strong class="text-[#20221b]">{{ $order->total_formatted }}</strong> ke rekening
-                                    berikut, lalu hubungi kami untuk verifikasi:
-                                </p>
+                                <p class="text-xs text-[#555a42] mb-3">{{ __('Lakukan transfer sebesar') }}<strong class="text-[#20221b]">{{ $order->total_formatted }}</strong>{{ __('ke rekening berikut, lalu hubungi kami untuk verifikasi:') }}</p>
                                 <div class="bg-white border border-[#e2e8f0] rounded-xl divide-y divide-[#f0f0eb]">
                                     <div class="flex items-center justify-between px-4 py-3">
-                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">Bank</span>
+                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">{{ __('Bank') }}</span>
                                         <span
                                             class="text-xs font-black text-[#20221b]">{{ strtoupper($order->payment->label) }}</span>
                                     </div>
                                     <div class="flex items-center justify-between px-4 py-3">
-                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">No. Rekening</span>
+                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">{{ __('No. Rekening') }}</span>
                                         <span
                                             class="text-xs font-black text-[#20221b] font-mono">{{ $paymentPayload['account_number'] }}</span>
                                     </div>
                                     <div class="flex items-center justify-between px-4 py-3">
-                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">a.n.</span>
+                                        <span class="text-[10px] font-bold text-[#8c9082] uppercase">{{ __('a.n.') }}</span>
                                         <span
                                             class="text-xs font-black text-[#20221b]">{{ $paymentPayload['account_holder_name'] ?? '-' }}</span>
                                     </div>
@@ -355,7 +341,7 @@
 
                         @if ($order->payment->driver === 'offline')
                             <div class="rounded-xl bg-white border border-dashed border-[#d8dac9] p-4 mb-4">
-                                <h3 class="text-xs font-black text-[#20221b] mb-1">Upload Bukti Transfer</h3>
+                                <h3 class="text-xs font-black text-[#20221b] mb-1">{{ __('Upload Bukti Transfer') }}</h3>
                                 <p class="text-[11px] text-[#8c9082] mb-3">
                                     Sudah transfer? Unggah bukti pembayaran (JPG/PNG/WebP, maks. 5MB) agar pesanan
                                     segera diverifikasi dan diproses.
@@ -378,8 +364,8 @@
                                     @enderror
                                     <button type="submit" wire:loading.attr="disabled"
                                         class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#20221b] px-5 py-2 text-[11px] font-bold text-white hover:bg-black disabled:opacity-60 transition">
-                                        <span wire:loading.remove wire:target="proof">Upload Bukti</span>
-                                        <span wire:loading wire:target="proof">Mengunggah...</span>
+                                        <span wire:loading.remove wire:target="proof">{{ __('Upload Bukti') }}</span>
+                                        <span wire:loading wire:target="proof">{{ __('Mengunggah...') }}</span>
                                     </button>
                                 </form>
                             </div>
@@ -388,7 +374,7 @@
                         <div
                             class="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-xl bg-[#f7f7f2] border border-[#e8e9e1] p-4">
                             <div class="text-xs text-[#8c9082]">
-                                <p class="font-bold text-[#20221b]">Menunggu Pembayaran</p>
+                                <p class="font-bold text-[#20221b]">{{ __('Menunggu Pembayaran') }}</p>
                                 <p class="text-[11px]">Selesaikan sebelum batas waktu:
                                     {{ $order->due_date_at_formatted }}.</p>
                             </div>
@@ -407,16 +393,13 @@
 
                         <div class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-white border border-rose-100 p-4">
                             <div class="text-xs text-[#8c9082]">
-                                <p class="font-bold text-rose-700">Pembatalan</p>
-                                <p class="text-[11px]">Belum membayar? Batalkan pesanan dan stok akan otomatis
-                                    dikembalikan.</p>
+                                <p class="font-bold text-rose-700">{{ __('Pembatalan') }}</p>
+                                <p class="text-[11px]">{{ __('Belum membayar? Batalkan pesanan dan stok akan otomatis dikembalikan.') }}</p>
                             </div>
                             <button type="button" wire:click="cancelOrder"
                                 wire:confirm="Yakin ingin membatalkan pesanan ini?"
                                 wire:loading.attr="disabled"
-                                class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-5 py-2.5 text-xs font-bold text-rose-700 hover:bg-rose-100 transition disabled:opacity-60">
-                                Batalkan Pesanan
-                            </button>
+                                class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-5 py-2.5 text-xs font-bold text-rose-700 hover:bg-rose-100 transition disabled:opacity-60">{{ __('Batalkan Pesanan') }}</button>
                         </div>
                     </div>
                 @endif

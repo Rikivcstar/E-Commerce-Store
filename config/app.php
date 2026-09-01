@@ -78,11 +78,25 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'id'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'faker_locale' => env('APP_FAKER_LOCALE', 'id_ID'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Available Locales
+    |--------------------------------------------------------------------------
+    | Daftar bahasa yang didukung aplikasi (untuk switcher bahasa & SEO hreflang).
+    | Key adalah kode locale (id/en), value adalah label tampilan.
+    |
+    */
+
+    'available_locales' => [
+        'id' => 'Indonesia',
+        'en' => 'English',
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -4,16 +4,16 @@
         <div class="grid grid-cols-1 gap-8 border-b border-neutral-800 pb-16 lg:grid-cols-12 lg:items-end">
             <div class="lg:col-span-4">
                 <h3 class="font-display text-xl font-bold uppercase tracking-wider text-white sm:text-2xl">
-                    GET IN TOUCH<br>WITH {{ strtoupper(config('app.name')) }}
+                    {{ __('GET IN TOUCH') }}<br>{{ __('WITH') }} {{ strtoupper(config('app.name')) }}
                 </h3>
                 <p class="mt-3 text-xs leading-relaxed text-neutral-400 max-w-sm">
-                    Contact us and our managers will be happy to answer all your questions.
+                    {{ __('Contact us and our managers will be happy to answer all your questions.') }}
                 </p>
             </div>
             <div class="lg:col-span-8 lg:text-right">
                 <h2
                     class="font-display text-4xl font-black uppercase leading-[0.9] tracking-tighter text-white sm:text-6xl lg:text-7xl">
-                    CREATE YOUR<br>OWN UNIQUE<br>LOOK
+                    {{ __('CREATE YOUR') }}<br>{{ __('OWN UNIQUE') }}<br>{{ __('LOOK') }}
                 </h2>
             </div>
         </div>
@@ -32,32 +32,31 @@
                         </div>
                     </a>
                     <div class="mt-4 space-y-1.5 text-xs text-neutral-400">
-                        <p><a href="{{ route('page') }}" class="hover:text-white transition">Terms & Conditions</a></p>
-                        <p><a href="{{ route('page') }}" class="hover:text-white transition">Privacy Policy</a></p>
+                        <p><a href="{{ route('page') }}" class="hover:text-white transition">{{ __('Terms & Conditions') }}</a></p>
+                        <p><a href="{{ route('page') }}" class="hover:text-white transition">{{ __('Privacy Policy') }}</a></p>
                     </div>
                 </div>
                 <div class="mt-8 text-[11px] text-neutral-500">
-                    &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+                    &copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('All rights reserved') }}.
                 </div>
             </div>
 
             <!-- NAVIGATION COLUMN -->
             <div class="lg:col-span-3">
-                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">Navigation</h4>
+                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">{{ __('Navigation') }}</h4>
                 <ul class="mt-5 space-y-2.5 text-xs uppercase tracking-wider text-neutral-300">
-                    <li><a href="{{ url('/') }}" class="hover:text-white transition font-medium">Home</a></li>
+                    <li><a href="{{ url('/') }}" class="hover:text-white transition font-medium">{{ __('Home') }}</a></li>
                     <li><a href="{{ route('product-catalog') }}"
-                            class="hover:text-white transition font-medium">Catalog</a></li>
-                    <li><a href="{{ route('product-catalog') }}" class="hover:text-white transition font-medium">New
-                            In</a></li>
-                    <li><a href="{{ route('cart') }}" class="hover:text-white transition font-medium">Shopping Bag</a>
+                            class="hover:text-white transition font-medium">{{ __('Catalog') }}</a></li>
+                    <li><a href="{{ route('product-catalog') }}" class="hover:text-white transition font-medium">{{ __('New In') }}</a></li>
+                    <li><a href="{{ route('cart') }}" class="hover:text-white transition font-medium">{{ __('Shopping Bag') }}</a>
                     </li>
                 </ul>
             </div>
 
             <!-- INFO COLUMN -->
             <div class="lg:col-span-3">
-                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">Info & Help</h4>
+                <h4 class="text-[11px] font-black uppercase tracking-[0.2em] text-neutral-400">{{ __('Info & Help') }}</h4>
                 <ul class="mt-5 space-y-2.5 text-xs uppercase tracking-wider text-neutral-300">
                     @php
                         $footerPages = \App\Models\Page::query()->active()->get();
@@ -66,8 +65,7 @@
                         <li><a href="{{ route('page', $fPage->slug) }}"
                                 class="hover:text-white transition font-medium">{{ $fPage->name }}</a></li>
                     @empty
-                        <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">Pusat
-                                Informasi</a></li>
+                        <li><a href="{{ route('page') }}" class="hover:text-white transition font-medium">{{ __('Pusat Informasi') }}</a></li>
                     @endforelse
                 </ul>
             </div>

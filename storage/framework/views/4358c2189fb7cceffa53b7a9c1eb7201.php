@@ -70,15 +70,15 @@
                         <!--[if BLOCK]><![endif]--><?php if(count($results) > 0): ?>
                             <div class="mb-3 flex items-center justify-between">
                                 <span class="text-xs font-bold uppercase tracking-wider text-gray-400">
-                                    <?php echo e(strlen(trim($query)) >= 2 ? 'Hasil Pencarian' : 'Rekomendasi Produk'); ?> (<?php echo e(count($results)); ?>)
+                                    <?php echo e(strlen(trim($query)) >= 2 ? __('Search results') : __('Product recommendations')); ?> (<?php echo e(count($results)); ?>)
                                 </span>
                                 <!--[if BLOCK]><![endif]--><?php if(strlen(trim($query)) >= 2): ?>
                                     <a href="<?php echo e(route('product-catalog', ['search' => $query])); ?>" class="text-xs font-bold text-indigo-600 hover:underline">
-                                        Lihat Semua Katalog &rarr;
+                                        <?php echo e(__('View All Catalog')); ?> &rarr;
                                     </a>
                                 <?php else: ?>
                                     <a href="<?php echo e(route('product-catalog')); ?>" class="text-xs font-bold text-indigo-600 hover:underline">
-                                        Lihat Katalog &rarr;
+                                        <?php echo e(__('View Catalog')); ?> &rarr;
                                     </a>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             </div>
@@ -123,16 +123,16 @@
                                         <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
                                     </svg>
                                 </div>
-                                <h3 class="text-sm font-bold text-gray-900">Produk "<?php echo e($query); ?>" tidak ditemukan</h3>
-                                <p class="mt-1 text-xs text-gray-400">Coba gunakan kata kunci pencarian yang lain.</p>
+                                <h3 class="text-sm font-bold text-gray-900"><?php echo e(__('Product :query was not found', ['query' => $query])); ?></h3>
+                                <p class="mt-1 text-xs text-gray-400"><?php echo e(__('Try using a different search keyword.')); ?></p>
                             </div>
                         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
 
                 <!-- MODAL FOOTER HINT -->
                 <div class="flex items-center justify-between border-t border-gray-100 bg-gray-50/60 px-6 py-3 text-[11px] text-gray-400">
-                    <span>Tekan <kbd class="rounded border bg-white px-1.5 py-0.5 text-gray-600 shadow-xs">ESC</kbd> untuk menutup</span>
-                    <span>Pencarian serentak Webstore</span>
+                    <span><?php echo e(__('Press')); ?> <kbd class="rounded border bg-white px-1.5 py-0.5 text-gray-600 shadow-xs">ESC</kbd> <?php echo e(__('to close')); ?></span>
+                    <span><?php echo e(__('Webstore instant search')); ?></span>
                 </div>
             </div>
         </div>

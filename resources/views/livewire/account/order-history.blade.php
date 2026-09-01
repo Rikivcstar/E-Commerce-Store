@@ -221,8 +221,8 @@
     </style>
 
     <div class="oh-shell">
-        <p class="oh-eyebrow">My Account</p>
-        <h1 class="oh-title">Order<br>History</h1>
+        <p class="oh-eyebrow">{{ __('My Account') }}</p>
+        <h1 class="oh-title">{{ __('Order') }}<br>{{ __('History') }}</h1>
 
         {{-- User bar --}}
         <div class="oh-user-bar">
@@ -232,7 +232,7 @@
             </div>
             <form id="account-logout-form" method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="button" onclick="confirmLogout('account-logout-form')" class="oh-logout-btn">Sign Out</button>
+                <button type="button" onclick="confirmLogout('account-logout-form')" class="oh-logout-btn">{{ __('Sign Out') }}</button>
             </form>
         </div>
 
@@ -295,7 +295,7 @@
 
                 <div class="oh-card-footer">
                     <div>
-                        <div class="oh-total-label">Total paid</div>
+                        <div class="oh-total-label">{{ __('Total paid') }}</div>
                         <div class="oh-total-amount">{{ $order->total_formatted }}</div>
                     </div>
                     <div class="flex items-center gap-2 flex-wrap">
@@ -303,30 +303,26 @@
                             <button type="button" wire:click="cancelOrder('{{ $order->trx_id }}')"
                                 wire:confirm="Yakin ingin membatalkan pesanan {{ $order->trx_id }}? Stok akan dikembalikan."
                                 wire:loading.attr="disabled"
-                                class="oh-view-btn !text-[#dc2626] !border-[#dc2626] hover:!bg-[#dc2626]">
-                                Batal
-                            </button>
+                                class="oh-view-btn !text-[#dc2626] !border-[#dc2626] hover:!bg-[#dc2626]">{{ __('Batal') }}</button>
                         @endif
                         <button type="button" wire:click="buyAgain('{{ $order->trx_id }}')"
                             wire:loading.attr="disabled" class="oh-view-btn">
-                            <span wire:loading.remove wire:target="buyAgain('{{ $order->trx_id }}')">Beli Lagi</span>
-                            <span wire:loading wire:target="buyAgain('{{ $order->trx_id }}')">Menambahkan...</span>
+                            <span wire:loading.remove wire:target="buyAgain('{{ $order->trx_id }}')">{{ __('Beli Lagi') }}</span>
+                            <span wire:loading wire:target="buyAgain('{{ $order->trx_id }}')">{{ __('Menambahkan...') }}</span>
                         </button>
                         <a href="{{ route('order-confirmed', $order->trx_id) }}" class="oh-view-btn">
                             View Order →
                         </a>
-                        <a href="{{ route('account.orders.invoice', $order->trx_id) }}" class="oh-view-btn">
-                            Invoice
-                        </a>
+                        <a href="{{ route('account.orders.invoice', $order->trx_id) }}" class="oh-view-btn">{{ __('Invoice') }}</a>
                     </div>
                 </div>
             </div>
         @empty
             <div class="oh-empty">
                 <div class="oh-empty-icon">🛍️</div>
-                <div class="oh-empty-title">No orders yet</div>
-                <p class="oh-empty-desc">Your order history will appear here after you make a purchase.</p>
-                <a href="{{ route('product-catalog') }}" class="oh-shop-btn">Start Shopping</a>
+                <div class="oh-empty-title">{{ __('No orders yet') }}</div>
+                <p class="oh-empty-desc">{{ __('Your order history will appear here after you make a purchase.') }}</p>
+                <a href="{{ route('product-catalog') }}" class="oh-shop-btn">{{ __('Start Shopping') }}</a>
             </div>
         @endforelse
 

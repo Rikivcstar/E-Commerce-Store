@@ -342,9 +342,9 @@
                     <span class="auth-mobile-logo-text">{{ config('app.name') }}</span>
                 </a>
 
-                <p class="auth-form-eyebrow">Customer Account</p>
-                <h1 class="auth-form-title">Create Account</h1>
-                <p class="auth-form-subtitle">Daftar gratis dan mulai belanja sekarang.</p>
+                <p class="auth-form-eyebrow">{{ __('Customer Account') }}</p>
+                <h1 class="auth-form-title">{{ __('Create Account') }}</h1>
+                <p class="auth-form-subtitle">{{ __('Daftar gratis dan mulai belanja sekarang.') }}</p>
 
                 {{-- Google Register --}}
                 <a href="{{ route('auth.google') }}" class="auth-btn-google">
@@ -354,18 +354,18 @@
                         <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                     </svg>
-                    Daftar dengan Google
+                    {{ __('Daftar dengan Google') }}
                 </a>
 
                 <div class="auth-or">
                     <div class="auth-or-line"></div>
-                    <span class="auth-or-text">or</span>
+                    <span class="auth-or-text">{{ __('or') }}</span>
                     <div class="auth-or-line"></div>
                 </div>
 
                 {{-- Full Name --}}
                 <div class="auth-field">
-                    <label class="auth-input-label" for="reg-name">Nama Lengkap</label>
+                    <label class="auth-input-label" for="reg-name">{{ __('Nama Lengkap') }}</label>
                     <div class="auth-input-group">
                         <span class="auth-input-icon"><i data-lucide="user"></i></span>
                         <input
@@ -373,7 +373,7 @@
                             type="text"
                             wire:model="name"
                             class="auth-input-field @error('name') error @enderror"
-                            placeholder="Nama lengkap Anda"
+                            placeholder="{{ __('Nama lengkap Anda') }}"
                             autocomplete="name"
                         >
                     </div>
@@ -382,7 +382,7 @@
 
                 {{-- Email --}}
                 <div class="auth-field">
-                    <label class="auth-input-label" for="reg-email">Email Address</label>
+                    <label class="auth-input-label" for="reg-email">{{ __('Email Address') }}</label>
                     <div class="auth-input-group">
                         <span class="auth-input-icon"><i data-lucide="mail"></i></span>
                         <input
@@ -399,7 +399,7 @@
 
                 {{-- Password --}}
                 <div class="auth-field">
-                    <label class="auth-input-label" for="reg-password">Password</label>
+                    <label class="auth-input-label" for="reg-password">{{ __('Password') }}</label>
                     <div class="auth-input-group">
                         <span class="auth-input-icon"><i data-lucide="lock"></i></span>
                         <input
@@ -407,7 +407,7 @@
                             type="password"
                             wire:model="password"
                             class="auth-input-field @error('password') error @enderror"
-                            placeholder="Minimal 6 karakter"
+                            placeholder="{{ __('Minimal 6 karakter') }}"
                             autocomplete="new-password"
                         >
                     </div>
@@ -416,7 +416,7 @@
 
                 {{-- Confirm Password --}}
                 <div class="auth-field">
-                    <label class="auth-input-label" for="reg-password-confirm">Konfirmasi Password</label>
+                    <label class="auth-input-label" for="reg-password-confirm">{{ __('Confirm Password') }}</label>
                     <div class="auth-input-group">
                         <span class="auth-input-icon"><i data-lucide="shield"></i></span>
                         <input
@@ -424,7 +424,7 @@
                             type="password"
                             wire:model="password_confirmation"
                             class="auth-input-field @error('password_confirmation') error @enderror"
-                            placeholder="Ulangi password"
+                            placeholder="{{ __('Ulangi password') }}"
                             autocomplete="new-password"
                         >
                     </div>
@@ -439,16 +439,16 @@
                     wire:loading.attr="disabled"
                     class="auth-btn-submit"
                 >
-                    <span wire:loading.remove wire:target="register">Buat Akun Sekarang</span>
+                    <span wire:loading.remove wire:target="register">{{ __('Buat Akun Sekarang') }}</span>
                     <span wire:loading.inline-flex wire:target="register" class="items-center justify-center gap-2">
                         <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
-                        <span>Creating...</span>
+                        <span>{{ __('Creating...') }}</span>
                     </span>
                 </button>
 
                 <p class="auth-form-footer">
-                    Sudah punya akun?
-                    <a href="{{ route('login') }}">Masuk di sini</a>
+                    {{ __('Sudah punya akun?') }}
+                    <a href="{{ route('login') }}">{{ __('Masuk di sini') }}</a>
                 </p>
             </div>
         </div>

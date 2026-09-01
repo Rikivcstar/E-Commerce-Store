@@ -35,12 +35,12 @@
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 11 4-7" /><path d="m19 11-4-7" /><path d="M2 11h20" /><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4" /></svg>
             </button>
         @else
-            <div class="riva-soldout">Stok habis — item ini sedang tidak tersedia.</div>
+            <div class="riva-soldout">{{ __('Stok habis — item ini sedang tidak tersedia.') }}</div>
         @endif
     </div>
 
     @if ($stock > 0)
-        <div class="riva-stock">Stock: {{ $stock }} left</div>
+        <div class="riva-stock">{{ __('Stock: :count left', ['count' => $stock]) }}</div>
     @endif
     @error('quantity')
         <div class="riva-error">{{ $message }}</div>

@@ -408,9 +408,9 @@
     <div class="product-page">
         <div class="product-shell">
 <nav class="product-crumbs" aria-label="Breadcrumb">
-                <a href="<?php echo e(route('home')); ?>">Home</a>
+                <a href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a>
                 <span aria-hidden="true">/</span>
-                <a href="<?php echo e(route('product-catalog')); ?>">Catalog</a>
+                <a href="<?php echo e(route('product-catalog')); ?>"><?php echo e(__('Catalog')); ?></a>
                 <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $breadcrumbs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $crumb): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <span aria-hidden="true">/</span>
                     <a href="<?php echo e(route('product-catalog', ['selectCategory' => [$crumb->id]])); ?>"><?php echo e($crumb->name); ?></a>
@@ -486,7 +486,8 @@
                             }"
                             x-init="tick(); setInterval(() => tick(), 1000)"
                             class="mt-2 inline-flex flex-wrap items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700">
-                            ⚡ Berakhir dalam
+                            ⚡ <?php echo e(__('Berakhir dalam')); ?>
+
                             <span class="tabular-nums" x-text="d + 'h ' + h + 'j ' + m + 'm ' + s + 'd'">0h 0j 0m 0d</span>
                         </div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
@@ -503,17 +504,13 @@
                                 Stok Tersedia (<?php echo e($product->stock); ?> unit)
                             </span>
                         <?php else: ?>
-                            <span class="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-600 border border-zinc-200">
-                                Stok Habis
-                            </span>
+                            <span class="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-600 border border-zinc-200"><?php echo e(__('Stok Habis')); ?></span>
                         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
                         <span class="inline-flex items-center gap-1.5 rounded-full bg-[#f2f3ed] px-3 py-1 text-xs font-semibold text-[#555a42]">
                             <svg class="size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>
-                            </svg>
-                            Estimasi 1-3 hari kerja
-                        </span>
+                            </svg><?php echo e(__('Estimasi 1-3 hari kerja')); ?></span>
                     </div>
 
                     <div class="product-divider"></div>
@@ -561,7 +558,7 @@ if (isset($__slots)) unset($__slots);
                                     ✓ Anda akan segera dihubungi saat stok tersedia kembali.
                                 </p>
                             <?php else: ?>
-                                <h3 class="text-xs font-bold text-[#20221b]">Kabari Saya Saat Stok Tersedia</h3>
+                                <h3 class="text-xs font-bold text-[#20221b]"><?php echo e(__('Kabari Saya Saat Stok Tersedia')); ?></h3>
                                 <p class="mt-1 text-[11px] text-[#8c9082]">
                                     Masukkan email, kami akan memberitahu Anda begitu produk ini kembali tersedia.
                                 </p>
@@ -572,9 +569,7 @@ if (isset($__slots)) unset($__slots);
                                             class="min-w-0 flex-1 rounded-lg border border-[#e2e8f0] bg-white px-3 py-2 text-xs focus:ring-2 focus:ring-[#555a42]/30">
                                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                     <button type="submit" wire:loading.attr="disabled"
-                                        class="rounded-lg bg-[#20221b] px-4 py-2 text-[11px] font-bold text-white hover:bg-black disabled:opacity-60 transition">
-                                        Notify Me
-                                    </button>
+                                        class="rounded-lg bg-[#20221b] px-4 py-2 text-[11px] font-bold text-white hover:bg-black disabled:opacity-60 transition"><?php echo e(__('Notify Me')); ?></button>
                                 </form>
                                 <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['notify_email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -592,15 +587,15 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                     <div class="product-divider"></div>
 
                     <div class="product-benefits">
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Original curated item</span>
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>Checkout cepat dan aman</span>
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>Support setelah pembelian</span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><?php echo e(__('Original curated item')); ?></span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg><?php echo e(__('Checkout cepat dan aman')); ?></span>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg><?php echo e(__('Support setelah pembelian')); ?></span>
                     </div>
 
                     <div class="product-info-stack">
                         <div class="product-detail-card">
                             <div class="product-detail-head">
-                                <span>Description & Fit</span>
+                                <span><?php echo e(__('Description & Fit')); ?></span>
                                 <span aria-hidden="true">+</span>
                             </div>
                             <div class="prose max-w-none">
@@ -608,24 +603,24 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                     <?php echo Str::markDown($product->description); ?>
 
                                 <?php else: ?>
-                                    <p>Produk pilihan dengan detail yang dikurasi untuk penggunaan harian.</p>
+                                    <p><?php echo e(__('Produk pilihan dengan detail yang dikurasi untuk penggunaan harian.')); ?></p>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             </div>
                         </div>
 
                         <div class="product-detail-card">
                             <div class="product-detail-head">
-                                <span>Shipping</span>
+                                <span><?php echo e(__('Shipping')); ?></span>
                                 <span aria-hidden="true">+</span>
                             </div>
                             <div class="shipping-grid">
                                 <div class="shipping-item">
                                     <span class="shipping-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg></span>
-                                    <span><span class="shipping-label">Package</span><span class="shipping-value">Regular Package</span></span>
+                                    <span><span class="shipping-label"><?php echo e(__('Package')); ?></span><span class="shipping-value"><?php echo e(__('Regular Package')); ?></span></span>
                                 </div>
                                 <div class="shipping-item">
                                     <span class="shipping-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></span>
-                                    <span><span class="shipping-label">Delivery</span><span class="shipping-value">3-5 Working Days</span></span>
+                                    <span><span class="shipping-label"><?php echo e(__('Delivery')); ?></span><span class="shipping-value"><?php echo e(__('3-5 Working Days')); ?></span></span>
                                 </div>
                             </div>
                         </div>
@@ -634,7 +629,7 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
             </div>
 
 <section aria-label="Product reviews">
-                <h2 class="review-section-title">Rating &amp; Reviews</h2>
+                <h2 class="review-section-title">Rating &amp; <?php echo e(__('Reviews')); ?></h2>
                 <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
@@ -672,7 +667,7 @@ if (isset($__slots)) unset($__slots);
 
             <!--[if BLOCK]><![endif]--><?php if($recommendations->count()): ?>
                 <section class="recommend-section" aria-label="Recommended products">
-                    <h2 class="recommend-title">You might also like</h2>
+                    <h2 class="recommend-title"><?php echo e(__('You might also like')); ?></h2>
                     <div class="recommend-grid">
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $recommendations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if (isset($component)) { $__componentOriginale405491d357fabfcd42600c89d1c98f5 = $component; } ?>
@@ -702,7 +697,7 @@ if (isset($__slots)) unset($__slots);
 
             <!--[if BLOCK]><![endif]--><?php if(isset($recently_viewed) && $recently_viewed->count()): ?>
                 <section class="recommend-section" aria-label="Recently viewed products">
-                    <h2 class="recommend-title">Recently viewed</h2>
+                    <h2 class="recommend-title"><?php echo e(__('Recently viewed')); ?></h2>
                     <div class="recommend-grid">
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $recently_viewed; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if (isset($component)) { $__componentOriginale405491d357fabfcd42600c89d1c98f5 = $component; } ?>

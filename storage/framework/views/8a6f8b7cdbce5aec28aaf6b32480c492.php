@@ -7,7 +7,7 @@
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
         </svg>
         <span><?php echo e($count); ?></span>
-        <span class="hidden sm:inline">Cart</span>
+        <span class="hidden sm:inline"><?php echo e(__('Cart')); ?></span>
     </a>
 </div>
 <?php /**PATH C:\laraherd\webstore\resources\views/livewire/cart-count.blade.php ENDPATH**/ ?>

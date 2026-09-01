@@ -81,60 +81,60 @@
     </style>
 
     <section class="mt-10" aria-label="Product questions">
-        <h2 class="qa-section-title">Tanya Jawab Produk</h2>
+        <h2 class="qa-section-title">{{ __('Product Questions') }}</h2>
 
         {{-- Daftar pertanyaan yang sudah dipublikasikan --}}
         <div class="qa-card mb-6">
             @forelse ($questions as $q)
                 <div class="qa-item">
                     <p class="qa-q">Q: {{ $q->question }}</p>
-                    <p class="qa-meta">{{ $q->user?->name ?? $q->name ?? 'Pembeli' }}</p>
+                    <p class="qa-meta">{{ $q->user?->name ?? $q->name ?? __('Buyer') }}</p>
                     @if ($q->answer)
                         <div class="qa-a">
-                            <span class="qa-a-badge">Jawaban</span>
+                            <span class="qa-a-badge">{{ __('Answer') }}</span>
                             <p class="qa-a-text">{{ $q->answer }}</p>
                         </div>
                     @else
                         <div class="qa-a">
-                            <span class="qa-a-badge" style="background:#8c9082;">Belum</span>
-                            <p class="qa-a-text text-[#8c9082] italic">Menunggu jawaban dari toko.</p>
+                            <span class="qa-a-badge" style="background:#8c9082;">{{ __('Pending') }}</span>
+                            <p class="qa-a-text text-[#8c9082] italic">{{ __('Waiting for an answer from the store.') }}</p>
                         </div>
                     @endif
                 </div>
             @empty
                 <div class="qa-item text-center py-8">
-                    <p class="text-sm font-bold text-[#20221b]">Belum ada pertanyaan.</p>
-                    <p class="text-xs text-[#8b8f82] mt-1">Jadilah yang pertama bertanya tentang produk ini.</p>
+                    <p class="text-sm font-bold text-[#20221b]">{{ __('No questions yet.') }}</p>
+                    <p class="text-xs text-[#8b8f82] mt-1">{{ __('Be the first to ask about this product.') }}</p>
                 </div>
             @endforelse
         </div>
 
         {{-- Form ajukan pertanyaan --}}
         <form wire:submit="submit" class="qa-card p-5 space-y-3">
-            <h3 class="text-sm font-black uppercase tracking-wider text-[#20221b]">Ajukan Pertanyaan</h3>
+            <h3 class="text-sm font-black uppercase tracking-wider text-[#20221b]">{{ __('Ask a Question') }}</h3>
 
             @guest
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <input type="text" wire:model="form.name" placeholder="Nama Anda" class="qa-input">
+                        <input type="text" wire:model="form.name" placeholder="{{ __('Your Name') }}" class="qa-input">
                         @error('form.name') <p class="qa-error">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <input type="email" wire:model="form.email" placeholder="Email Anda" class="qa-input">
+                        <input type="email" wire:model="form.email" placeholder="{{ __('Your Email') }}" class="qa-input">
                         @error('form.email') <p class="qa-error">{{ $message }}</p> @enderror
                     </div>
                 </div>
             @endguest
 
             <div>
-                <textarea wire:model="form.question" rows="3" placeholder="Tulis pertanyaan Anda tentang produk ini..."
+                <textarea wire:model="form.question" rows="3" placeholder="{{ __('Write your question about this product...') }}"
                     class="qa-input resize-y"></textarea>
                 @error('form.question') <p class="qa-error">{{ $message }}</p> @enderror
             </div>
 
             <button type="submit" wire:loading.attr="disabled"
                 class="inline-flex items-center justify-center rounded-xl bg-[#20221b] px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white hover:bg-black transition disabled:opacity-60">
-                Kirim Pertanyaan
+                {{ __('Submit Question') }}
             </button>
         </form>
     </section>

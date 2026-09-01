@@ -5,13 +5,15 @@
             <!-- Content -->
             <div class="space-y-5 md:space-y-8">
                 <div class="space-y-1">
-                    <h2 class="text-2xl font-bold md:text-3xl dark:text-white">{{ $page->name }}
+                    <h2 class="text-2xl font-bold md:text-3xl dark:text-white"><?php echo e($page->name); ?>
+
                     </h2>
-                    <span class="text-sm text-gray-400">{{ __('Published At') }} {{ $page->created_at }}</span>
+                    <span class="text-sm text-gray-400"><?php echo e(__('Published At')); ?> <?php echo e($page->created_at); ?></span>
                 </div>
 
                 <div class="space-y-3 text-lg prose text-gray-800 dark:text-neutral-200">
-                    {!! Str::markdown($page->context ?? '') !!}
+                    <?php echo Str::markdown($page->context ?? ''); ?>
+
                 </div>
 
             </div>
@@ -19,3 +21,4 @@
         </div>
     </div>
 </div>
+<?php /**PATH C:\laraherd\webstore\resources\views/livewire/page-static.blade.php ENDPATH**/ ?>

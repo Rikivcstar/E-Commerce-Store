@@ -121,13 +121,13 @@
         </style>
 
         <div class="track-shell">
-            <p class="track-eyebrow">Order</p>
-            <h1 class="track-title">Lacak<br>Pesanan</h1>
-            <p class="track-sub">Masukkan No. Transaksi (TRX-...) dan No. HP yang dipakai saat checkout untuk melihat status pesanan Anda.</p>
+            <p class="track-eyebrow"><?php echo e(__('Order')); ?></p>
+            <h1 class="track-title"><?php echo e(__('Track Order')); ?><br><?php echo e(__('Track Order')); ?></h1>
+            <p class="track-sub"><?php echo e(__('Enter the transaction number (TRX-...) and phone number used at checkout to see your order status.')); ?></p>
 
             <form class="track-card" wire:submit="track">
                 <div class="track-field">
-                    <label class="track-label" for="track-trx">No. Transaksi</label>
+                    <label class="track-label" for="track-trx"><?php echo e(__('Transaction Number')); ?></label>
                     <input id="track-trx" type="text" wire:model="trx_id"
                         class="track-input <?php $__errorArgs = ['trx_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -151,7 +151,7 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
 
                 <div class="track-field">
-                    <label class="track-label" for="track-phone">No. HP</label>
+                    <label class="track-label" for="track-phone"><?php echo e(__('Phone Number')); ?></label>
                     <input id="track-phone" type="text" wire:model="phone"
                         class="track-input <?php $__errorArgs = ['phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -175,17 +175,17 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
 
                 <button type="submit" wire:loading.attr="disabled" class="track-btn">
-                    <span wire:loading.remove wire:target="track">Lacak Pesanan</span>
+                    <span wire:loading.remove wire:target="track"><?php echo e(__('Track order')); ?></span>
                     <span wire:loading wire:target="track"
                         class="inline-flex items-center justify-center gap-2">
                         <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
-                        <span>Mencari...</span>
+                        <span><?php echo e(__('Mencari...')); ?></span>
                     </span>
                 </button>
             </form>
 
             <p class="track-note">
-                Sudah masuk akun? <a href="<?php echo e(route('account.orders')); ?>">Lihat di My Orders</a>
+                <?php echo e(__('Already have an account?')); ?> <a href="<?php echo e(route('account.orders')); ?>"><?php echo e(__('View in My Orders')); ?></a>
             </p>
         </div>
      <?php echo $__env->renderComponent(); ?>

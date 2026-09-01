@@ -81,42 +81,42 @@
     </style>
 
     <section class="mt-10" aria-label="Product questions">
-        <h2 class="qa-section-title">Tanya Jawab Produk</h2>
+        <h2 class="qa-section-title"><?php echo e(__('Product Questions')); ?></h2>
 
         
         <div class="qa-card mb-6">
             <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $questions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $q): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <div class="qa-item">
                     <p class="qa-q">Q: <?php echo e($q->question); ?></p>
-                    <p class="qa-meta"><?php echo e($q->user?->name ?? $q->name ?? 'Pembeli'); ?></p>
+                    <p class="qa-meta"><?php echo e($q->user?->name ?? $q->name ?? __('Buyer')); ?></p>
                     <!--[if BLOCK]><![endif]--><?php if($q->answer): ?>
                         <div class="qa-a">
-                            <span class="qa-a-badge">Jawaban</span>
+                            <span class="qa-a-badge"><?php echo e(__('Answer')); ?></span>
                             <p class="qa-a-text"><?php echo e($q->answer); ?></p>
                         </div>
                     <?php else: ?>
                         <div class="qa-a">
-                            <span class="qa-a-badge" style="background:#8c9082;">Belum</span>
-                            <p class="qa-a-text text-[#8c9082] italic">Menunggu jawaban dari toko.</p>
+                            <span class="qa-a-badge" style="background:#8c9082;"><?php echo e(__('Pending')); ?></span>
+                            <p class="qa-a-text text-[#8c9082] italic"><?php echo e(__('Waiting for an answer from the store.')); ?></p>
                         </div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <div class="qa-item text-center py-8">
-                    <p class="text-sm font-bold text-[#20221b]">Belum ada pertanyaan.</p>
-                    <p class="text-xs text-[#8b8f82] mt-1">Jadilah yang pertama bertanya tentang produk ini.</p>
+                    <p class="text-sm font-bold text-[#20221b]"><?php echo e(__('No questions yet.')); ?></p>
+                    <p class="text-xs text-[#8b8f82] mt-1"><?php echo e(__('Be the first to ask about this product.')); ?></p>
                 </div>
             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         </div>
 
         
         <form wire:submit="submit" class="qa-card p-5 space-y-3">
-            <h3 class="text-sm font-black uppercase tracking-wider text-[#20221b]">Ajukan Pertanyaan</h3>
+            <h3 class="text-sm font-black uppercase tracking-wider text-[#20221b]"><?php echo e(__('Ask a Question')); ?></h3>
 
             <!--[if BLOCK]><![endif]--><?php if(auth()->guard()->guest()): ?>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <input type="text" wire:model="form.name" placeholder="Nama Anda" class="qa-input">
+                        <input type="text" wire:model="form.name" placeholder="<?php echo e(__('Your Name')); ?>" class="qa-input">
                         <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['form.name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -127,7 +127,7 @@ endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                     </div>
                     <div>
-                        <input type="email" wire:model="form.email" placeholder="Email Anda" class="qa-input">
+                        <input type="email" wire:model="form.email" placeholder="<?php echo e(__('Your Email')); ?>" class="qa-input">
                         <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['form.email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -141,7 +141,7 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
             <div>
-                <textarea wire:model="form.question" rows="3" placeholder="Tulis pertanyaan Anda tentang produk ini..."
+                <textarea wire:model="form.question" rows="3" placeholder="<?php echo e(__('Write your question about this product...')); ?>"
                     class="qa-input resize-y"></textarea>
                 <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['form.question'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -155,7 +155,8 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
 
             <button type="submit" wire:loading.attr="disabled"
                 class="inline-flex items-center justify-center rounded-xl bg-[#20221b] px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white hover:bg-black transition disabled:opacity-60">
-                Kirim Pertanyaan
+                <?php echo e(__('Submit Question')); ?>
+
             </button>
         </form>
     </section>

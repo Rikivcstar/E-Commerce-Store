@@ -411,9 +411,9 @@
                     <span class="auth-mobile-logo-text">{{ config('app.name') }}</span>
                 </a>
 
-                <p class="auth-form-eyebrow">Customer Account</p>
-                <h1 class="auth-form-title">Sign In</h1>
-                <p class="auth-form-subtitle">Masuk dengan email atau akun Google Anda.</p>
+                <p class="auth-form-eyebrow">{{ __('Customer Account') }}</p>
+                <h1 class="auth-form-title">{{ __('Sign In') }}</h1>
+                <p class="auth-form-subtitle">{{ __('Masuk dengan email atau akun Google Anda.') }}</p>
 
                 {{-- Google Login --}}
                 <a href="{{ route('auth.google') }}" class="auth-btn-google">
@@ -431,18 +431,18 @@
                             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                             fill="#EA4335" />
                     </svg>
-                    Lanjutkan dengan Google
+                    {{ __('Lanjutkan dengan Google') }}
                 </a>
 
                 <div class="auth-or">
                     <div class="auth-or-line"></div>
-                    <span class="auth-or-text">atau</span>
+                    <span class="auth-or-text">{{ __('atau') }}</span>
                     <div class="auth-or-line"></div>
                 </div>
 
                 {{-- Email --}}
                 <div class="auth-field">
-                    <label class="auth-input-label" for="login-email">Email Address</label>
+                    <label class="auth-input-label" for="login-email">{{ __('Email Address') }}</label>
                     <div class="auth-input-group">
                         <span class="auth-input-icon"><i data-lucide="mail"></i></span>
                         <input id="login-email" type="email" wire:model="email"
@@ -456,7 +456,7 @@
 
                 {{-- Password --}}
                 <div class="auth-field">
-                    <label class="auth-input-label" for="login-password">Password</label>
+                    <label class="auth-input-label" for="login-password">{{ __('Password') }}</label>
                     <div class="auth-input-group">
                         <span class="auth-input-icon"><i data-lucide="lock"></i></span>
                         <input id="login-password" type="password" wire:model="password"
@@ -471,23 +471,23 @@
                 {{-- Remember me --}}
                 <div class="auth-remember">
                     <input type="checkbox" id="login-remember" wire:model="remember">
-                    <label for="login-remember">Ingat saya</label>
+                    <label for="login-remember">{{ __('Ingat saya') }}</label>
                 </div>
 
                 {{-- Submit --}}
                 <button type="button" id="btn-login" wire:click="login" wire:loading.attr="disabled"
                     class="auth-btn-submit">
-                    <span wire:loading.remove wire:target="login">Masuk Sekarang</span>
+                    <span wire:loading.remove wire:target="login">{{ __('Masuk Sekarang') }}</span>
                     <span wire:loading.inline-flex wire:target="login" class="items-center justify-center gap-2">
                         <span
                             class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
-                        <span>Signing in...</span>
+                        <span>{{ __('Signing in...') }}</span>
                     </span>
                 </button>
 
                 <p class="auth-form-footer">
-                    Belum punya akun?
-                    <a href="{{ route('register') }}">Daftar sekarang</a>
+                    {{ __('Belum punya akun?') }}
+                    <a href="{{ route('register') }}">{{ __('Daftar sekarang') }}</a>
                 </p>
             </div>
         </div>

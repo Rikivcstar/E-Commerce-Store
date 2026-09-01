@@ -112,13 +112,13 @@
         </style>
 
         <div class="track-shell">
-            <p class="track-eyebrow">Order</p>
-            <h1 class="track-title">Lacak<br>Pesanan</h1>
-            <p class="track-sub">Masukkan No. Transaksi (TRX-...) dan No. HP yang dipakai saat checkout untuk melihat status pesanan Anda.</p>
+            <p class="track-eyebrow">{{ __('Order') }}</p>
+            <h1 class="track-title">{{ __('Track Order') }}<br>{{ __('Track Order') }}</h1>
+            <p class="track-sub">{{ __('Enter the transaction number (TRX-...) and phone number used at checkout to see your order status.') }}</p>
 
             <form class="track-card" wire:submit="track">
                 <div class="track-field">
-                    <label class="track-label" for="track-trx">No. Transaksi</label>
+                    <label class="track-label" for="track-trx">{{ __('Transaction Number') }}</label>
                     <input id="track-trx" type="text" wire:model="trx_id"
                         class="track-input @error('trx_id') error @enderror"
                         placeholder="TRX-20260816-XXXXXX" autocomplete="off">
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="track-field">
-                    <label class="track-label" for="track-phone">No. HP</label>
+                    <label class="track-label" for="track-phone">{{ __('Phone Number') }}</label>
                     <input id="track-phone" type="text" wire:model="phone"
                         class="track-input @error('phone') error @enderror"
                         placeholder="08xxxxxxxxxx" autocomplete="off">
@@ -138,17 +138,17 @@
                 </div>
 
                 <button type="submit" wire:loading.attr="disabled" class="track-btn">
-                    <span wire:loading.remove wire:target="track">Lacak Pesanan</span>
+                    <span wire:loading.remove wire:target="track">{{ __('Track order') }}</span>
                     <span wire:loading wire:target="track"
                         class="inline-flex items-center justify-center gap-2">
                         <span class="animate-spin inline-block size-4 border-2 border-current border-t-transparent rounded-full"></span>
-                        <span>Mencari...</span>
+                        <span>{{ __('Mencari...') }}</span>
                     </span>
                 </button>
             </form>
 
             <p class="track-note">
-                Sudah masuk akun? <a href="{{ route('account.orders') }}">Lihat di My Orders</a>
+                {{ __('Already have an account?') }} <a href="{{ route('account.orders') }}">{{ __('View in My Orders') }}</a>
             </p>
         </div>
     </x-layouts.app>

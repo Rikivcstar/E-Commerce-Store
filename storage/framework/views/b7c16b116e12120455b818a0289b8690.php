@@ -184,18 +184,17 @@
                         <span class="pxr-date"><?php echo e($review->created_at->translatedFormat('d F Y')); ?> &middot; Pembeli terverifikasi</span>
                     </article>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                    <p class="pxr-empty">Belum ada ulasan untuk produk ini. Jadilah yang pertama!</p>
+                    <p class="pxr-empty"><?php echo e(__('Belum ada ulasan untuk produk ini. Jadilah yang pertama!')); ?></p>
                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
             </div>
         </div>
 
         <!--[if BLOCK]><![endif]--><?php if(Auth::check()): ?>
             <!--[if BLOCK]><![endif]--><?php if($hasReviewed): ?>
-                <p class="pxr-note">Terima kasih, ulasan Anda sudah kami terima dan sedang ditinjau admin.</p>
+                <p class="pxr-note"><?php echo e(__('Terima kasih, ulasan Anda sudah kami terima dan sedang ditinjau admin.')); ?></p>
             <?php elseif($canReview): ?>
                 <form wire:submit="submit" class="pxr-form">
-                    <label>Rating
-                        <select wire:model="form.rating" class="pxr-input">
+                    <label><?php echo e(__('Rating')); ?><select wire:model="form.rating" class="pxr-input">
                             <option value="5">5 - Sangat Baik</option>
                             <option value="4">4 - Baik</option>
                             <option value="3">3 - Cukup</option>
@@ -203,11 +202,9 @@
                             <option value="1">1 - Buruk</option>
                         </select>
                     </label>
-                    <label>Judul (opsional)
-                        <input wire:model="form.title" type="text" class="pxr-input" placeholder="Ringkasan singkat...">
+                    <label><?php echo e(__('Judul (opsional)')); ?><input wire:model="form.title" type="text" class="pxr-input" placeholder="Ringkasan singkat...">
                     </label>
-                    <label>Ulasan
-                        <textarea wire:model="form.body" class="pxr-input" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
+                    <label><?php echo e(__('Ulasan')); ?><textarea wire:model="form.body" class="pxr-input" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
                     </label>
                     <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['form.body'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -219,15 +216,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
-                    <button type="submit" class="pxr-submit">Kirim Ulasan</button>
+                    <button type="submit" class="pxr-submit"><?php echo e(__('Kirim Ulasan')); ?></button>
                 </form>
             <?php else: ?>
-                <p class="pxr-note">Anda harus masuk dan sudah pernah membeli produk ini agar dapat menulis ulasan.</p>
+                <p class="pxr-note"><?php echo e(__('Anda harus masuk dan sudah pernah membeli produk ini agar dapat menulis ulasan.')); ?></p>
             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         <?php else: ?>
             <p class="pxr-note">
-                <a href="<?php echo e(route('login')); ?>" class="underline font-black">Masuk</a> untuk menulis ulasan.
-            </p>
+                <a href="<?php echo e(route('login')); ?>" class="underline font-black"><?php echo e(__('Masuk')); ?></a><?php echo e(__('untuk menulis ulasan.')); ?></p>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
     </div>
 </div><?php /**PATH C:\laraherd\webstore\resources\views/livewire/product-reviews.blade.php ENDPATH**/ ?>

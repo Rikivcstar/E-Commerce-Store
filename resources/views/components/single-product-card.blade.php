@@ -84,7 +84,7 @@
                                     ? (($product->id * 17) % 75) + 15
                                     : 25);
                     @endphp
-                    Terjual {{ $sold }}+
+                    {{ __('Terjual :count+', ['count' => $sold]) }}
                 </span>
             </div>
         </div>

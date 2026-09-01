@@ -214,13 +214,13 @@
     </style>
 
     <div class="ab-shell">
-        <p class="ab-eyebrow">My Account</p>
-        <h1 class="ab-title">Address<br>Book</h1>
+        <p class="ab-eyebrow">{{ __('My Account') }}</p>
+        <h1 class="ab-title">{{ __('Address') }}<br>{{ __('Book') }}</h1>
 
         <div class="ab-toolbar">
             <span class="text-sm text-neutral-500">{{ $addresses->count() }} alamat tersimpan</span>
             @if (! $showForm)
-                <button type="button" wire:click="startCreate" class="ab-add-btn">+ Add New Address</button>
+                <button type="button" wire:click="startCreate" class="ab-add-btn">{{ __('+ Add New Address') }}</button>
             @endif
         </div>
 
@@ -229,26 +229,26 @@
                 <div class="ab-form-title">{{ $editingId ? 'Edit Address' : 'New Address' }}</div>
                 <div class="ab-field-grid">
                     <div>
-                        <label class="ab-label">Label</label>
+                        <label class="ab-label">{{ __('Label') }}</label>
                         <input wire:model="form.label" type="text" class="ab-input" placeholder="Rumah / Kantor">
                     </div>
                     <div>
-                        <label class="ab-label">Nama Penerima</label>
+                        <label class="ab-label">{{ __('Nama Penerima') }}</label>
                         <input wire:model="form.full_name" type="text" class="ab-input" placeholder="Full name">
                         @error('form.full_name')<p class="ab-error">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label class="ab-label">No. HP</label>
+                        <label class="ab-label">{{ __('No. HP') }}</label>
                         <input wire:model="form.phone" type="text" class="ab-input" placeholder="Phone number">
                         @error('form.phone')<p class="ab-error">{{ $message }}</p>@enderror
                     </div>
                     <div class="full">
-                        <label class="ab-label">Alamat Lengkap (Jalan, no. rumah, dsb.)</label>
+                        <label class="ab-label">{{ __('Alamat Lengkap (Jalan, no. rumah, dsb.)') }}</label>
                         <input wire:model="form.address_line" type="text" class="ab-input" placeholder="Street address">
                         @error('form.address_line')<p class="ab-error">{{ $message }}</p>@enderror
                     </div>
                     <div class="full">
-                        <label class="ab-label">Kota / Kecamatan</label>
+                        <label class="ab-label">{{ __('Kota / Kecamatan') }}</label>
                         <div x-data="{ open: false }" class="relative w-full">
                             <input type="text" wire:model.live.debounce.500ms="region_selector.keyword"
                                 x-on:focus="open = true" x-on:click.outside="open = false"
@@ -270,15 +270,15 @@
                             @endif
                         </div>
                         @if ($this->region_selector['region_label'])
-                            <div class="ab-selected">Wilayah terpilih: <strong>{{ $this->region_selector['region_label'] }}</strong></div>
+                            <div class="ab-selected">{{ __('Wilayah terpilih:') }}<strong>{{ $this->region_selector['region_label'] }}</strong></div>
                         @endif
                         @error('region_selector.region_selected')<p class="ab-error">{{ $message }}</p>@enderror
                     </div>
                 </div>
 
                 <div class="ab-form-actions">
-                    <button type="submit" class="ab-save-btn">Simpan Alamat</button>
-                    <button type="button" wire:click="cancelEdit" class="ab-cancel-btn">Batal</button>
+                    <button type="submit" class="ab-save-btn">{{ __('Simpan Alamat') }}</button>
+                    <button type="button" wire:click="cancelEdit" class="ab-cancel-btn">{{ __('Batal') }}</button>
                 </div>
             </form>
         @endif
@@ -289,7 +289,7 @@
                     <div class="ab-card-label">
                         {{ $address->label }}
                         @if ($address->is_default)
-                            <span class="ab-badge">Utama</span>
+                            <span class="ab-badge">{{ __('Utama') }}</span>
                         @endif
                     </div>
                     <span class="text-xs font-bold text-neutral-400">{{ $address->region_code }}</span>
@@ -300,16 +300,16 @@
                     <div>{{ $address->sub_district }}, {{ $address->district }}, {{ $address->city }}, {{ $address->province }} {{ $address->postal_code }}</div>
                 </div>
                 <div class="ab-card-actions">
-                    <button type="button" wire:click="startEdit({{ $address->id }})" class="ab-link-btn">Edit</button>
+                    <button type="button" wire:click="startEdit({{ $address->id }})" class="ab-link-btn">{{ __('Edit') }}</button>
                     @if (! $address->is_default)
-                        <button type="button" wire:click="setDefault({{ $address->id }})" class="ab-link-btn">Set Utama</button>
+                        <button type="button" wire:click="setDefault({{ $address->id }})" class="ab-link-btn">{{ __('Set Utama') }}</button>
                     @endif
-                    <button type="button" wire:click="delete({{ $address->id }})" wire:confirm="Hapus alamat ini?" class="ab-link-btn danger">Hapus</button>
+                    <button type="button" wire:click="delete({{ $address->id }})" wire:confirm="Hapus alamat ini?" class="ab-link-btn danger">{{ __('Hapus') }}</button>
                 </div>
             </div>
         @empty
             @if (! $showForm)
-                <div class="ab-empty">Belum ada alamat. Tambahkan alamat pertama Anda agar checkout lebih cepat.</div>
+                <div class="ab-empty">{{ __('Belum ada alamat. Tambahkan alamat pertama Anda agar checkout lebih cepat.') }}</div>
             @endif
         @endforelse
     </div>

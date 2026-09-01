@@ -19,29 +19,30 @@
 
         <div class="hidden items-center gap-1 md:flex">
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="{{ url('/') }}">Home</a>
+                href="{{ url('/') }}">{{ __('Home') }}</a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="{{ route('product-catalog') }}">Catalog</a>
+                href="{{ route('product-catalog') }}">{{ __('Catalog') }}</a>
             <livewire:category-menu />
             @php
                 $firstPage = \App\Models\Page::query()->active()->first();
             @endphp
             <a class="relative inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
                 href="{{ route('product-catalog', ['shortBy' => 'price_asc']) }}">
-                Sale
+                {{ __('Sale') }}
                 <span class="relative flex size-1.5">
                     <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                     <span class="relative inline-flex size-1.5 rounded-full bg-red-500"></span>
                 </span>
             </a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="{{ $firstPage ? route('page', $firstPage->slug) : url('/') }}">About</a>
+                href="{{ $firstPage ? route('page', $firstPage->slug) : url('/') }}">{{ __('About') }}</a>
             <a class="rounded-full px-4 py-2 text-sm font-bold text-[#555a42] transition hover:bg-[#f2f3ed] hover:text-[#20221b]"
-                href="{{ route('track-order') }}">Lacak Pesanan</a>
+                href="{{ route('track-order') }}">{{ __('Lacak Pesanan') }}</a>
         </div>
 
         <div class="flex items-center gap-2">
             <livewire:global-search />
+            <livewire:language-switcher :key="'lang'" />
 
             @auth
                 @php
@@ -60,7 +61,7 @@
                     <div x-show="userMenuOpen" x-transition style="display: none;"
                         class="absolute right-0 mt-2 w-52 rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-black/10 z-50">
                         <div class="px-3 py-3 border-b border-gray-100 rounded-xl mb-1">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Signed in as</p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ __('Signed in as') }}</p>
                             <p class="text-xs font-black text-gray-900 truncate">{{ auth()->user()->name }}</p>
                         </div>
                         <a href="{{ route('account.dashboard') }}"
@@ -163,24 +164,24 @@
         :class="scrolled ? 'mt-2 max-w-[92rem] rounded-[1.25rem]' : 'mt-0 max-w-full rounded-none'"
         class="mx-auto bg-white/95 p-2 shadow-lg shadow-[#555a42]/10 ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 md:hidden">
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="{{ url('/') }}">Home</a>
+            href="{{ url('/') }}">{{ __('Home') }}</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="{{ route('product-catalog') }}">Catalog</a>
+            href="{{ route('product-catalog') }}">{{ __('Catalog') }}</a>
         <div class="mt-1 border-t border-black/5 px-4 py-2">
             <livewire:category-menu />
         </div>
         <a class="flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
             href="{{ route('product-catalog', ['shortBy' => 'price_asc']) }}">
-            Sale
+            {{ __('Sale') }}
             <span class="relative flex size-1.5">
                 <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                 <span class="relative inline-flex size-1.5 rounded-full bg-red-500"></span>
             </span>
         </a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="{{ $firstPage ? route('page', $firstPage->slug) : url('/') }}">About</a>
+            href="{{ $firstPage ? route('page', $firstPage->slug) : url('/') }}">{{ __('About') }}</a>
         <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-            href="{{ route('track-order') }}">Lacak Pesanan</a>
+            href="{{ route('track-order') }}">{{ __('Lacak Pesanan') }}</a>
         @auth
             @php
                 $userInitials = strtoupper(substr(trim(auth()->user()->name ?? 'User'), 0, 1));
@@ -193,28 +194,28 @@
                     </span>
                     <div>
                         <p class="text-xs font-black text-gray-900">{{ auth()->user()->name }}</p>
-                        <p class="text-[10px] text-emerald-600 font-bold">● Active Customer</p>
+                        <p class="text-[10px] text-emerald-600 font-bold">● {{ __('Active Customer') }}</p>
                     </div>
                 </div>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                    href="{{ route('account.dashboard') }}">Dashboard</a>
+                    href="{{ route('account.dashboard') }}">{{ __('Dashboard') }}</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                    href="{{ route('account.orders') }}">My Orders</a>
+                    href="{{ route('account.orders') }}">{{ __('My Orders') }}</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                    href="{{ route('account.wishlist') }}">My Wishlist</a>
+                    href="{{ route('account.wishlist') }}">{{ __('My Wishlist') }}</a>
                 <a class="block rounded-2xl px-4 py-2.5 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                    href="{{ route('account.addresses') }}">Addresses</a>
+                    href="{{ route('account.addresses') }}">{{ __('Addresses') }}</a>
                 <form id="nav-mobile-logout-form" method="POST" action="{{ route('logout') }}" class="px-4 py-1">
                     @csrf
                     <button type="button" onclick="confirmLogout('nav-mobile-logout-form')"
-                        class="w-full text-left text-sm font-bold text-red-600 hover:text-red-800 py-1">Sign Out</button>
+                        class="w-full text-left text-sm font-bold text-red-600 hover:text-red-800 py-1">{{ __('Sign Out') }}</button>
                 </form>
             </div>
         @else
             <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                href="{{ route('login') }}">Sign In</a>
+                href="{{ route('login') }}">{{ __('Sign In') }}</a>
             <a class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#555a42] hover:bg-[#f2f3ed]"
-                href="{{ route('register') }}">Create Account</a>
+                href="{{ route('register') }}">{{ __('Create Account') }}</a>
         @endauth
     </div>
 </header>

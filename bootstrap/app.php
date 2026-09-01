@@ -24,6 +24,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
             except: ['moota/callback', 'xendit/callback']
         );
         $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
             \RealRashid\SweetAlert\ToSweetAlert::class,
         ]);
     })

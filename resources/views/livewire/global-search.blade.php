@@ -70,15 +70,15 @@
                         @if (count($results) > 0)
                             <div class="mb-3 flex items-center justify-between">
                                 <span class="text-xs font-bold uppercase tracking-wider text-gray-400">
-                                    {{ strlen(trim($query)) >= 2 ? 'Hasil Pencarian' : 'Rekomendasi Produk' }} ({{ count($results) }})
+                                    {{ strlen(trim($query)) >= 2 ? __('Search results') : __('Product recommendations') }} ({{ count($results) }})
                                 </span>
                                 @if(strlen(trim($query)) >= 2)
                                     <a href="{{ route('product-catalog', ['search' => $query]) }}" class="text-xs font-bold text-indigo-600 hover:underline">
-                                        Lihat Semua Katalog &rarr;
+                                        {{ __('View All Catalog') }} &rarr;
                                     </a>
                                 @else
                                     <a href="{{ route('product-catalog') }}" class="text-xs font-bold text-indigo-600 hover:underline">
-                                        Lihat Katalog &rarr;
+                                        {{ __('View Catalog') }} &rarr;
                                     </a>
                                 @endif
                             </div>
@@ -120,16 +120,16 @@
                                         <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
                                     </svg>
                                 </div>
-                                <h3 class="text-sm font-bold text-gray-900">Produk "{{ $query }}" tidak ditemukan</h3>
-                                <p class="mt-1 text-xs text-gray-400">Coba gunakan kata kunci pencarian yang lain.</p>
+                                <h3 class="text-sm font-bold text-gray-900">{{ __('Product :query was not found', ['query' => $query]) }}</h3>
+                                <p class="mt-1 text-xs text-gray-400">{{ __('Try using a different search keyword.') }}</p>
                             </div>
                         @endif
                 </div>
 
                 <!-- MODAL FOOTER HINT -->
                 <div class="flex items-center justify-between border-t border-gray-100 bg-gray-50/60 px-6 py-3 text-[11px] text-gray-400">
-                    <span>Tekan <kbd class="rounded border bg-white px-1.5 py-0.5 text-gray-600 shadow-xs">ESC</kbd> untuk menutup</span>
-                    <span>Pencarian serentak Webstore</span>
+                    <span>{{ __('Press') }} <kbd class="rounded border bg-white px-1.5 py-0.5 text-gray-600 shadow-xs">ESC</kbd> {{ __('to close') }}</span>
+                    <span>{{ __('Webstore instant search') }}</span>
                 </div>
             </div>
         </div>

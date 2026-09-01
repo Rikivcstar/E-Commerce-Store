@@ -102,7 +102,8 @@ if (isset($__slots)) unset($__slots);
                                     ? (($product->id * 17) % 75) + 15
                                     : 25);
                     ?>
-                    Terjual <?php echo e($sold); ?>+
+                    <?php echo e(__('Terjual :count+', ['count' => $sold])); ?>
+
                 </span>
             </div>
         </div>

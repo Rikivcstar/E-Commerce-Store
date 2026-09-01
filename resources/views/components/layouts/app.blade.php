@@ -16,6 +16,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="manifest" href="/site.webmanifest">
+    @foreach (config('app.available_locales', []) as $code => $_label)
+        <link rel="alternate" hreflang="{{ $code }}" href="{{ \App\Support\LocaleUrl::for($code) }}">
+    @endforeach
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -50,14 +53,14 @@
     <script>
         function confirmLogout(formId) {
             Swal.fire({
-                title: 'Keluar dari Akun?',
-                text: 'Apakah Anda yakin ingin keluar dari akun Anda?',
+                title: '{{ __("Keluar dari Akun?") }}',
+                text: '{{ __("Apakah Anda yakin ingin keluar dari akun Anda?") }}',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#111111',
                 cancelButtonColor: '#9ca3af',
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Batal'
+                confirmButtonText: '{{ __("Ya, Keluar") }}',
+                cancelButtonText: '{{ __("Batal") }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById(formId).submit();

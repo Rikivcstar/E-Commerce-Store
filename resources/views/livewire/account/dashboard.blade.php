@@ -235,8 +235,8 @@
         </style>
 
         <div class="dash-shell">
-            <p class="dash-eyebrow">My Account</p>
-            <h1 class="dash-title">Dashboard</h1>
+            <p class="dash-eyebrow">{{ __('My Account') }}</p>
+            <h1 class="dash-title">{{ __('Dashboard') }}</h1>
 
             <div class="dash-user-bar">
                 <div>
@@ -245,41 +245,41 @@
                 </div>
                 <form id="dash-logout-form" method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="button" onclick="confirmLogout('dash-logout-form')" class="dash-logout-btn">Sign Out</button>
+                    <button type="button" onclick="confirmLogout('dash-logout-form')" class="dash-logout-btn">{{ __('Sign Out') }}</button>
                 </form>
             </div>
 
             <div class="dash-stats-grid">
                 <div class="dash-stat">
                     <div class="dash-stat-value">{{ $stats['total_orders'] }}</div>
-                    <div class="dash-stat-label">Total Pesanan</div>
+                    <div class="dash-stat-label">{{ __('Total Pesanan') }}</div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-value">{{ $stats['active_orders'] }}</div>
-                    <div class="dash-stat-label">Pesanan Aktif</div>
+                    <div class="dash-stat-label">{{ __('Pesanan Aktif') }}</div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-value">{{ $stats['total_spent_formatted'] }}</div>
-                    <div class="dash-stat-label">Total Belanja</div>
+                    <div class="dash-stat-label">{{ __('Total Belanja') }}</div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-value">{{ $stats['wishlist_count'] }}</div>
-                    <div class="dash-stat-label">Wishlist</div>
+                    <div class="dash-stat-label">{{ __('Wishlist') }}</div>
                 </div>
                 <div class="dash-stat">
                     <div class="dash-stat-value">{{ $stats['address_count'] }}</div>
-                    <div class="dash-stat-label">Alamat Tersimpan</div>
+                    <div class="dash-stat-label">{{ __('Alamat Tersimpan') }}</div>
                 </div>
             </div>
 
             <div class="dash-links">
-                <a class="dash-link" href="{{ route('account.orders') }}">My Orders</a>
-                <a class="dash-link" href="{{ route('account.wishlist') }}">Wishlist</a>
-                <a class="dash-link" href="{{ route('account.addresses') }}">Alamat</a>
-                <a class="dash-link" href="{{ route('product-catalog') }}">Belanja</a>
+                <a class="dash-link" href="{{ route('account.orders') }}">{{ __('My Orders') }}</a>
+                <a class="dash-link" href="{{ route('account.wishlist') }}">{{ __('Wishlist') }}</a>
+                <a class="dash-link" href="{{ route('account.addresses') }}">{{ __('Alamat') }}</a>
+                <a class="dash-link" href="{{ route('product-catalog') }}">{{ __('Belanja') }}</a>
             </div>
 
-            <h2 class="dash-section-title">Pesanan Terakhir</h2>
+            <h2 class="dash-section-title">{{ __('Pesanan Terakhir') }}</h2>
 
             @if ($latest_order)
                 @php
@@ -299,7 +299,7 @@
                     </div>
                     <div class="dash-order-foot">
                         <div>
-                            <div class="dash-total-label">Total Pembayaran</div>
+                            <div class="dash-total-label">{{ __('Total Pembayaran') }}</div>
                             <div class="dash-total-amount">{{ $latest_order->total_formatted }}</div>
                         </div>
                         <a href="{{ route('order-confirmed', $latest_order->trx_id) }}" class="dash-view-btn">View Order
@@ -308,8 +308,8 @@
                 </div>
             @else
                 <div class="dash-empty">
-                    <p>Belum ada pesanan.</p>
-                    <a href="{{ route('product-catalog') }}">Mulai Belanja</a>
+                    <p>{{ __('Belum ada pesanan.') }}</p>
+                    <a href="{{ route('product-catalog') }}">{{ __('Mulai Belanja') }}</a>
                 </div>
             @endif
         </div>

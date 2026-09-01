@@ -317,16 +317,16 @@
         </style>
         <div class="nx-hero">
             <div class="nx-hero-topline">
-                <span>Free delivery on orders above Rp 500.000</span>
-                <span>Track order</span>
+                <span><?php echo e(__('Free delivery on orders above Rp 500.000')); ?></span>
+                <span><?php echo e(__('Track order')); ?></span>
             </div>
-            <div class="nx-hero-eyebrow">Fashion<br>that moves<br>with you.</div>
+            <div class="nx-hero-eyebrow"><?php echo e(__('Fashion')); ?><br><?php echo e(__('that moves')); ?><br><?php echo e(__('with you.')); ?></div>
             <div class="nx-hero-word">RIVA &amp; CO.</div>
             <img class="nx-hero-img" src="<?php echo e(asset('images/hero-outfit-women.png')); ?>" alt="Riva & Co. collection">
-            <div class="nx-hero-tag">New<br>collection<br>2026</div>
+            <div class="nx-hero-tag"><?php echo e(__('New')); ?><br><?php echo e(__('collection')); ?><br>2026</div>
             <div class="nx-hero-actions">
-                <a class="nx-btn nx-btn-primary nx-focus" href="<?php echo e(route('product-catalog')); ?>">Shop now</a>
-                <a class="nx-link nx-focus" href="#featured" style="color:var(--nx-ink)">Explore new in</a>
+                <a class="nx-btn nx-btn-primary nx-focus" href="<?php echo e(route('product-catalog')); ?>"><?php echo e(__('Shop now')); ?></a>
+                <a class="nx-link nx-focus" href="#featured" style="color:var(--nx-ink)"><?php echo e(__('Explore new in')); ?></a>
             </div>
         </div>
     </section>
@@ -384,7 +384,7 @@
                                     class="absolute inset-0 flex flex-col items-start justify-center gap-4 px-8 sm:px-14 lg:px-18 max-w-3xl">
                                     <div
                                         class="inline-flex items-center gap-2 rounded-full  px-3.5 py-1 text-xs font-bold text-[#EBE5D8] backdrop-blur-md ">
-                                        <span>PROMO SPESIAL</span>
+                                        <span><?php echo e(__('PROMO SPESIAL')); ?></span>
                                     </div>
                                     <h2
                                         class="nx-display max-w-2xl text-3xl sm:text-5xl lg:text-6xl leading-[0.95] text-[#F7F5EF] font-black tracking-tight">
@@ -476,7 +476,7 @@
                         </div>
                         <div>
                             <h3 class="nx-display text-lg text-white"><?php echo e($category->name); ?></h3>
-                            <p class="mt-1 text-xs" style="color:#96907A">Koleksi pilihan terbaik.</p>
+                            <p class="mt-1 text-xs" style="color:#96907A"><?php echo e(__('Koleksi pilihan terbaik.')); ?></p>
                             <span
                                 class="nx-card-arrow nx-link mt-3 inline-flex items-center gap-1 text-white/50 group-hover:text-white">
                                 Shop <?php echo e($category->name); ?> &rarr;
@@ -495,16 +495,10 @@
             style="background:var(--nx-ink)"></div>
         <div
             class="mx-auto flex min-h-[420px] max-w-7xl flex-col items-start justify-center gap-6 px-8 py-16 sm:min-h-[480px] sm:px-12 lg:px-16">
-            <p class="nx-label" style="color:var(--nx-muted)">New season</p>
-            <h2 class="nx-display max-w-sm text-6xl leading-[0.9] sm:text-8xl" style="color:var(--nx-ink)">
-                New<br>Vibes
-            </h2>
-            <p class="max-w-xs text-sm leading-relaxed" style="color:var(--nx-muted)">Discover everything new and now
-                —
-                engineered for daily comfort and bold contemporary style.</p>
-            <a href="<?php echo e(route('product-catalog')); ?>" class="nx-btn nx-btn-primary nx-focus mt-2">
-                Explore Collection
-            </a>
+            <p class="nx-label" style="color:var(--nx-muted)"><?php echo e(__('New season')); ?></p>
+            <h2 class="nx-display max-w-sm text-6xl leading-[0.9] sm:text-8xl" style="color:var(--nx-ink)"><?php echo e(__('New')); ?><br><?php echo e(__('Vibes')); ?></h2>
+            <p class="max-w-xs text-sm leading-relaxed" style="color:var(--nx-muted)"><?php echo e(__('Discover everything new and now — engineered for daily comfort and bold contemporary style.')); ?></p>
+            <a href="<?php echo e(route('product-catalog')); ?>" class="nx-btn nx-btn-primary nx-focus mt-2"><?php echo e(__('Explore Collection')); ?></a>
         </div>
         <img src="<?php echo e(asset('images/hero-outfit-men.png')); ?>" alt="New season"
             class="nx-photo absolute bottom-0 right-8 h-[90%] w-auto object-contain object-bottom max-lg:hidden">
@@ -521,8 +515,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Fast Delivery</p>
-                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">Quick & safe delivery</p>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)"><?php echo e(__('Fast Delivery')); ?></p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)"><?php echo e(__('Quick & safe delivery')); ?></p>
                     </div>
                 </div>
 
@@ -533,8 +527,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Easy Returns</p>
-                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">Within 15 days</p>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)"><?php echo e(__('Easy Returns')); ?></p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)"><?php echo e(__('Within 15 days')); ?></p>
                     </div>
                 </div>
 
@@ -545,8 +539,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Quality Assured</p>
-                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">Best fashion, best quality</p>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)"><?php echo e(__('Quality Assured')); ?></p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)"><?php echo e(__('Best fashion, best quality')); ?></p>
                     </div>
                 </div>
 
@@ -557,8 +551,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)">Secure Payment</p>
-                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)">100% secure checkout</p>
+                        <p class="text-xs font-bold uppercase tracking-wider" style="color:var(--nx-ink)"><?php echo e(__('Secure Payment')); ?></p>
+                        <p class="mt-0.5 text-xs" style="color:var(--nx-muted)"><?php echo e(__('100% secure checkout')); ?></p>
                     </div>
                 </div>
             </div>
@@ -569,9 +563,8 @@
     <section id="featured" class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
         <div class="mx-auto max-w-7xl">
             <div class="mb-8 flex items-end justify-between border-b pb-4" style="border-color:var(--nx-line)">
-                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)">Best of Riva &amp; Co.</h2>
-                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)">View
-                    All</a>
+                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)"><?php echo e(__('Best of Riva & Co.')); ?></h2>
+                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)"><?php echo e(__('View All')); ?></a>
             </div>
             <div class="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
                 <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $feature_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -607,12 +600,11 @@
                     <div class="mb-8 flex items-end justify-between border-b pb-4"
                         style="border-color:var(--nx-line)">
                         <div>
-                            <p class="nx-label" style="color:var(--nx-muted)">Personalized for you</p>
-                            <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)">Untuk
-                                Anda</h2>
+                            <p class="nx-label" style="color:var(--nx-muted)"><?php echo e(__('Personalized for you')); ?></p>
+                            <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)"><?php echo e(__('Untuk Anda')); ?></h2>
                         </div>
                         <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus"
-                            style="color:var(--nx-ink)">View All</a>
+                            style="color:var(--nx-ink)"><?php echo e(__('View All')); ?></a>
                     </div>
                     <div class="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
                         <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $personalized_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -647,9 +639,8 @@
     <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:#EAE7DD">
         <div class="mx-auto max-w-7xl">
             <div class="mb-8 flex items-end justify-between">
-                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)">Collections</h2>
-                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)">View
-                    All</a>
+                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)"><?php echo e(__('Collections')); ?></h2>
+                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)"><?php echo e(__('View All')); ?></a>
             </div>
             <div class="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
                 <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $categories->take(4); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -681,9 +672,8 @@
     <section class="w-full py-16 px-4 sm:px-8 lg:px-16" style="background:var(--nx-paper)">
         <div class="mx-auto max-w-7xl">
             <div class="mb-8 flex items-end justify-between border-b pb-4" style="border-color:var(--nx-line)">
-                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)">New Arrivals</h2>
-                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)">View
-                    All</a>
+                <h2 class="nx-display text-2xl sm:text-3xl" style="color:var(--nx-ink)"><?php echo e(__('New Arrivals')); ?></h2>
+                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-link nx-focus" style="color:var(--nx-ink)"><?php echo e(__('View All')); ?></a>
             </div>
             <div class="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
                 <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $latest_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -710,9 +700,7 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
             </div>
             <div class="mt-12 flex justify-center">
-                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-btn nx-btn-outline nx-focus">
-                    Lihat Semua Produk
-                </a>
+                <a href="<?php echo e(route('product-catalog')); ?>" class="nx-btn nx-btn-outline nx-focus"><?php echo e(__('Lihat Semua Produk')); ?></a>
             </div>
         </div>
     </section>
@@ -747,9 +735,7 @@
                             </div>
                             <a href="<?php echo e(route('product-catalog', ['selectCategory' => [$cat->id]])); ?>"
                                 class="nx-btn nx-btn-primary nx-focus mt-8 w-fit"
-                                style="background:var(--nx-paper);color:var(--nx-ink)">
-                                Lihat Koleksi
-                                <i data-lucide="arrow-right" class="size-4"></i>
+                                style="background:var(--nx-paper);color:var(--nx-ink)"><?php echo e(__('Lihat Koleksi')); ?><i data-lucide="arrow-right" class="size-4"></i>
                             </a>
                         </div>
                     </div>
@@ -760,8 +746,8 @@
         <!--[if BLOCK]><![endif]--><?php if(isset($popular_products) && count($popular_products) > 0): ?>
             <section class="w-full py-14 overflow-hidden" style="background:var(--nx-paper)" x-data="{ paused: false }">
                 <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16 mb-8">
-                    <p class="nx-label" style="color:var(--nx-muted)">Trending Now</p>
-                    <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)">Pilihan Populer</h2>
+                    <p class="nx-label" style="color:var(--nx-muted)"><?php echo e(__('Trending Now')); ?></p>
+                    <h2 class="nx-display text-2xl sm:text-3xl mt-1" style="color:var(--nx-ink)"><?php echo e(__('Pilihan Populer')); ?></h2>
                 </div>
                 <div class="relative" @mouseenter="paused = true" @mouseleave="paused = false">
                     
@@ -820,9 +806,9 @@
                     >
                         <span class="inline-flex items-center gap-2 rounded-full bg-[#f2f3ed] px-4 py-1.5 ring-1 ring-black/5 mb-3">
                             <span class="size-2 rounded-full bg-[#555a42] animate-pulse"></span>
-                            <span class="text-[11px] font-black uppercase tracking-[0.18em] text-[#555a42]">Pusat Bantuan &amp; Panduan</span>
+                            <span class="text-[11px] font-black uppercase tracking-[0.18em] text-[#555a42]"><?php echo e(__('Pusat Bantuan & Panduan')); ?></span>
                         </span>
-                        <h2 class="nx-display text-4xl sm:text-5xl font-black text-[#20221b]">Pusat Informasi</h2>
+                        <h2 class="nx-display text-4xl sm:text-5xl font-black text-[#20221b]"><?php echo e(__('Pusat Informasi')); ?></h2>
                         <p class="mt-2 text-sm sm:text-base max-w-xl mx-auto leading-relaxed text-[#777c62]">
                             Panduan lengkap, kebijakan garansi, pengiriman, dan informasi resmi Riva &amp; Co. untuk kenyamanan belanja Anda.
                         </p>
@@ -906,7 +892,7 @@
                                     </p>
 
                                     <div class="pt-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-all group-hover:gap-3 <?php echo e($isHero ? 'text-white' : 'text-[#555a42]'); ?>">
-                                        <span>Baca Selengkapnya</span>
+                                        <span><?php echo e(__('Baca Selengkapnya')); ?></span>
                                         <i data-lucide="arrow-right" class="size-4"></i>
                                     </div>
                                 </div>
@@ -974,7 +960,7 @@
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                 <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
                                 <div class="absolute bottom-4 left-6 text-white">
-                                    <p class="text-[11px] font-black uppercase tracking-widest text-[#EBE5D8]">Pusat Informasi</p>
+                                    <p class="text-[11px] font-black uppercase tracking-widest text-[#EBE5D8]"><?php echo e(__('Pusat Informasi')); ?></p>
                                     <p class="text-xs font-medium opacity-80 mt-0.5">Riva &amp; Co. Official Guide</p>
                                 </div>
                             </div>
@@ -982,9 +968,7 @@
                             
                             <div class="overflow-y-auto p-6 sm:p-8 flex flex-col gap-4">
                                 <span class="inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider bg-[#f2f3ed] text-[#555a42]">
-                                    <span class="size-1.5 rounded-full inline-block bg-[#555a42]"></span>
-                                    Panduan Resmi
-                                </span>
+                                    <span class="size-1.5 rounded-full inline-block bg-[#555a42]"></span><?php echo e(__('Panduan Resmi')); ?></span>
 
                                 <h2 class="font-display text-2xl sm:text-3xl font-bold leading-snug text-[#20221b]">
                                     <?php echo e($page->name); ?>
@@ -997,9 +981,7 @@
                                 <a
                                     href="<?php echo e(route('page', $page->slug)); ?>"
                                     class="mt-2 inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white bg-[#555a42] transition-all duration-200 hover:bg-[#3f4331] hover:scale-[1.02] active:scale-95"
-                                >
-                                    Baca Artikel Lengkap
-                                    <i data-lucide="arrow-right" class="size-4"></i>
+                                ><?php echo e(__('Baca Artikel Lengkap')); ?><i data-lucide="arrow-right" class="size-4"></i>
                                 </a>
                             </div>
                         </div>

@@ -17,6 +17,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('favicon-32x32.png')); ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(asset('favicon-16x16.png')); ?>">
     <link rel="manifest" href="/site.webmanifest">
+    <?php $__currentLoopData = config('app.available_locales', []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $_label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <link rel="alternate" hreflang="<?php echo e($code); ?>" href="<?php echo e(\App\Support\LocaleUrl::for($code)); ?>">
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -128,14 +131,14 @@
     <script>
         function confirmLogout(formId) {
             Swal.fire({
-                title: 'Keluar dari Akun?',
-                text: 'Apakah Anda yakin ingin keluar dari akun Anda?',
+                title: '<?php echo e(__("Keluar dari Akun?")); ?>',
+                text: '<?php echo e(__("Apakah Anda yakin ingin keluar dari akun Anda?")); ?>',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#111111',
                 cancelButtonColor: '#9ca3af',
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Batal'
+                confirmButtonText: '<?php echo e(__("Ya, Keluar")); ?>',
+                cancelButtonText: '<?php echo e(__("Batal")); ?>'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById(formId).submit();

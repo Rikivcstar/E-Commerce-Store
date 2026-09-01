@@ -6,15 +6,11 @@
                 class="h-44 w-full object-cover object-right sm:h-56 sm:object-center md:h-64 lg:h-72">
             <div class="absolute inset-0 flex items-center bg-gradient-to-r from-[#f7f4ed] via-[#f7f4ed]/85 to-transparent p-6 sm:p-10">
                 <div class="max-w-md">
-                    <p class="text-xs font-black uppercase tracking-[0.14em] text-[#777c62]">Catalog</p>
-                    <h1 class="mt-2 font-display text-3xl font-black uppercase leading-none text-[#20221b] sm:text-4xl lg:text-5xl">
-                        Temukan produk favoritmu
-                    </h1>
+                    <p class="text-xs font-black uppercase tracking-[0.14em] text-[#777c62]">{{ __('Catalog') }}</p>
+                    <h1 class="mt-2 font-display text-3xl font-black uppercase leading-none text-[#20221b] sm:text-4xl lg:text-5xl">{{ __('Temukan produk favoritmu') }}</h1>
 <div class="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/80 px-3.5 py-1.5 ring-1 ring-black/5 backdrop-blur-sm">
-                        <span wire:loading.remove class="text-xs font-medium text-[#686c60]">Result: <span class="font-black text-[#20221b]">{{ ($products) ? $products->total() : '0' }}</span> items</span>
-                        <span wire:loading class="inline-flex items-center gap-2 text-xs font-medium text-[#686c60]">
-                            Result:
-                            <span class="inline-block h-3.5 w-10 animate-pulse rounded-full bg-neutral-200/80"></span>
+                        <span wire:loading.remove class="text-xs font-medium text-[#686c60]">{{ __('Result:') }}<span class="font-black text-[#20221b]">{{ ($products) ? $products->total() : '0' }}</span> items</span>
+                        <span wire:loading class="inline-flex items-center gap-2 text-xs font-medium text-[#686c60]">{{ __('Result:') }}<span class="inline-block h-3.5 w-10 animate-pulse rounded-full bg-neutral-200/80"></span>
                             items
                         </span>
                     </div>
@@ -62,11 +58,9 @@
                     }
                 }">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-black uppercase tracking-wider text-[#20221b]">Categories</span>
+                        <span class="text-xs font-black uppercase tracking-wider text-[#20221b]">{{ __('Categories') }}</span>
                         <template x-if="$wire.selectCategory && $wire.selectCategory.length > 0">
-                            <button type="button" wire:click="$set('selectCategory', [])" class="text-[11px] font-bold text-rose-600 hover:underline cursor-pointer">
-                                Hapus
-                            </button>
+                            <button type="button" wire:click="$set('selectCategory', [])" class="text-[11px] font-bold text-rose-600 hover:underline cursor-pointer">{{ __('Hapus') }}</button>
                         </template>
                     </div>
 
@@ -99,7 +93,7 @@
                             <div class="max-h-60 overflow-y-auto space-y-1 pr-1 border-t border-neutral-100 pt-2">
                                 <button type="button" wire:click="$set('selectCategory', [])" @click="open = false"
                                     class="flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition text-[#555a42] hover:bg-[#f7f7f2] cursor-pointer">
-                                    <span>Semua Kategori</span>
+                                    <span>{{ __('Semua Kategori') }}</span>
                                     @if(empty($selectCategory))
                                         <svg class="size-3.5 text-[#555a42]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                                     @endif
@@ -137,11 +131,9 @@
                 {{-- ── COLLECTIONS LIST ── --}}
                 <div class="mt-6">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-black uppercase tracking-wider text-[#20221b]">Collections</span>
+                        <span class="text-xs font-black uppercase tracking-wider text-[#20221b]">{{ __('Collections') }}</span>
                         <template x-if="$wire.selectCollection && $wire.selectCollection.length > 0">
-                            <button type="button" wire:click="$set('selectCollection', [])" class="text-[11px] font-bold text-rose-600 hover:underline cursor-pointer">
-                                Hapus
-                            </button>
+                            <button type="button" wire:click="$set('selectCollection', [])" class="text-[11px] font-bold text-rose-600 hover:underline cursor-pointer">{{ __('Hapus') }}</button>
                         </template>
                     </div>
 
@@ -165,16 +157,12 @@
 
                 <div class="mt-6 grid grid-cols-2 gap-3">
                     <button wire:click='applySearch' wire:loading.attr='disabled' type="button"
-                        class="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#555a42] px-4 text-sm font-black text-white transition hover:bg-[#3f4331] disabled:pointer-events-none disabled:opacity-50 cursor-pointer">
-                        Apply
-                        <div wire:loading class="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-white" role="status" aria-label="loading">
-                            <span class="sr-only">Loading...</span>
+                        class="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#555a42] px-4 text-sm font-black text-white transition hover:bg-[#3f4331] disabled:pointer-events-none disabled:opacity-50 cursor-pointer">{{ __('Apply') }}<div wire:loading class="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-white" role="status" aria-label="loading">
+                            <span class="sr-only">{{ __('Loading...') }}</span>
                         </div>
                     </button>
                     <button wire:click='resetFilter' type="button"
-                        class="inline-flex h-11 items-center justify-center rounded-full bg-[#f2f3ed] px-4 text-sm font-black text-[#555a42] transition hover:bg-[#e6e8de] cursor-pointer">
-                        Reset
-                    </button>
+                        class="inline-flex h-11 items-center justify-center rounded-full bg-[#f2f3ed] px-4 text-sm font-black text-[#555a42] transition hover:bg-[#e6e8de] cursor-pointer">{{ __('Reset') }}</button>
                 </div>
             </aside>
 
@@ -193,17 +181,17 @@
                         @endforeach
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="text-xs font-black uppercase tracking-[0.12em] text-[#777c62]">Sort</span>
+                        <span class="text-xs font-black uppercase tracking-[0.12em] text-[#777c62]">{{ __('Sort') }}</span>
                         @error('shortBy')
                             <div class="text-xs font-semibold text-red-600">{{ $message }}</div>
                         @enderror
                         <select wire:model='shortBy'
                             class="h-10 rounded-full border-0 bg-[#f2f3ed] px-4 pe-9 text-sm font-bold text-[#555a42] focus:ring-2 focus:ring-[#777c62]/30 disabled:pointer-events-none disabled:opacity-50">
-                            <option value="newest">Product Newest</option>
-                            <option value="latest">Product Latest</option>
-                            <option value="popular">Product Popular</option>
-                            <option value="price_asc">Product Price A-Z</option>
-                            <option value="price_desc">Product Price Z-A</option>
+                            <option value="newest">{{ __('Product Newest') }}</option>
+                            <option value="latest">{{ __('Product Latest') }}</option>
+                            <option value="popular">{{ __('Product Popular') }}</option>
+                            <option value="price_asc">{{ __('Product Price A-Z') }}</option>
+                            <option value="price_desc">{{ __('Product Price Z-A') }}</option>
                         </select>
                     </div>
                 </div>
@@ -213,8 +201,8 @@
                         <x-single-product-card :product="$product"/>
                     @empty
                         <div class="col-span-full rounded-[1.5rem] bg-white py-14 text-center shadow-sm ring-1 ring-black/5">
-                            <p class="font-display text-2xl font-black uppercase text-[#20221b]">Product not found</p>
-                            <p class="mt-2 text-sm text-[#777b6d]">Coba kata kunci atau filter koleksi lain.</p>
+                            <p class="font-display text-2xl font-black uppercase text-[#20221b]">{{ __('Product not found') }}</p>
+                            <p class="mt-2 text-sm text-[#777b6d]">{{ __('Coba kata kunci atau filter koleksi lain.') }}</p>
                         </div>
                     @endforelse
                 </div>

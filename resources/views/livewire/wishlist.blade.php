@@ -111,13 +111,13 @@
         </style>
 
         <div class="wishlist-page">
-            <h1 class="wishlist-title">Wishlist</h1>
-            <p class="wishlist-subtitle">Produk yang Anda simpan untuk dibeli nanti.</p>
+            <h1 class="wishlist-title">{{ __('Wishlist') }}</h1>
+            <p class="wishlist-subtitle">{{ __('Produk yang Anda simpan untuk dibeli nanti.') }}</p>
 
             @if ($items->isEmpty())
                 <div class="wish-empty">
-                    <p>Wishlist Anda masih kosong.</p>
-                    <a href="{{ route('product-catalog') }}">Jelajahi Produk</a>
+                    <p>{{ __('Wishlist Anda masih kosong.') }}</p>
+                    <a href="{{ route('product-catalog') }}">{{ __('Jelajahi Produk') }}</a>
                 </div>
             @else
                 <div class="wishlist-grid">
@@ -143,14 +143,10 @@
                                     wire:loading.attr="disabled"
                                     class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#4d4634] bg-[#4d4634] px-4 py-2 text-[.75rem] font-black uppercase tracking-wider text-[#fffaf2] transition hover:bg-[#2f2a20] cursor-pointer">
                                     <span wire:loading.remove wire:target="addToCart('{{ $item->sku }}')">
-                                        <svg class="inline size-3.5 -mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 11 4-7"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4"/></svg>
-                                        Tambah ke Keranjang
-                                    </span>
+                                        <svg class="inline size-3.5 -mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 11 4-7"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4"/></svg>{{ __('Tambah ke Keranjang') }}</span>
                                     <span wire:loading wire:target="addToCart('{{ $item->sku }}')"
                                         class="inline-flex items-center gap-2">
-                                        <span class="inline-block size-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
-                                        Menambahkan...
-                                    </span>
+                                        <span class="inline-block size-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"></span>{{ __('Menambahkan...') }}</span>
                                 </button>
                             </div>
                         </div>
