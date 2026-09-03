@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\HasTranslatableFormAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,10 +12,15 @@ use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Translatable\HasTranslations;
 
 class Category extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use HasTranslations, InteractsWithMedia, HasTranslatableFormAttributes;
+
+    protected $translatable = ['name', 'description'];
+
+    protected static array $translatableFormFields = ['name', 'description'];
 
     protected $fillable = [
         'name',

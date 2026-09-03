@@ -329,5 +329,10 @@
     "Subtotal": "Subtotal",
     "Full Address": "Full Address",
     "Add to Cart": "Add to Cart",
-    "Login here": "Login here"
+    "Login here": "Login here",
+    "Email": "Email",
+    "Name": "Name",
+    "Category": "Category",
+    "Collection": "Collection",
+    "Password confirmation": "Password confirmation"
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\ProductRestockedEvent;
+use App\Support\HasTranslatableFormAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,11 +14,16 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
+use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements HasMedia
 {
     //
-    use HasTags, InteractsWithMedia, LogsActivity;
+    use HasTags, HasTranslations, InteractsWithMedia, LogsActivity, HasTranslatableFormAttributes;
+
+    protected $translatable = ['name', 'description'];
+
+    protected static array $translatableFormFields = ['name', 'description'];
 
     protected static function booted(): void
     {

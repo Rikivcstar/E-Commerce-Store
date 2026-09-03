@@ -33,8 +33,8 @@ class CustomerLogin extends Component
     protected function validationAttributes(): array
     {
         return [
-            'email' => 'Email',
-            'password' => 'Password',
+            'email' => __('Email'),
+            'password' => __('Password'),
         ];
     }
 
@@ -61,8 +61,8 @@ class CustomerLogin extends Component
 
             toast(
                 count($messages) > 0
-                    ? 'Berhasil Sign In! '.implode(', dan ', $messages).'.'
-                    : 'Berhasil Sign In!',
+                    ? 'Berhasil '.__('Sign In').' '.implode(', dan ', $messages).'.'
+                    : 'Berhasil '.__('Sign In').'!',
                 'success'
             );
 

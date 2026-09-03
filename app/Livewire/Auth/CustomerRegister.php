@@ -39,10 +39,10 @@ class CustomerRegister extends Component
     protected function validationAttributes(): array
     {
         return [
-            'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'password_confirmation' => 'Password confirmation',
+            'name' => __('Name'),
+            'email' => __('Email'),
+            'password' => __('Password'),
+            'password_confirmation' => __('Password confirmation'),
         ];
     }
 

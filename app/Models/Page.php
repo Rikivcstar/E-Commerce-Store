@@ -2,16 +2,22 @@
 
 namespace App\Models;
 
+use App\Support\HasTranslatableFormAttributes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Translatable\HasTranslations;
 
 class Page extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use HasTranslations, InteractsWithMedia, HasTranslatableFormAttributes;
+
+    protected $translatable = ['name', 'excerpt', 'context'];
+
+    protected static array $translatableFormFields = ['name', 'excerpt', 'context'];
 
     protected $fillable = [
         'name',

@@ -70,8 +70,8 @@ class ProductCatalog extends Component
     protected function validationAttributes()
     {
         return [
-            'selectCollection' => 'Collection',
-            'selectCategory' => 'Category',
+            'selectCollection' => __('Collection'),
+            'selectCategory' => __('Category'),
         ];
     }
 
