@@ -6,16 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasTranslatableFormAttributes
 {
-    protected static array $translatableFormFields = [];
-
     public static function getTranslatableFormFields(): array
     {
-        return static::$translatableFormFields;
+        return property_exists(static::class, 'translatableFormFields') ? static::$translatableFormFields : [];
     }
 
     public static function getTranslatableFormLocales(): array
     {
-        return array_keys(config('app.available_locales'));
+        return array_keys(config('app.available_locales', []));
     }
 
     public static function extractTranslatableData(array $data, Model $record): array
@@ -33,9 +31,9 @@ trait HasTranslatableFormAttributes
         return $data;
     }
 
-    public function __set(string $key, mixed $value): void
+    public function __set($key, $value)
     {
-        foreach (static::$translatableFormFields as $field) {
+        foreach (static::getTranslatableFormFields() as $field) {
             foreach (static::getTranslatableFormLocales() as $locale) {
                 if ($key === "{$field}_{$locale}") {
                     $this->setTranslation($field, $locale, $value);
@@ -47,9 +45,9 @@ trait HasTranslatableFormAttributes
         parent::__set($key, $value);
     }
 
-    public function __get(string $key): mixed
+    public function __get($key)
     {
-        foreach (static::$translatableFormFields as $field) {
+        foreach (static::getTranslatableFormFields() as $field) {
             foreach (static::getTranslatableFormLocales() as $locale) {
                 if ($key === "{$field}_{$locale}") {
                     return $this->getTranslation($field, $locale);
